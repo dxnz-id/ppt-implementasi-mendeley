@@ -28,7 +28,7 @@ def box(s,x,y,w,h,fill,r=1.0,line=None,dash=None,name='kartu'):
 def tx(s,x,y,w,h,t,size=18,color=TX,bold=False,align='left',valign='top',name='teks'):
     add(s,'shape',x=cm(x),y=cm(y),width=cm(w),height=cm(h),text=t,size=size,color=color,bold=str(bold).lower(),
         align=align,valign=valign,font=F,fill='none',line='none',margin='0',name=name)
-def pic(s,f,x,y,w,alt):add(s,'picture',src=os.path.abspath('assets/'+f),x=cm(x),y=cm(y),width=cm(w),height=cm(w),alt=alt)
+def pic(s,f,x,y,w,alt,h=None):add(s,'picture',src=os.path.abspath('assets/'+f),x=cm(x),y=cm(y),width=cm(w),height=cm(h or w),alt=alt)
 def notes(s,t):add(s,'notes',text=t)
 def num(s,x,y,d,t,fill,col):
     add(s,'shape',geometry='ellipse',x=cm(x),y=cm(y),width=cm(d),height=cm(d),text=t,size=20,bold='true',color=col,
@@ -144,11 +144,13 @@ s=frame(10,2,'Demo: dari impor sampai daftar pustaka')
 box(s,X0,4.0,10.2,14.0,CARD,1.4)
 for k,t in enumerate(['Impor jurnal ke Library','Sisipkan kutipan di paragraf','Buat daftar pustaka otomatis']):
     y=5.0+k*4.2;num(s,X0+0.9,y,1.6,str(k+1),P,'FFFFFF');tx(s,X0+3.1,y-0.3,6.6,2.4,t,20,TX,True,valign='middle')
-for k,(lab,cap) in enumerate([('Sebelum','Tangkapan layar daftar pustaka manual'),('Sesudah','Tangkapan layar hasil Mendeley')]):
-    x=X0+11.0+k*8.6;box(s,x,4.0,8.4,14.0,BG,1.4,line=P,dash='dash',name='bingkai-gambar')
-    box(s,x+0.8,4.8,3.6,1.1,PC,0.55,name='label');tx(s,x+0.8,4.8,3.6,1.1,lab,16,ON_PC,True,'center','middle')
-    pic(s,icon('MdDescription','circle',SC,ON_SC),x+2.9,8.2,2.6,'Ikon gambar');tx(s,x+0.8,11.6,6.8,3.6,cap,18,MUT,align='center')
-notes(s,'Peragakan alur singkat langsung, atau tempel tangkapan layar dari penggunaan sendiri pada dua bingkai: daftar pustaka manual di kiri dan hasil Mendeley di kanan. Tangkapan layar sendiri lebih meyakinkan daripada gambar dari internet.')
+for k,(lab,img,cap) in enumerate([('Library','mendeley-library.png','Impor PDF, kelompokkan, dan rapikan referensi.'),('Daftar pustaka','mendeley-bibliography.png','Sisipkan kutipan di Word, lalu buat daftar pustaka otomatis.')]):
+    x=X0+11.0+k*8.6;box(s,x,4.0,8.4,14.0,CARD,1.4,line='AFB3B3',name='bingkai-gambar')
+    pic(s,img,x+0.6,4.8,7.2,'Tangkapan layar '+lab,6.3)
+    box(s,x+0.6,11.5,3.6,1.0,PC,0.55,name='label');tx(s,x+0.6,11.5,3.6,1.0,lab,14,ON_PC,True,'center','middle')
+    tx(s,x+0.6,12.8,7.2,2.4,cap,16,MUT)
+    tx(s,x+0.6,15.6,7.2,0.7,'Sumber: mendeley.com',10,MUT)
+notes(s,'Peragakan alur singkat langsung: impor ke Library, sisipkan kutipan, lalu buat daftar pustaka. Gambar di slide memakai tangkapan layar resmi Mendeley (mendeley.com); ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.')
 # 11 kelebihan kekurangan
 s=frame(11,3,'Kelebihan dan kekurangan')
 for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Format konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi antarperangkat'],PC,ON_PC,P,'FFFFFF'),
