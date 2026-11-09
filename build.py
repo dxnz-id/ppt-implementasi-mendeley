@@ -108,32 +108,32 @@ for k,(ic,hd,bd) in enumerate([('MdLibraryBooks','Mendeley Reference Manager','P
     tx(s,X0+14.8,y+0.6,12.6,1.2,hd,24,TX,True);tx(s,X0+14.8,y+1.8,12.6,2.3,bd,18,MUT)
 tx(s,X0,18.3,20,0.4,'Sumber: Mendeley (n.d.); Mendeley Support (2025).',9,MUT)
 notes(s,'Mendeley dikembangkan Elsevier. Ada tiga komponen: Reference Manager untuk pustaka, Mendeley Cite untuk Word, dan Web Importer untuk peramban. Mendeley Desktop masih tersedia, tetapi pengembangannya sudah dihentikan; Reference Manager menjadi fokus.')
-# 6 kaidah
-s=frame(6,1,'Kaitan Mendeley dengan kaidah bahasa')
+# 6 apa yang diolah
+s=frame(6,1,'Apa yang diolah Mendeley')
 box(s,X0,4.0,W,4.6,P,1.4)
-pic(s,icon('MdSchool','circle',PC,ON_PC),X0+1.0,5.0,2.6,'Ikon pengetahuan')
-tx(s,X0+4.4,4.0,W-5.4,4.6,'Mendeley menjaga konsistensi format. Pemahaman kaidah kutipan tetap menjadi tanggung jawab penulis.',24,'FFFFFF',True,valign='middle')
-card3(s,9.4,8.6,[('MdFormatQuote','Kutipan','Langsung, yaitu kata demi kata dalam tanda petik, dan tidak langsung, yaitu parafrasa.'),
- ('MdListAlt','Daftar pustaka','Urutan, tanda baca, dan penulisan nama penulis mengikuti gaya yang dipilih.'),
- ('MdStyle','Gaya selingkung','APA, IEEE, atau Harvard sesuai ketentuan kampus, satu gaya untuk seluruh naskah.')],[(CARD,SC,ON_SC,TX),(CARD,TC,ON_TC,TX),(CARD,PC,ON_PC,TX)])
-tx(s,X0,18.3,20,0.4,'Sumber: KBBI VI Daring.',9,MUT)
-notes(s,'Materi kita di kelas membahas kutipan langsung dan tidak langsung, penulisan daftar pustaka, dan gaya selingkung. Mendeley hanya menerapkan gaya yang kita pilih; kalau kita salah memilih atau salah mengisi data, hasilnya tetap salah.')
-# 7 contoh kaidah
-s=frame(7,1,'Contoh kaidah: satu sumber')
-box(s,X0,4.0,13.6,5.8,CARD,1.4)
-tx(s,X0+0.8,4.6,12.0,1.2,'Kutipan langsung',24,TX,True)
-tx(s,X0+0.8,6.0,12.0,3.4,'“pengungkapan kembali suatu tuturan dari sebuah tingkatan atau macam bahasa menjadi tuturan yang lain tanpa mengubah pengertian” (Badan Pengembangan dan Pembinaan Bahasa, n.d.).',16,TX)
-box(s,X0,10.4,13.6,5.8,SC,1.4)
-tx(s,X0+0.8,11.0,12.0,1.2,'Kutipan tidak langsung',24,ON_SC,True)
-tx(s,X0+0.8,12.4,12.0,3.4,'Parafrasa mengungkapkan kembali suatu tuturan dengan bentuk lain tanpa mengubah maknanya (Badan Pengembangan dan Pembinaan Bahasa, n.d.).',16,ON_SC)
-box(s,X0+14.4,4.0,13.6,5.8,TC,1.4)
-tx(s,X0+15.2,4.6,12.0,1.2,'Daftar pustaka: APA',24,ON_TC,True)
-tx(s,X0+15.2,6.0,12.0,3.6,'Badan Pengembangan dan Pembinaan Bahasa. (n.d.). Parafrasa. KBBI VI Daring. Diakses 9 November 2026, dari https://kbbi.kemendikdasmen.go.id/entri/parafrasa',13,ON_TC)
-box(s,X0+14.4,10.4,13.6,5.8,PC,1.4)
-tx(s,X0+15.2,11.0,12.0,1.2,'Daftar pustaka: IEEE',24,ON_PC,True)
-tx(s,X0+15.2,12.4,12.0,3.6,'[1] Badan Pengembangan dan Pembinaan Bahasa, “Parafrasa,” KBBI VI Daring. [Online]. Available: https://kbbi.kemendikdasmen.go.id/entri/parafrasa. [Accessed: Nov. 9, 2026].',13,ON_PC)
-tx(s,X0,16.8,28,0.8,'Satu sumber, dua bentuk kutipan, dua gaya daftar pustaka. Tanggal akses: 9 November 2026.',10,MUT)
-notes(s,'Tunjukkan bahwa satu sumber yang sama bisa muncul sebagai kutipan langsung, kutipan tidak langsung, dan entri daftar pustaka. Bedanya hanya bentuk penyajian; sumbernya tetap harus sama.')
+pic(s,icon('MdDescription','circle',PC,ON_PC),X0+1.0,5.0,2.6,'Ikon metadata')
+tx(s,X0+4.4,4.0,W-5.4,4.6,'Mendeley memindahkan metadata referensi ke sitasi dan daftar pustaka. Isi dan ketepatan data tetap diperiksa penulis.',24,'FFFFFF',True,valign='middle')
+card3(s,9.4,8.6,[('MdDescription','Metadata','Judul, penulis, tahun, DOI, dan nama jurnal menjadi bahan sitasi.'),
+ ('MdStyle','Gaya sitasi','Mendeley menerapkan gaya yang dipilih, misalnya APA atau IEEE.'),
+ ('MdListAlt','Daftar pustaka','Entri disusun otomatis dari metadata dan gaya yang sama.')],[(CARD,SC,ON_SC,TX),(CARD,TC,ON_TC,TX),(CARD,PC,ON_PC,TX)])
+tx(s,X0,18.3,20,0.4,'Sumber: Mendeley Support (2025).',9,MUT)
+notes(s,'Mendeley mengolah metadata menjadi sitasi dan daftar pustaka. Jenis kutipan dan aturan tiap gaya dibahas Kelompok 4; fokus kita pada data yang diolah dan hasil yang dibuat Mendeley.')
+# 7 satu sumber dua keluaran
+s=frame(7,1,'Satu sumber, dua keluaran')
+tx(s,X0,3.3,W,0.9,'Metadata yang sama dipakai untuk sitasi dan daftar pustaka.',18,MUT)
+w3=(W-1.6)/3
+for k,(hd,bd,fill,col) in enumerate([('01 Metadata','Judul, penulis, tahun, dan sumber.',CARD,TX),
+ ('02 Sitasi','Mendeley Cite menyisipkan sitasi ke naskah.',SC,ON_SC),
+ ('03 Daftar pustaka','Entri tersusun dari metadata yang sama.',TC,ON_TC)]):
+    x=X0+k*(w3+0.8);box(s,x,4.6,w3,7.0,fill,1.3)
+    tx(s,x+0.8,5.2,w3-1.6,1.0,hd,24,col,True)
+    tx(s,x+0.8,6.6,w3-1.6,3.6,bd,18,col)
+    if k<2:pic(s,icon('MdArrowForward','none','x',P),x+w3+0.25,7.7,0.9,'Panah')
+box(s,X0,12.4,W,4.4,PC,1.4)
+pic(s,icon('MdFactCheck','circle',P,'FFFFFF'),X0+1.0,13.2,2.4,'Ikon pemeriksaan')
+tx(s,X0+4.0,12.8,W-5.0,3.6,'Yang tetap manual: periksa metadata dan pastikan gaya sitasi sesuai pedoman. Teori jenis sitasi dibahas Kelompok 4.',20,ON_PC,False,valign='middle')
+tx(s,X0,17.2,28,0.7,'Sumber: Mendeley Support (2025).',9,MUT)
+notes(s,'Satu referensi menghasilkan sitasi dalam teks dan entri daftar pustaka. Mendeley memakai metadata yang sama. Teori jenis sitasi dan aturan APA/IEEE tidak dibahas di sini; itu materi Kelompok 4.')
 # 8 persiapan
 s=frame(8,2,'Persiapan: akun, aplikasi, dan add-in')
 w3=(W-1.6)/3
