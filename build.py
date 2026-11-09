@@ -128,10 +128,10 @@ tx(s,X0+0.8,11.0,12.0,1.2,'Kutipan tidak langsung',24,ON_SC,True)
 tx(s,X0+0.8,12.4,12.0,3.4,'Parafrasa mengungkapkan kembali suatu tuturan dengan bentuk lain tanpa mengubah maknanya (Badan Pengembangan dan Pembinaan Bahasa, n.d.).',16,ON_SC)
 box(s,X0+14.4,4.0,13.6,5.8,TC,1.4)
 tx(s,X0+15.2,4.6,12.0,1.2,'Daftar pustaka: APA',24,ON_TC,True)
-tx(s,X0+15.2,6.0,12.0,3.6,'Badan Pengembangan dan Pembinaan Bahasa. (n.d.). Parafrasa. KBBI VI Daring. Diakses 9 November 2026, dari https://kbbi.kemendikdasmen.go.id/entri/parafrasa',12,ON_TC)
+tx(s,X0+15.2,6.0,12.0,3.6,'Badan Pengembangan dan Pembinaan Bahasa. (n.d.). Parafrasa. KBBI VI Daring. Diakses 9 November 2026, dari https://kbbi.kemendikdasmen.go.id/entri/parafrasa',13,ON_TC)
 box(s,X0+14.4,10.4,13.6,5.8,PC,1.4)
 tx(s,X0+15.2,11.0,12.0,1.2,'Daftar pustaka: IEEE',24,ON_PC,True)
-tx(s,X0+15.2,12.4,12.0,3.6,'[1] Badan Pengembangan dan Pembinaan Bahasa, “Parafrasa,” KBBI VI Daring. [Online]. Available: https://kbbi.kemendikdasmen.go.id/entri/parafrasa. [Accessed: Nov. 9, 2026].',11,ON_PC)
+tx(s,X0+15.2,12.4,12.0,3.6,'[1] Badan Pengembangan dan Pembinaan Bahasa, “Parafrasa,” KBBI VI Daring. [Online]. Available: https://kbbi.kemendikdasmen.go.id/entri/parafrasa. [Accessed: Nov. 9, 2026].',13,ON_PC)
 tx(s,X0,16.8,28,0.8,'Satu sumber, dua bentuk kutipan, dua gaya daftar pustaka. Tanggal akses: 9 November 2026.',10,MUT)
 notes(s,'Tunjukkan bahwa satu sumber yang sama bisa muncul sebagai kutipan langsung, kutipan tidak langsung, dan entri daftar pustaka. Bedanya hanya bentuk penyajian; sumbernya tetap harus sama.')
 # 8 persiapan
@@ -196,8 +196,9 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
     x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
     pic(s,icon(ic,'cookie',sh,fg),x+0.9,4.8,2.2,hd);tx(s,x+3.6,4.8,9.4,2.2,hd,24,col,True,valign='middle')
     for j,t in enumerate(its):
-        y=7.9+j*2.5;add(s,'shape',geometry='ellipse',x=cm(x+1.0),y=cm(y+0.35),width=cm(0.5),height=cm(0.5),fill=sh,line='none',name='titik')
-        tx(s,x+2.0,y,10.8,2.3,t,18,col)
+        y=7.7+j*2.5
+        box(s,x+0.8,y,12.0,1.9,CARD,0.95,name='kapsul')
+        tx(s,x+1.4,y,11.2,1.9,t,16,col,valign='middle')
 tx(s,X0,18.3,20,0.4,'Sumber: Mendeley Support (2025).',9,MUT)
 notes(s,'Kelebihan: hemat waktu, format konsisten, dan sinkron. Keterbatasannya: metadata perlu dicek, gaya sitasi kampus tertentu mungkin tidak tersedia, penyimpanan gratis 2 GB, dan kesalahan tetap menjadi tanggung jawab penulis.')
 # 14 kesimpulan (terang)
@@ -221,10 +222,10 @@ refs=[
  'American Psychological Association. (2020). Publication manual of the American Psychological Association (7th ed.). https://doi.org/10.1037/0000165-000',
  'IEEE. (2024). IEEE editorial style manual for authors. https://journals.ieeeauthorcenter.ieee.org/wp-content/uploads/sites/7/IEEE-Editorial-Style-Manual-for-Authors.pdf']
 for k,t in enumerate(refs):
-    x=X0+(k%2)*14.4;y=4.2+(k//2)*2.9
+    x=X0+(k%2)*14.4;y=4.2+(k//2)*3.0
     fill=[CARD,SC,TC,PC][k%4];col=[TX,ON_SC,ON_TC,ON_PC][k%4]
-    box(s,x,y,13.6,2.6,fill,1.2)
-    tx(s,x+0.6,y+0.4,12.4,2.0,f'{k+1}. {t}',9.5,col)
+    box(s,x,y,13.6,2.8,fill,1.2)
+    tx(s,x+0.6,y+0.4,12.4,2.2,f'{k+1}. {t}',11.5,col)
 tx(s,X0,16.8,28,0.8,'Semua sumber diakses 9 November 2026.',10,MUT)
 notes(s,'Daftar pustaka memuat sumber yang benar-benar dibuka: halaman resmi Mendeley, Mendeley Support, KBBI VI Daring, dan panduan gaya APA serta IEEE. Perbarui tanggal akses bila presentasi dilakukan pada hari lain.')
 # 16 penutup
@@ -235,8 +236,11 @@ box(s,2.4,7.8,5.2,0.12,P,0.06,name='garis')
 tx(s,2.4,8.4,19,1.4,'Pertanyaan dan diskusi',24,P,True)
 tx(s,2.4,10.4,18,2.0,'Sumber lengkap ada di slide daftar pustaka.',14,MUT)
 tx(s,2.4,16.3,18,0.8,'Mata kuliah Bahasa Indonesia',11,MUT)
-box(s,21.4,4.2,10.4,10.4,PC,5.2,name='lingkaran')
-pic(s,icon('MdQuestionAnswer','flower',TC,ON_TC),22.6,5.4,8.2,'Ikon tanya jawab')
+box(s,21.0,3.2,10.4,12.6,SC,2.0,name='kartu-tanya')
+pic(s,icon('MdQuestionAnswer','flower',PC,ON_PC),22.4,4.4,4.2,'Ikon tanya jawab')
+tx(s,22.4,9.0,7.6,1.4,'Tanya jawab',24,ON_SC,True)
+tx(s,22.4,10.5,7.6,2.6,'Alur, metadata, dan gaya sitasi.',16,ON_SC)
+box(s,22.4,13.4,2.4,0.9,CARD,0.45,name='label-qa');tx(s,22.4,13.4,2.4,0.9,'Q&A',12,ON_SC,True,'center','middle')
 tx(s,29.4,18.2,3,0.6,'16 / 16',10,MUT,align='right',name='nomor-slide')
 notes(s,'Buka sesi tanya jawab. Arahkan pertanyaan tentang langkah implementasi, kendala metadata, dan pilihan gaya sitasi ke slide terkait.')
 # --- bangun ---
