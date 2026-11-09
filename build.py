@@ -89,6 +89,7 @@ s=frame(4,0,'Rumusan masalah dan tujuan')
 for k,(ic,hd,its,pitch,fill,col,nb,nc) in enumerate([('MdQuestionAnswer','Rumusan masalah',['Bagaimana Mendeley diimplementasikan dalam penulisan karya ilmiah?','Apa manfaat dan keterbatasan Mendeley bagi mahasiswa?'],4.2,CARD,TX,P,'FFFFFF'),
  ('MdFlag','Tujuan',['Menjelaskan fungsi Mendeley.','Menguraikan langkah penggunaannya.','Menilai manfaat dan keterbatasannya.'],2.9,TC,ON_TC,ON_TC,'FFFFFF')]):
     x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
+    pic(s,'mask-04-tanya.png' if k==0 else 'mask-04-tujuan.png',x,4.0,13.6,'Masking tanda',14.0)
     pic(s,icon(ic,'cookie',PC if k==0 else SC,ON_PC if k==0 else ON_TC),x+0.9,4.9,2.2,hd)
     tx(s,x+3.6,4.9,9,2.2,hd,24,col,True,valign='middle')
     for j,t in enumerate(its):
@@ -97,6 +98,7 @@ notes(s,'Dua rumusan masalah menuntun presentasi ini: cara implementasi dan manf
 # 5 mengenal
 s=frame(5,1,'Tiga komponen utama Mendeley')
 box(s,X0,4.0,10.0,14.0,PC,1.4)
+pic(s,'mask-05-tiga.png',X0,4.0,10.0,'Masking angka tiga',14.0)
 pic(s,icon('MdLibraryBooks','flower',P,'FFFFFF'),X0+1.2,4.9,3.6,'Ikon Mendeley')
 tx(s,X0+1.0,9.4,8,5.6,'Mendeley adalah aplikasi pengelola referensi dan jejaring akademik. Elsevier mengembangkannya.',22,ON_PC,True)
 tx(s,X0+1.0,15.0,8,2.6,'Pengembangan Mendeley Desktop dihentikan; Reference Manager menjadi fokus.',16,ON_PC)
@@ -139,7 +141,7 @@ s=frame(8,2,'Persiapan: akun, aplikasi, dan add-in')
 w3=(W-1.6)/3
 for k,(ic,hd,bd) in enumerate([('MdPersonAdd','Buat akun','Daftar dengan email aktif.'),('MdDownload','Pasang aplikasi','Unduh Reference Manager, lalu pasang add-in Mendeley Cite di Word.'),('MdExtension','Pasang ekstensi','Tambahkan Web Importer ke peramban untuk menyimpan referensi dari web.')]):
     x=X0+k*(w3+0.8);box(s,x,4.2,w3,12.6,CARD if k!=1 else PC,1.4)
-    num(s,x+0.9,5.0,1.7,str(k+1),P,'FFFFFF')
+    pic(s,f'mask-08-{k+1:02d}.png',x,4.2,w3,'Masking angka langkah',12.6)
     pic(s,icon(ic,'flower',PC if k!=1 else P,ON_PC if k!=1 else 'FFFFFF'),x+w3-5.4,4.8,4.6,hd)
     tx(s,x+0.9,10.4,w3-1.8,1.4,hd,24,TX if k!=1 else ON_PC,True);tx(s,x+0.9,12.2,w3-1.8,4.6,bd,20,MUT if k!=1 else ON_PC)
 tx(s,X0,18.3,20,0.4,'Sumber: Mendeley (n.d.).',9,MUT)
@@ -158,6 +160,7 @@ for k,(ic,hd,bd) in enumerate([('MdBorderColor','Highlight dan anotasi','Tandai 
     y=4.9+k*6.6;pic(s,icon(ic,'cookie',SC,ON_SC),X0+1.0,y+0.6,3.6,hd)
     tx(s,X0+5.4,y+0.6,11.2,1.4,hd,24,TX,True);tx(s,X0+5.4,y+2.2,11.2,3.4,bd,20,MUT)
 box(s,X0+18.4,4.0,9.6,14.0,TC,1.4)
+pic(s,'mask-10-panah.png',X0+18.4,4.0,9.6,'Masking panah hasil',14.0)
 pic(s,icon('MdLightbulb','flower',SC,ON_TC),X0+19.6,5.2,4.2,'Ikon ide')
 tx(s,X0+19.4,10.6,7.6,1.4,'Hasilnya',24,ON_TC,True);tx(s,X0+19.4,12.2,7.6,5,'Bahan parafrasa untuk menyusun kutipan tidak langsung.',22,ON_TC)
 notes(s,'Anotasi dan catatan membantu kita memahami sumber lebih dulu. Dari catatan itulah kutipan tidak langsung ditulis ulang dengan kalimat sendiri, lengkap dengan sitasinya.')
@@ -207,6 +210,7 @@ s=slide(BG);tx(s,2.0,1.4,30,2.4,'Kesimpulan dan saran',40,TX,True,valign='middle
 w3=(31.8-2*0.9-2.0)/3 if False else 9.6
 for k,(ic,hd,bd) in enumerate([('MdCheckCircle','Implementasinya','Impor referensi, sisipkan sitasi di Word, lalu buat daftar pustaka otomatis.'),('MdSchool','Manfaat dan batasannya','Format menjadi konsisten, tetapi metadata dan kaidah tetap harus diperiksa.'),('MdFlag','Saran','Mulai dari tugas kecil, cek metadata, dan gunakan satu gaya sitasi.')]):
     x=2.0+k*10.4;box(s,x,4.6,w3,12.6,[PC,CARD,TC][k],1.4)
+    pic(s,f'mask-14-{k+1:02d}.png',x,4.6,w3,'Masking angka kesimpulan',12.6)
     pic(s,icon(ic,'cookie',[P,SC,ON_TC][k],[ON_P,ON_SC,TC][k]),x+0.9,5.6,3.4,hd)
     tx(s,x+0.9,9.8,w3-1.8,2.8,hd,24,[ON_PC,TX,ON_TC][k],True);tx(s,x+0.9,12.8,w3-1.8,4.2,bd,18,[ON_PC,TX,ON_TC][k])
 tx(s,29.4,18.2,3,0.6,'14 / 16',10,MUT,align='right',name='nomor-slide')
