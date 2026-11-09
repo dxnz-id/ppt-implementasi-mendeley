@@ -31,14 +31,15 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 | Primary / container | 46627A / B0C8E0 |
 | Secondary container | C1E0E0 |
 | Tertiary container | DCE7D6 |
-| Error | F56965 / 65000B |
+| Error | FFDAD6 / 65000B |
 | Teks | 2F3334 |
 
 ## Yang harus diisi manual
-- Slide 2: nama dan NIM anggota; Rifqy belum masuk daftar sampai datanya tersedia.
+- Slide 2: nama dan NIM anggota; kartu Rifqy masih placeholder.
 - Slide 7: contoh kaidah memakai KBBI VI Daring; ganti sumbernya bila dosen meminta contoh lain.
-- Slide 12: tangkapan layar dari penggunaan sendiri, bukan aset marketing.
+- Slide 12: kartu `assets/card-library.png` dan `assets/card-cite.png`; ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.
 - Slide 15: daftar pustaka; perbarui tanggal akses bila presentasi dilakukan pada hari lain.
+- Slide 16: latar `assets/closing-bg.png`; jangan ganti dengan warna gelap.
 - Verifikasi ke situs resmi Mendeley: status Desktop dan batas penyimpanan gratis.
 
 ## Catatan teknis OfficeCLI

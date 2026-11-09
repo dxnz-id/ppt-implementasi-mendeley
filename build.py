@@ -90,7 +90,7 @@ for k,(ic,hd,its,pitch,fill,col,nb,nc) in enumerate([('MdQuestionAnswer','Rumusa
  ('MdFlag','Tujuan',['Menjelaskan fungsi Mendeley.','Menguraikan langkah penggunaannya.','Menilai manfaat dan keterbatasannya.'],2.9,TC,ON_TC,ON_TC,'FFFFFF')]):
     x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
     pic(s,icon(ic,'cookie',PC if k==0 else SC,ON_PC if k==0 else ON_TC),x+0.9,4.9,2.2,hd)
-    tx(s,x+3.6,4.9,9,2.2,hd,26,col,True,valign='middle')
+    tx(s,x+3.6,4.9,9,2.2,hd,24,col,True,valign='middle')
     for j,t in enumerate(its):
         y=8.2+j*pitch;num(s,x+0.9,y,1.5,str(j+1),nb,nc);tx(s,x+3.0,y-0.2,10,pitch-0.4,t,20,col,valign='top')
 notes(s,'Dua rumusan masalah menuntun presentasi ini: cara implementasi dan manfaat serta keterbatasan. Tiga tujuan mengikuti urutan tersebut: fungsi, langkah, lalu evaluasi.')
@@ -121,16 +121,16 @@ notes(s,'Materi kita di kelas membahas kutipan langsung dan tidak langsung, penu
 # 7 contoh kaidah
 s=frame(7,1,'Contoh kaidah: satu sumber')
 box(s,X0,4.0,13.6,5.8,CARD,1.4)
-tx(s,X0+0.8,4.6,12.0,1.2,'Kutipan langsung',22,TX,True)
+tx(s,X0+0.8,4.6,12.0,1.2,'Kutipan langsung',24,TX,True)
 tx(s,X0+0.8,6.0,12.0,3.4,'“pengungkapan kembali suatu tuturan dari sebuah tingkatan atau macam bahasa menjadi tuturan yang lain tanpa mengubah pengertian” (Badan Pengembangan dan Pembinaan Bahasa, n.d.).',16,TX)
 box(s,X0,10.4,13.6,5.8,SC,1.4)
-tx(s,X0+0.8,11.0,12.0,1.2,'Kutipan tidak langsung',22,ON_SC,True)
+tx(s,X0+0.8,11.0,12.0,1.2,'Kutipan tidak langsung',24,ON_SC,True)
 tx(s,X0+0.8,12.4,12.0,3.4,'Parafrasa mengungkapkan kembali suatu tuturan dengan bentuk lain tanpa mengubah maknanya (Badan Pengembangan dan Pembinaan Bahasa, n.d.).',16,ON_SC)
 box(s,X0+14.4,4.0,13.6,5.8,TC,1.4)
-tx(s,X0+15.2,4.6,12.0,1.2,'Daftar pustaka: APA',22,ON_TC,True)
+tx(s,X0+15.2,4.6,12.0,1.2,'Daftar pustaka: APA',24,ON_TC,True)
 tx(s,X0+15.2,6.0,12.0,3.6,'Badan Pengembangan dan Pembinaan Bahasa. (n.d.). Parafrasa. KBBI VI Daring. Diakses 9 November 2026, dari https://kbbi.kemendikdasmen.go.id/entri/parafrasa',12,ON_TC)
 box(s,X0+14.4,10.4,13.6,5.8,PC,1.4)
-tx(s,X0+15.2,11.0,12.0,1.2,'Daftar pustaka: IEEE',22,ON_PC,True)
+tx(s,X0+15.2,11.0,12.0,1.2,'Daftar pustaka: IEEE',24,ON_PC,True)
 tx(s,X0+15.2,12.4,12.0,3.6,'[1] Badan Pengembangan dan Pembinaan Bahasa, “Parafrasa,” KBBI VI Daring. [Online]. Available: https://kbbi.kemendikdasmen.go.id/entri/parafrasa. [Accessed: Nov. 9, 2026].',11,ON_PC)
 tx(s,X0,16.8,28,0.8,'Satu sumber, dua bentuk kutipan, dua gaya daftar pustaka. Tanggal akses: 9 November 2026.',10,MUT)
 notes(s,'Tunjukkan bahwa satu sumber yang sama bisa muncul sebagai kutipan langsung, kutipan tidak langsung, dan entri daftar pustaka. Bedanya hanya bentuk penyajian; sumbernya tetap harus sama.')
@@ -159,7 +159,7 @@ for k,(ic,hd,bd) in enumerate([('MdBorderColor','Highlight dan anotasi','Tandai 
     tx(s,X0+5.4,y+0.6,11.2,1.4,hd,24,TX,True);tx(s,X0+5.4,y+2.2,11.2,3.4,bd,20,MUT)
 box(s,X0+18.4,4.0,9.6,14.0,TC,1.4)
 pic(s,icon('MdLightbulb','flower',SC,ON_TC),X0+19.6,5.2,4.2,'Ikon ide')
-tx(s,X0+19.4,10.6,7.6,1.4,'Hasilnya',26,ON_TC,True);tx(s,X0+19.4,12.2,7.6,5,'Bahan parafrasa untuk menyusun kutipan tidak langsung.',22,ON_TC)
+tx(s,X0+19.4,10.6,7.6,1.4,'Hasilnya',24,ON_TC,True);tx(s,X0+19.4,12.2,7.6,5,'Bahan parafrasa untuk menyusun kutipan tidak langsung.',22,ON_TC)
 notes(s,'Anotasi dan catatan membantu kita memahami sumber lebih dulu. Dari catatan itulah kutipan tidak langsung ditulis ulang dengan kalimat sendiri, lengkap dengan sitasinya.')
 # 11 langkah 3
 s=frame(11,2,'Langkah 3: sisipkan kutipan di Word')
@@ -204,7 +204,7 @@ w3=(31.8-2*0.9-2.0)/3 if False else 9.6
 for k,(ic,hd,bd) in enumerate([('MdCheckCircle','Implementasinya','Impor referensi, sisipkan sitasi di Word, lalu buat daftar pustaka otomatis.'),('MdSchool','Manfaat dan batasannya','Format menjadi konsisten, tetapi metadata dan kaidah tetap harus diperiksa.'),('MdFlag','Saran','Mulai dari tugas kecil, cek metadata, dan gunakan satu gaya sitasi.')]):
     x=2.0+k*10.4;box(s,x,4.6,w3,12.6,[PC,CARD,TC][k],1.4)
     pic(s,icon(ic,'cookie',[P,SC,ON_TC][k],[ON_P,ON_SC,TC][k]),x+0.9,5.6,3.4,hd)
-    tx(s,x+0.9,9.8,w3-1.8,2.8,hd,26,[ON_PC,TX,ON_TC][k],True);tx(s,x+0.9,12.8,w3-1.8,4.2,bd,19,[ON_PC,TX,ON_TC][k])
+    tx(s,x+0.9,9.8,w3-1.8,2.8,hd,24,[ON_PC,TX,ON_TC][k],True);tx(s,x+0.9,12.8,w3-1.8,4.2,bd,18,[ON_PC,TX,ON_TC][k])
 tx(s,29.4,18.2,3,0.6,'14 / 16',10,MUT,align='right',name='nomor-slide')
 notes(s,'Jawab kedua rumusan: implementasinya lewat impor, sitasi, dan daftar pustaka otomatis; manfaatnya format konsisten, tetapi metadata dan kaidah tetap harus diperiksa. Sarankan mulai dari tugas kecil dan satu gaya sitasi.')
 # 15 pustaka
