@@ -176,7 +176,7 @@ s=frame(12,2,'Demo alur: impor sampai daftar pustaka')
 tx(s,X0,3.4,W,0.8,'Dua tahap: rapikan referensi di Library, lalu sisipkan sitasi sampai daftar pustaka.',18,MUT)
 for k,(img,lab) in enumerate([('card-library.png','Library'),('card-cite.png','Mendeley Cite')]):
     x=X0+k*14.4;y=4.6
-    pic(s,img,x,y,13.6,12.4,'Ilustrasi '+lab)
+    pic(s,img,x,y,13.6,'Ilustrasi '+lab,12.4)
     if k==0:
         box(s,x+0.6,y+8.0,3.6,1.0,PC,0.55,name='label');tx(s,x+0.6,y+8.0,3.6,1.0,lab,14,ON_PC,True,'center','middle')
         tx(s,x+0.6,y+9.2,12.4,2.0,'Impor PDF, kelompokkan, dan rapikan metadata referensi.',16,MUT)
@@ -227,7 +227,7 @@ tx(s,X0,16.8,28,0.8,'Semua sumber diakses 9 November 2026.',10,MUT)
 notes(s,'Daftar pustaka memuat sumber yang benar-benar dibuka: halaman resmi Mendeley, Mendeley Support, KBBI VI Daring, dan panduan gaya APA serta IEEE. Perbarui tanggal akses bila presentasi dilakukan pada hari lain.')
 # 16 penutup
 s=slide(BG)
-pic(s,'closing-bg.png',0,0,33.87,19.05,'Latar penutup bergradasi')
+pic(s,'closing-bg.png',0,0,33.87,'Latar penutup bergradasi',19.05)
 box(s,2.4,2.2,6.2,1.1,PC,0.55,name='label');tx(s,2.4,2.2,6.2,1.1,'Penutup',14,ON_PC,True,'center','middle')
 tx(s,2.4,4.0,21,3.0,'Terima kasih',64,TX,True)
 box(s,2.4,7.8,5.2,0.12,P,0.06,name='garis')
