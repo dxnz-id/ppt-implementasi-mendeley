@@ -72,7 +72,7 @@ for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Arkano Hamada Mosl
     box(s,x,y,6.8,5.2,fill,1.2,line=P if k==6 else None,dash='dash' if k==6 else None)
     pic(s,f'num-{k+1:02d}.png',x+0.05,y+0.04,6.7,'Nomor '+f'{k+1:02d}',5.12)
     if k==6:pic(s,icon('MdHourglassEmpty','none','x',P),x+5.4,y+0.35,0.9,'Data menyusul')
-    tx(s,x+0.6,y+1.0,5.6,2.4,nm,18,col,True)
+    tx(s,x+0.6,y+1.3,5.6,2.4,nm,18,col,True)
     tx(s,x+0.6,y+3.8,5.6,1.2,nim if nim else 'Nama lengkap & NIM menyusul',12,MUT)
 tx(s,29.4,18.2,3,0.6,'2 / 16',10,MUT,align='right',name='nomor-slide')
 notes(s,'Sebutkan anggota kelompok satu per satu. Kartu Rifqy masih berupa placeholder; perbarui nama lengkap dan NIM saat datanya masuk.')
