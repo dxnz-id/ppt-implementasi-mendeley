@@ -54,14 +54,15 @@ def card3(s,y,h,items,fills):
         tx(s,x+0.8,y+3.5,w-1.6,1.3,hd,22,fills[k][3],True)
         tx(s,x+0.8,y+4.8,w-1.6,h-4.6,bd,18,fills[k][3])
 # 1 sampul
-s=slide(DBG)
-pic(s,icon('MdLibraryBooks','flower',DPC,DP),20.6,2.6,12,'Ilustrasi Mendeley')
-pic(s,icon('MdFormatQuote','cookie',DTC,'SC'),28.4,12.6,5,'Ikon kutipan')
-box(s,2.0,3.0,8.4,1.6,DPC,0.8,name='label');tx(s,2.0,3.0,8.4,1.6,'Bahasa Indonesia',18,DP,True,'center','middle')
-tx(s,2.0,5.0,18,8.6,'Implementasi aplikasi Mendeley dalam penulisan karya ilmiah',44,DTX,True,name='judul')
-tx(s,2.0,14.0,18,1,'Mata kuliah Bahasa Indonesia',20,DP,True)
-tx(s,2.0,15.4,19.5,1.4,'[Nama penyaji]  |  [NIM]  |  [Kelas]  |  [Dosen pengampu]',18,DTX)
-notes(s,'Salam pembuka. Perkenalkan diri, lalu sebutkan topik: cara Mendeley dipakai untuk menyusun kutipan dan daftar pustaka karya ilmiah. Ganti teks dalam kurung siku dengan nama, NIM, kelas, dan dosen pengampu.')
+s=slide(BG)
+pic(s,icon('MdLibraryBooks','flower',PC,ON_PC),20.6,2.6,12,'Ilustrasi Mendeley')
+pic(s,icon('MdFormatQuote','cookie',TC,ON_TC),28.4,12.6,5,'Ikon kutipan')
+box(s,2.0,3.0,8.4,1.6,PC,0.8,name='label');tx(s,2.0,3.0,8.4,1.6,'Bahasa Indonesia',18,ON_PC,True,'center','middle')
+tx(s,2.0,4.4,18,7.8,'Implementasi aplikasi Mendeley dalam penulisan karya ilmiah',44,TX,True,name='judul')
+tx(s,2.0,12.2,18,1,'Mata kuliah Bahasa Indonesia',20,P,True)
+for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Arkano Hamada Moslem','202551034'),('Farrel Aufa Athaya Ardiyono','202551042'),("Muhammad La'azidannak Rusda",'202551049'),('Aksel Agustiyan','202551058'),('Muhammad Arief Satria Nugraha','202551151')]):
+    tx(s,2.0,13.3+k*0.82,19.5,0.82,f'{nm} ({nim})',15,TX)
+notes(s,'Salam pembuka. Perkenalkan anggota kelompok dan topik: cara Mendeley dipakai untuk menyusun kutipan dan daftar pustaka karya ilmiah.')
 # 2 latar belakang
 s=frame(2,0,'Sitasi manual rawan salah dan lambat')
 card3(s,4.0,8.2,[('MdFormatAlignLeft','Format berbeda','Gaya kutipan berbeda antarparagraf karena diketik satu per satu.'),
@@ -161,13 +162,13 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
         y=7.9+j*2.5;add(s,'shape',geometry='ellipse',x=cm(x+1.0),y=cm(y+0.35),width=cm(0.5),height=cm(0.5),fill=sh,line='none',name='titik')
         tx(s,x+2.0,y,10.8,2.3,t,19,col)
 notes(s,'Kelebihan: hemat waktu, format konsisten, dan sinkron. Risikonya: metadata sering keliru, gaya sitasi kampus bisa tidak tersedia, penyimpanan gratis terbatas (cek batasnya di situs resmi), dan kesalahan tetap menjadi tanggung jawab penulis.')
-# 12 kesimpulan (gelap)
-s=slide(DBG);tx(s,2.0,1.4,30,2.4,'Kesimpulan dan saran',40,DTX,True,valign='middle',name='judul')
+# 12 kesimpulan (terang)
+s=slide(BG);tx(s,2.0,1.4,30,2.4,'Kesimpulan dan saran',40,TX,True,valign='middle',name='judul')
 w3=(31.8-2*0.9-2.0)/3 if False else 9.6
 for k,(ic,hd,bd) in enumerate([('MdCheckCircle','Efektif untuk kerapian','Mendeley merapikan kutipan dan daftar pustaka, tetapi tidak menjamin naskah bebas plagiarisme.'),('MdSchool','Kaidah tetap dipahami','Penulis perlu menguasai aturan kutipan dan memeriksa hasil akhir.'),('MdFlag','Saran','Mulai dari tugas kecil, lalu cek ulang daftar pustaka sebelum naskah dikumpulkan.')]):
-    x=2.0+k*10.4;box(s,x,4.6,w3,12.6,[DPC,DCARD,DTC][k],1.4)
-    pic(s,icon(ic,'cookie',[DP,DPC,'SC'][k],[DPC,DP,DTC][k]),x+0.9,5.6,3.4,hd)
-    tx(s,x+0.9,9.8,w3-1.8,2.8,hd,26,DTX,True);tx(s,x+0.9,12.8,w3-1.8,4.2,bd,19,DTX)
+    x=2.0+k*10.4;box(s,x,4.6,w3,12.6,[PC,CARD,TC][k],1.4)
+    pic(s,icon(ic,'cookie',[P,SC,ON_TC][k],[ON_P,ON_SC,TC][k]),x+0.9,5.6,3.4,hd)
+    tx(s,x+0.9,9.8,w3-1.8,2.8,hd,26,[ON_PC,TX,ON_TC][k],True);tx(s,x+0.9,12.8,w3-1.8,4.2,bd,19,[ON_PC,TX,ON_TC][k])
 notes(s,'Simpulkan: Mendeley efektif merapikan sitasi tetapi tidak menjamin bebas plagiarisme. Penulis tetap harus memahami kaidah dan memeriksa hasil akhir. Sarankan mulai dari tugas kecil dan cek ulang daftar pustaka sebelum dikumpulkan.')
 # 13 pustaka
 s=frame(13,4,'Daftar pustaka')
