@@ -39,6 +39,7 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Slide 2: nama dan NIM anggota, urut NIM; nomor besar memakai aset `num-01.png` sampai `num-07.png` yang dipotong mask kartu.
 - Slide 6: batas Mendeley, bukan teori sitasi; teori jenis sitasi ada di Kelompok 4.
 - Slide 7: contoh satu sumber menjadi sitasi dan daftar pustaka; jangan menambah teori jenis sitasi atau aturan APA/IEEE.
+- Slide 4, 5, 8, 10, 14: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks.
 - Slide 12: `assets/img-library-fade.png` dan `assets/img-cite-panel.png`; ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.
 - Slide 15: daftar pustaka; perbarui tanggal akses bila presentasi dilakukan pada hari lain.
 - Slide 16: penutup terang dengan bentuk tonal solid; jangan tambahkan gradasi latar.
