@@ -7,6 +7,7 @@ P,ON_P,PC,ON_PC='46627A','F6F9FF','B0C8E0','355169'
 SC,ON_SC='C1E0E0','3D6060'
 TC,ON_TC='DCE7D6','536350'
 EC,ON_EC='FFDAD6','65000B'
+PILL_PC,PILL_EC='C9DBEC','F7C7C1'
 DBG,DTX,DP,DPC,DTC='0C0F0F','E2E6E7','DCEDFF','355169','41513E'
 DCARD='1C2021'
 F='Calibri'
@@ -195,9 +196,10 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
  ('MdWarning','Keterbatasan',['Metadata impor perlu dicek manual','Gaya sitasi kampus tertentu mungkin tidak tersedia','Penyimpanan gratis 2 GB','Kesalahan tetap menjadi tanggung jawab penulis'],EC,ON_EC,'F56965','FFFFFF')]):
     x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
     pic(s,icon(ic,'cookie',sh,fg),x+0.9,4.8,2.2,hd);tx(s,x+3.6,4.8,9.4,2.2,hd,24,col,True,valign='middle')
+    pill=PILL_PC if k==0 else PILL_EC
     for j,t in enumerate(its):
         y=7.7+j*2.5
-        box(s,x+0.8,y,12.0,1.9,CARD,0.95,name='kapsul')
+        box(s,x+0.8,y,12.0,1.9,pill,0.95,name='kapsul')
         tx(s,x+1.4,y,11.2,1.9,t,16,col,valign='middle')
 tx(s,X0,18.3,20,0.4,'Sumber: Mendeley Support (2025).',9,MUT)
 notes(s,'Kelebihan: hemat waktu, format konsisten, dan sinkron. Keterbatasannya: metadata perlu dicek, gaya sitasi kampus tertentu mungkin tidak tersedia, penyimpanan gratis 2 GB, dan kesalahan tetap menjadi tanggung jawab penulis.')
