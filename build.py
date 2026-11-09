@@ -66,16 +66,15 @@ notes(s,'Salam pembuka. Perkenalkan topik: cara Mendeley dipakai untuk menyusun 
 s=slide(BG)
 tx(s,2.0,1.4,28,2.4,'Anggota kelompok',40,TX,True,valign='middle',name='judul')
 tx(s,2.0,3.6,28,1,'Mata kuliah Bahasa Indonesia',18,P,True)
-for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Arkano Hamada Moslem','202551034'),('Farrel Aufa Athaya Ardiyono','202551042'),("Muhammad La'azidannak Rusda",'202551049'),('Aksel Agustiyan','202551058'),('Muhammad Arief Satria Nugraha','202551151'),('Rifqy','')]):
+for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Muhammad Rifqi al Khafis','202551019'),('Arkano Hamada Moslem','202551034'),('Farrel Aufa Athaya Ardiyono','202551042'),("Muhammad La'azidannak Rusda",'202551049'),('Aksel Agustiyan','202551058'),('Muhammad Arief Satria Nugraha','202551151')]):
     x=(2.0+k*7.3) if k<4 else (5.2+(k-4)*7.3);y=5.2 if k<4 else 11.0
     fill=[PC,CARD,TC,CARD,PC,CARD,CARD][k];col=[ON_PC,TX,ON_TC,TX,ON_PC,TX,TX][k]
-    box(s,x,y,6.8,5.2,fill,1.2,line=P if k==6 else None,dash='dash' if k==6 else None)
+    box(s,x,y,6.8,5.2,fill,1.2)
     pic(s,f'num-{k+1:02d}.png',x+0.05,y+0.04,6.7,'Nomor '+f'{k+1:02d}',5.12)
-    if k==6:pic(s,icon('MdHourglassEmpty','none','x',P),x+5.4,y+0.35,0.9,'Data menyusul')
     tx(s,x+0.6,y+1.3,5.6,2.4,nm,18,col,True)
-    tx(s,x+0.6,y+3.8,5.6,1.2,nim if nim else 'Nama lengkap & NIM menyusul',12,MUT)
+    tx(s,x+0.6,y+3.8,5.6,1.2,nim,12,MUT)
 tx(s,29.4,18.2,3,0.6,'2 / 16',10,MUT,align='right',name='nomor-slide')
-notes(s,'Sebutkan anggota kelompok satu per satu. Kartu Rifqy masih berupa placeholder; perbarui nama lengkap dan NIM saat datanya masuk.')
+notes(s,'Sebutkan anggota kelompok satu per satu sesuai urutan NIM.')
 # 3 latar belakang
 s=frame(3,0,'Sitasi manual rawan salah dan lambat')
 card3(s,4.0,8.2,[('MdFormatAlignLeft','Format berbeda','Gaya sitasi berbeda antarparagraf karena diketik satu per satu.'),
