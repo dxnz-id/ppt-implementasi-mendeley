@@ -1,6 +1,6 @@
 # Implementasi Mendeley: generator slide
 
-Generator deck 14 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat dengan OfficeCLI dan bergaya Material 3.
+Generator deck 16 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat dengan OfficeCLI dan bergaya Material 3.
 
 ## Struktur
 - `build.py`: isi slide, palet, dan layout

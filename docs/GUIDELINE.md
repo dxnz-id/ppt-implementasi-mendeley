@@ -1,7 +1,7 @@
 # Panduan deck Implementasi Mendeley
 
 ## Tujuan
-Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
+Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
 
 ## Alur kerja
 1. Baca skill yang dipakai (urutan: bahasa-skills, stop-slop, material-3, officecli). Sebagian ada di `skills/`, sisanya dipasang dari sumber di `skills/README.md`.
@@ -19,25 +19,26 @@ Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 
 ## Aturan desain
 - Referensi layout: pengaturan (settings) di https://github.com/satoxyan/expressive-pC, yaitu rail navigasi kiri, kartu tonal berradius besar, ikon dalam bentuk cookie atau flower.
-- Palet: hijau zaitun dengan aksen teal, merah hanya untuk risiko. Tanpa ungu.
-- Font: Calibri. Judul 36 pt tebal, isi 18 sampai 24 pt, keterangan minimal 10 pt.
+- Palet: biru, teal, dan hijau pastel dengan aksen navy. Merah hanya untuk risiko. Tanpa ungu.
+- Font: Calibri. Judul 36 pt tebal, isi 18 sampai 24 pt, keterangan minimal 10 pt, sitasi kaki minimal 8 pt.
 - Margin tepi minimal 1 cm, jarak antarkartu 0,8 cm. Satu gagasan per slide.
-- Setiap slide membawa elemen visual (ikon, bentuk). Sampul dan kesimpulan gelap, slide isi terang.
+- Setiap slide membawa elemen visual (ikon, bentuk). Sampul, kesimpulan, dan penutup terang.
 
 ## Token warna (ada di bagian atas build.py)
 | Peran | Hex |
 |---|---|
-| Latar | F9FAEF |
-| Primary / container | 4C662B / CDEDA3 |
-| Secondary container | DCE7C8 |
-| Tertiary container | BCECE7 |
-| Error container | FFDAD6 |
-| Latar gelap | 12140E |
+| Latar | F6F6F6 |
+| Primary / container | 46627A / B0C8E0 |
+| Secondary container | C1E0E0 |
+| Tertiary container | DCE7D6 |
+| Error | F56965 / 65000B |
+| Teks | 2F3334 |
 
 ## Yang harus diisi manual
-- Slide 1: nama, NIM, kelas, dosen pengampu.
-- Slide 10: tangkapan layar dari penggunaan sendiri.
-- Slide 13: 2 sampai 3 jurnal hasil pencarian dan verifikasi sendiri.
+- Slide 2: nama dan NIM anggota; Rifqy belum masuk daftar sampai datanya tersedia.
+- Slide 7: contoh kaidah memakai KBBI VI Daring; ganti sumbernya bila dosen meminta contoh lain.
+- Slide 12: tangkapan layar dari penggunaan sendiri, bukan aset marketing.
+- Slide 15: daftar pustaka; perbarui tanggal akses bila presentasi dilakukan pada hari lain.
 - Verifikasi ke situs resmi Mendeley: status Desktop dan batas penyimpanan gratis.
 
 ## Catatan teknis OfficeCLI
