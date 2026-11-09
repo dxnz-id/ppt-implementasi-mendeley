@@ -36,7 +36,7 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 | Teks | 2F3334 |
 
 ## Yang harus diisi manual
-- Slide 2: nama dan NIM anggota; kartu Rifqy masih placeholder.
+- Slide 2: nama dan NIM anggota, urut NIM; nomor besar memakai aset `num-01.png` sampai `num-07.png` yang dipotong mask kartu.
 - Slide 7: contoh kaidah memakai KBBI VI Daring; ganti sumbernya bila dosen meminta contoh lain.
 - Slide 12: `assets/img-library-fade.png` dan `assets/img-cite-panel.png`; ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.
 - Slide 15: daftar pustaka; perbarui tanggal akses bila presentasi dilakukan pada hari lain.
