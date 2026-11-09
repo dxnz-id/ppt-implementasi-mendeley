@@ -37,9 +37,9 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 ## Yang harus diisi manual
 - Slide 2: nama dan NIM anggota; kartu Rifqy masih placeholder.
 - Slide 7: contoh kaidah memakai KBBI VI Daring; ganti sumbernya bila dosen meminta contoh lain.
-- Slide 12: kartu `assets/card-library.png` dan `assets/card-cite.png`; ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.
+- Slide 12: `assets/img-library-fade.png` dan `assets/img-cite-panel.png`; ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.
 - Slide 15: daftar pustaka; perbarui tanggal akses bila presentasi dilakukan pada hari lain.
-- Slide 16: latar `assets/closing-bg.png`; jangan ganti dengan warna gelap.
+- Slide 16: penutup terang dengan bentuk tonal solid; jangan tambahkan gradasi latar.
 - Verifikasi ke situs resmi Mendeley: status Desktop dan batas penyimpanan gratis.
 
 ## Catatan teknis OfficeCLI

@@ -174,19 +174,21 @@ notes(s,'Alurnya empat langkah di Word: buka Mendeley Cite, sisipkan kutipan, pi
 # 12 demo
 s=frame(12,2,'Demo alur: impor sampai daftar pustaka')
 tx(s,X0,3.4,W,0.8,'Dua tahap: rapikan referensi di Library, lalu sisipkan sitasi sampai daftar pustaka.',18,MUT)
-for k,(img,lab) in enumerate([('card-library.png','Library'),('card-cite.png','Mendeley Cite')]):
-    x=X0+k*14.4;y=4.6
-    pic(s,img,x,y,13.6,'Ilustrasi '+lab,12.4)
+for k,lab in enumerate(['Library','Mendeley Cite']):
+    x=X0+k*14.4;y=4.6;fill=PC if k==0 else SC;col=ON_PC if k==0 else ON_SC
+    box(s,x,y,13.6,12.4,fill,1.4)
     if k==0:
-        box(s,x+0.6,y+8.0,3.6,1.0,PC,0.55,name='label');tx(s,x+0.6,y+8.0,3.6,1.0,lab,14,ON_PC,True,'center','middle')
-        tx(s,x+0.6,y+9.2,12.4,2.0,'Impor PDF, kelompokkan, dan rapikan metadata referensi.',16,MUT)
+        pic(s,'img-library-fade.png',x+0.6,y+0.6,12.4,'Ilustrasi Library',6.98)
+        box(s,x+0.6,y+8.0,3.6,1.0,CARD,0.55,name='label');tx(s,x+0.6,y+8.0,3.6,1.0,lab,14,col,True,'center','middle')
+        tx(s,x+0.6,y+9.2,12.4,2.0,'Impor PDF, kelompokkan, dan rapikan metadata referensi.',16,col)
     else:
-        tx(s,x+0.6,y+0.9,6.8,1.2,'Mendeley Cite',24,TX,True)
-        tx(s,x+0.6,y+2.2,6.8,4.0,'Sisipkan kutipan, pilih satu gaya, lalu buat daftar pustaka dari Word.',16,MUT)
-        box(s,x+0.6,y+6.6,5.4,1.0,PC,0.55,name='label');tx(s,x+0.6,y+6.6,5.4,1.0,'Insert Bibliography',12,ON_PC,True,'center','middle')
-        tx(s,x+0.6,y+7.9,6.8,2.2,'Klik More, lalu pilih Insert Bibliography.',14,MUT)
-    tx(s,x+0.6,y+11.3,12.4,0.7,'Sumber: mendeley.com',9,MUT)
-notes(s,'Peragakan alur: impor ke Library, cek metadata, sisipkan kutipan di Word, pilih gaya, lalu buat daftar pustaka. Gambar adalah kartu ilustrasi dari aset resmi Mendeley (mendeley.com); ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.')
+        tx(s,x+0.6,y+0.9,6.8,1.2,'Mendeley Cite',24,col,True)
+        tx(s,x+0.6,y+2.2,6.8,4.0,'Sisipkan kutipan, pilih satu gaya, lalu buat daftar pustaka dari Word.',16,col)
+        box(s,x+0.6,y+6.6,5.4,1.0,CARD,0.55,name='label');tx(s,x+0.6,y+6.6,5.4,1.0,'Insert Bibliography',12,col,True,'center','middle')
+        tx(s,x+0.6,y+7.9,6.8,2.2,'Klik More, lalu pilih Insert Bibliography.',14,col)
+        pic(s,'img-cite-panel.png',x+7.7,y+1.75,5.4,'Ilustrasi Mendeley Cite',7.45)
+    tx(s,x+0.6,y+11.3,12.4,0.7,'Sumber: mendeley.com',9,col)
+notes(s,'Peragakan alur: impor ke Library, cek metadata, sisipkan kutipan di Word, pilih gaya, lalu buat daftar pustaka. Gambar adalah ilustrasi dari aset resmi Mendeley (mendeley.com); ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.')
 # 13 kelebihan keterbatasan
 s=frame(13,3,'Kelebihan dan keterbatasan')
 for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Format konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi antarperangkat'],PC,ON_PC,P,'FFFFFF'),
@@ -227,13 +229,13 @@ tx(s,X0,16.8,28,0.8,'Semua sumber diakses 9 November 2026.',10,MUT)
 notes(s,'Daftar pustaka memuat sumber yang benar-benar dibuka: halaman resmi Mendeley, Mendeley Support, KBBI VI Daring, dan panduan gaya APA serta IEEE. Perbarui tanggal akses bila presentasi dilakukan pada hari lain.')
 # 16 penutup
 s=slide(BG)
-pic(s,'closing-bg.png',0,0,33.87,'Latar penutup bergradasi',19.05)
 box(s,2.4,2.2,6.2,1.1,PC,0.55,name='label');tx(s,2.4,2.2,6.2,1.1,'Penutup',14,ON_PC,True,'center','middle')
 tx(s,2.4,4.0,21,3.0,'Terima kasih',64,TX,True)
 box(s,2.4,7.8,5.2,0.12,P,0.06,name='garis')
 tx(s,2.4,8.4,19,1.4,'Pertanyaan dan diskusi',24,P,True)
 tx(s,2.4,10.4,18,2.0,'Sumber lengkap ada di slide daftar pustaka.',14,MUT)
 tx(s,2.4,16.3,18,0.8,'Mata kuliah Bahasa Indonesia',11,MUT)
+box(s,21.4,4.2,10.4,10.4,PC,5.2,name='lingkaran')
 pic(s,icon('MdQuestionAnswer','flower',TC,ON_TC),22.6,5.4,8.2,'Ikon tanya jawab')
 tx(s,29.4,18.2,3,0.6,'16 / 16',10,MUT,align='right',name='nomor-slide')
 notes(s,'Buka sesi tanya jawab. Arahkan pertanyaan tentang langkah implementasi, kendala metadata, dan pilihan gaya sitasi ke slide terkait.')
