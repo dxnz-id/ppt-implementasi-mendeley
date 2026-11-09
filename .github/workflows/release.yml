@@ -1,0 +1,74 @@
+name: Release deck
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      OFFICECLI_NO_AUTO_RESIDENT: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      # uv menyediakan Python; build.py hanya memakai stdlib.
+      - uses: astral-sh/setup-uv@v10
+        with:
+          python-version: "3.12"
+          enable-cache: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      # Carlito metrik-compatible dengan Calibri agar layout PDF tidak bergeser.
+      - name: Pasang LibreOffice dan font
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libreoffice-impress fonts-crosextra-carlito
+
+      # shortcut: installer selalu mengambil OfficeCLI terbaru; pin versi jika output berubah.
+      - name: Pasang OfficeCLI
+        run: |
+          set -euo pipefail
+          curl -fsSL https://d.officecli.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/officecli" --version
+
+      - name: Pasang dependensi Node
+        run: npm ci --no-audit --no-fund
+
+      - name: Bangun deck
+        run: uv run build.py
+
+      - name: Periksa deck
+        run: |
+          officecli validate deck.pptx
+          officecli view deck.pptx issues --limit 50 || true
+
+      - name: Ekspor PDF
+        run: |
+          soffice --headless --convert-to pdf --outdir . deck.pptx
+          test -f deck.pdf
+
+      - name: Ambil SHA pendek
+        id: meta
+        run: echo "short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ steps.meta.outputs.short }}
+          name: Build ${{ steps.meta.outputs.short }}
+          body: |
+            Dibangun otomatis dari commit ${{ github.sha }}.
+          files: |
+            deck.pptx
+            deck.pdf
+          fail_on_unmatched_files: true
+          overwrite_files: true

@@ -6,7 +6,7 @@ Deck 13 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 ## Alur kerja
 1. Baca skill yang dipakai (urutan: bahasa-skills, stop-slop, material-3, officecli). Sebagian ada di `skills/`, sisanya dipasang dari sumber di `skills/README.md`.
 2. Tulis teks slide di `build.py` mengikuti aturan bahasa di bawah.
-3. Jalankan `python3 build.py`. Skrip membuat ikon (`icons.js`) lalu menyusun deck lewat batch OfficeCLI.
+3. Jalankan `uv run build.py`. Skrip membuat ikon (`icons.js`) lalu menyusun deck lewat batch OfficeCLI.
 4. Validasi: `officecli validate deck.pptx` dan `officecli view deck.pptx issues`.
 5. Render ke PDF lalu cek tiap slide secara visual sebelum diserahkan.
 
