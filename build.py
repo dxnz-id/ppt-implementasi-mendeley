@@ -1,14 +1,14 @@
 import json,subprocess,os,hashlib
 OUT='deck.pptx'
-# --- palet M3 (hijau zaitun + teal, tanpa ungu) ---
-BG,RAIL,CARD='F9FAEF','EEEFE3','E8E9DE'
-TX,MUT='1A1C16','44483D'
-P,ON_P,PC,ON_PC='4C662B','FFFFFF','CDEDA3','354E16'
-SC,ON_SC='DCE7C8','404A33'
-TC,ON_TC='BCECE7','1F4E4B'
-EC,ON_EC='FFDAD6','7A1F1A'
-DBG,DTX,DP,DPC,DTC='12140E','E2E3D8','ABD073','354E16','1F4E4B'
-DCARD='1E2218'
+# --- palet M3 Expressive dari #B0C8E0 #C1E0E0 #DCE7D6 #F6F6F6 ---
+BG,RAIL,CARD='F6F6F6','ECEEEE','E6E9E9'
+TX,MUT='2F3334','5B6061'
+P,ON_P,PC,ON_PC='46627A','F6F9FF','B0C8E0','355169'
+SC,ON_SC='C1E0E0','3D6060'
+TC,ON_TC='DCE7D6','536350'
+EC,ON_EC='F56965','65000B'
+DBG,DTX,DP,DPC,DTC='0C0F0F','E2E6E7','DCEDFF','355169','41513E'
+DCARD='1C2021'
 F='Calibri'
 ops=[];specs={};n=0
 def cm(v):return f'{v:.2f}cm'
@@ -56,7 +56,7 @@ def card3(s,y,h,items,fills):
 # 1 sampul
 s=slide(DBG)
 pic(s,icon('MdLibraryBooks','flower',DPC,DP),20.6,2.6,12,'Ilustrasi Mendeley')
-pic(s,icon('MdFormatQuote','cookie',DTC,'A0D0CB'),28.4,12.6,5,'Ikon kutipan')
+pic(s,icon('MdFormatQuote','cookie',DTC,'SC'),28.4,12.6,5,'Ikon kutipan')
 box(s,2.0,3.0,8.4,1.6,DPC,0.8,name='label');tx(s,2.0,3.0,8.4,1.6,'Bahasa Indonesia',18,DP,True,'center','middle')
 tx(s,2.0,5.0,18,8.6,'Implementasi aplikasi Mendeley dalam penulisan karya ilmiah',44,DTX,True,name='judul')
 tx(s,2.0,14.0,18,1,'Mata kuliah Bahasa Indonesia',20,DP,True)
@@ -76,7 +76,7 @@ s=frame(3,0,'Rumusan masalah dan tujuan')
 for k,(ic,hd,its,pitch,fill,col,nb,nc) in enumerate([('MdQuestionAnswer','Rumusan masalah',['Bagaimana Mendeley diimplementasikan dalam penulisan karya ilmiah?','Apa manfaat dan keterbatasan Mendeley bagi mahasiswa?'],4.2,CARD,TX,P,'FFFFFF'),
  ('MdFlag','Tujuan',['Menjelaskan fungsi Mendeley.','Menguraikan langkah penggunaannya.','Mengevaluasi hasil penggunaannya.'],2.9,TC,ON_TC,ON_TC,'FFFFFF')]):
     x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
-    pic(s,icon(ic,'cookie',PC if k==0 else '9DD4CF',ON_PC if k==0 else ON_TC),x+0.9,4.9,2.2,hd)
+    pic(s,icon(ic,'cookie',PC if k==0 else 'SC',ON_PC if k==0 else ON_TC),x+0.9,4.9,2.2,hd)
     tx(s,x+3.6,4.9,9,2.2,hd,26,col,True,valign='middle')
     for j,t in enumerate(its):
         y=8.2+j*pitch;num(s,x+0.9,y,1.5,str(j+1),nb,nc);tx(s,x+3.0,y-0.2,10,pitch-0.4,t,20,col,valign='top')
@@ -116,7 +116,7 @@ notes(s,'Tiga persiapan: membuat akun dengan email institusi, memasang Reference
 s=frame(7,2,'Langkah 1: kumpulkan referensi')
 for k,(ic,hd,bd) in enumerate([('MdUploadFile','Impor PDF','Tambahkan PDF jurnal ke Library.'),('MdLanguage','Simpan dari web','Gunakan Web Importer pada halaman artikel.'),('MdFactCheck','Periksa metadata','Cek judul, penulis, tahun, dan DOI; koreksi yang salah.'),('MdFolder','Rapikan','Kelompokkan dengan folder dan tag per bab atau topik.')]):
     x=X0+(k%2)*14.4;y=4.0+(k//2)*7.4;box(s,x,y,13.6,6.6,[CARD,SC,TC,CARD][k],1.3)
-    pic(s,icon(ic,['cookie','flower','cookie','flower'][k],[PC,P,'9DD4CF',SC][k],[ON_PC,'FFFFFF',ON_TC,ON_SC][k]),x+0.9,y+1.6,3.4,hd)
+    pic(s,icon(ic,['cookie','flower','cookie','flower'][k],[PC,P,'SC',SC][k],[ON_PC,'FFFFFF',ON_TC,ON_SC][k]),x+0.9,y+1.6,3.4,hd)
     tx(s,x+5.0,y+1.2,8.0,1.3,hd,24,TX,True);tx(s,x+5.0,y+2.7,8.0,3.4,bd,19,MUT)
 notes(s,'Mulai dari mengumpulkan sumber. Metadata hasil impor sering keliru, jadi periksa judul, penulis, tahun, dan DOI satu per satu. Folder dan tag per bab memudahkan pencarian saat menulis.')
 # 8 langkah 2
@@ -126,7 +126,7 @@ for k,(ic,hd,bd) in enumerate([('MdBorderColor','Highlight dan anotasi','Tandai 
     y=4.9+k*6.6;pic(s,icon(ic,'cookie',SC,ON_SC),X0+1.0,y+0.6,3.6,hd)
     tx(s,X0+5.4,y+0.6,11.2,1.4,hd,24,TX,True);tx(s,X0+5.4,y+2.2,11.2,3.4,bd,20,MUT)
 box(s,X0+18.4,4.0,9.6,14.0,TC,1.4)
-pic(s,icon('MdLightbulb','flower','9DD4CF',ON_TC),X0+19.6,5.2,4.2,'Ikon ide')
+pic(s,icon('MdLightbulb','flower','SC',ON_TC),X0+19.6,5.2,4.2,'Ikon ide')
 tx(s,X0+19.4,10.6,7.6,1.4,'Hasilnya',26,ON_TC,True);tx(s,X0+19.4,12.2,7.6,5,'Bahan parafrase untuk menyusun kutipan tidak langsung.',22,ON_TC)
 notes(s,'Anotasi dan catatan membantu kita memahami sumber lebih dulu. Dari catatan itulah kutipan tidak langsung ditulis ulang dengan kalimat sendiri, lengkap dengan sitasinya.')
 # 9 langkah 3
@@ -135,7 +135,7 @@ w4=(W-3*1.6)/4
 for k,(ic,hd,bd) in enumerate([('MdDescription','Buka plugin','Buka Mendeley Cite di Microsoft Word.'),('MdFormatQuote','Sisipkan kutipan','Pilih referensi, lalu tempatkan pada kalimat.'),('MdStyle','Pilih gaya','Sesuaikan dengan pedoman kampus.'),('MdListAlt','Buat bibliografi','Daftar pustaka tersusun otomatis.')]):
     x=X0+k*(w4+1.6);box(s,x,4.4,w4,13.0,[CARD,SC,TC,PC][k],1.3)
     num(s,x+0.7,5.1,1.5,str(k+1),P,'FFFFFF')
-    pic(s,icon(ic,'cookie',['E2E3D8','F9FAEF','F9FAEF','F9FAEF'][k] if False else [PC,P,'9DD4CF',P][k],[ON_PC,'FFFFFF',ON_TC,'FFFFFF'][k]),x+0.7,7.2,3.4,hd)
+    pic(s,icon(ic,'cookie',['E2E3D8','F9FAEF','F9FAEF','F9FAEF'][k] if False else [PC,P,'SC',P][k],[ON_PC,'FFFFFF',ON_TC,'FFFFFF'][k]),x+0.7,7.2,3.4,hd)
     tx(s,x+0.7,11.0,w4-1.4,2.4,hd,22,TX,True);tx(s,x+0.7,13.6,w4-1.4,3.4,bd,18,MUT)
     if k<3:pic(s,icon('MdArrowForward','none','x',P),x+w4+0.3,10.2,1.0,'Panah')
 notes(s,'Alurnya empat langkah di Word: buka Mendeley Cite, sisipkan kutipan, pilih gaya sesuai pedoman kampus, lalu buat bibliografi. Daftar pustaka ikut berubah otomatis saat kutipan ditambah atau dihapus.')
@@ -152,7 +152,7 @@ notes(s,'Peragakan alur singkat langsung, atau tempel tangkapan layar dari pengg
 # 11 kelebihan kekurangan
 s=frame(11,3,'Kelebihan dan kekurangan')
 for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Format konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi antarperangkat'],PC,ON_PC,P,'FFFFFF'),
- ('MdWarning','Kekurangan dan risiko',['Metadata impor sering keliru dan wajib dicek manual','Gaya sitasi kampus tertentu mungkin tidak tersedia','Penyimpanan gratis terbatas','Kesalahan Mendeley tetap menjadi tanggung jawab penulis'],EC,ON_EC,'BA1A1A','FFFFFF')]):
+ ('MdWarning','Kekurangan dan risiko',['Metadata impor sering keliru dan wajib dicek manual','Gaya sitasi kampus tertentu mungkin tidak tersedia','Penyimpanan gratis terbatas','Kesalahan Mendeley tetap menjadi tanggung jawab penulis'],EC,ON_EC,'AC3434','FFFFFF')]):
     x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
     pic(s,icon(ic,'cookie',sh,fg),x+0.9,4.8,2.2,hd);tx(s,x+3.6,4.8,9.4,2.2,hd,26,col,True,valign='middle')
     for j,t in enumerate(its):
@@ -164,7 +164,7 @@ s=slide(DBG);tx(s,2.0,1.4,30,2.4,'Kesimpulan dan saran',40,DTX,True,valign='midd
 w3=(31.8-2*0.9-2.0)/3 if False else 9.6
 for k,(ic,hd,bd) in enumerate([('MdCheckCircle','Efektif untuk kerapian','Mendeley merapikan kutipan dan daftar pustaka, tetapi tidak menjamin naskah bebas plagiarisme.'),('MdSchool','Kaidah tetap dipahami','Penulis perlu menguasai aturan kutipan dan memeriksa hasil akhir.'),('MdFlag','Saran','Mulai dari tugas kecil, lalu cek ulang daftar pustaka sebelum naskah dikumpulkan.')]):
     x=2.0+k*10.4;box(s,x,4.6,w3,12.6,[DPC,DCARD,DTC][k],1.4)
-    pic(s,icon(ic,'cookie',[DP,DPC,'A0D0CB'][k],[DPC,DP,DTC][k]),x+0.9,5.6,3.4,hd)
+    pic(s,icon(ic,'cookie',[DP,DPC,'SC'][k],[DPC,DP,DTC][k]),x+0.9,5.6,3.4,hd)
     tx(s,x+0.9,9.8,w3-1.8,2.8,hd,26,DTX,True);tx(s,x+0.9,12.8,w3-1.8,4.2,bd,19,DTX)
 notes(s,'Simpulkan: Mendeley efektif merapikan sitasi tetapi tidak menjamin bebas plagiarisme. Penulis tetap harus memahami kaidah dan memeriksa hasil akhir. Sarankan mulai dari tugas kecil dan cek ulang daftar pustaka sebelum dikumpulkan.')
 # 13 pustaka
