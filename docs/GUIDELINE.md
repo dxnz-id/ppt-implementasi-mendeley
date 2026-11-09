@@ -22,6 +22,7 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Palet: biru, teal, dan hijau pastel dengan aksen navy. Merah hanya untuk risiko. Tanpa ungu.
 - Font: Calibri. Judul 36 pt tebal, isi 18 sampai 24 pt, keterangan minimal 10 pt, sitasi kaki minimal 8 pt.
 - Margin tepi minimal 1 cm, jarak antarkartu 0,8 cm. Satu gagasan per slide.
+- Gradasi hanya untuk opacity gambar; permukaan, kartu, dan latar memakai warna tonal solid.
 - Setiap slide membawa elemen visual (ikon, bentuk). Sampul, kesimpulan, dan penutup terang.
 
 ## Token warna (ada di bagian atas build.py)
