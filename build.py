@@ -132,13 +132,13 @@ w3=(W-1.6)/3
 for k,(hd,bd,fill,col) in enumerate([('01 Metadata','Judul, penulis, tahun, dan sumber.',CARD,TX),
  ('02 Sitasi','Mendeley Cite menyisipkan sitasi ke naskah.',SC,ON_SC),
  ('03 Daftar pustaka','Entri tersusun dari metadata yang sama.',TC,ON_TC)]):
-    x=X0+k*(w3+0.8);box(s,x,4.6,w3,6.0,fill,1.3)
+    x=X0+k*(w3+0.8);box(s,x,4.6,w3,5.6,fill,1.3)
     tx(s,x+0.8,5.2,w3-1.6,2.05,hd,24,col,True)
     tx(s,x+0.8,6.6,w3-1.6,3.6,bd,18,col)
-    if k<2:pic(s,icon('MdArrowForward','none','x',P),x+w3+0.1,7.3,0.6,'Panah')
-box(s,X0,12.4,W,4.4,PC,1.4)
-pic(s,icon('MdFactCheck','circle',P,'FFFFFF'),X0+1.0,13.2,2.4,'Ikon pemeriksaan')
-tx(s,X0+4.0,12.8,W-5.0,3.6,'Yang tetap manual: periksa metadata dan pastikan gaya sitasi sesuai pedoman. Teori jenis sitasi dibahas Kelompok 4.',20,ON_PC,False,valign='middle')
+    if k<2:pic(s,icon('MdArrowForward','none','x',P),x+w3+0.1,7.1,0.6,'Panah')
+box(s,X0,11.6,W,4.4,PC,1.4)
+pic(s,icon('MdFactCheck','circle',P,'FFFFFF'),X0+1.0,12.4,2.4,'Ikon pemeriksaan')
+tx(s,X0+4.0,12.0,W-5.0,3.6,'Yang tetap manual: periksa metadata dan pastikan gaya sitasi sesuai pedoman. Teori jenis sitasi dibahas Kelompok 4.',20,ON_PC,False,valign='middle')
 tx(s,X0,17.2,28,0.7,'Sumber: Mendeley Support (2025).',10,MUT)
 notes(s,'Satu referensi menghasilkan sitasi dalam teks dan entri daftar pustaka. Mendeley memakai metadata yang sama. Teori jenis sitasi dan aturan APA/IEEE tidak dibahas di sini; itu materi Kelompok 4.')
 # 8 persiapan
