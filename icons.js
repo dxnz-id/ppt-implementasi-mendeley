@@ -1,5 +1,6 @@
 const fs=require('fs'),React=require('react'),S=require('react-dom/server'),sharp=require('sharp'),m=require('react-icons/md');
 const specs=JSON.parse(fs.readFileSync(process.argv[2]));
+fs.mkdirSync('assets',{recursive:true});
 function outline(shape,N=480){const p=[];for(let i=0;i<N;i++){const t=i/N*2*Math.PI;let r=1;
  if(shape==='cookie')r=(1+.055*Math.cos(9*t))/1.055;
  else if(shape==='flower')r=(1+.12*Math.cos(8*t))/1.12;

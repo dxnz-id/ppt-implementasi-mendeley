@@ -13,8 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OFFICECLI_NO_AUTO_RESIDENT: "1"
+      OFFICECLI_VERSION: "v1.0.160"
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       # uv menyediakan Python; build.py hanya memakai stdlib.
       - uses: astral-sh/setup-uv@v10.3.3
@@ -33,11 +36,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libreoffice-impress fonts-crosextra-carlito
 
-      # shortcut: installer selalu mengambil OfficeCLI terbaru; pin versi jika output berubah.
+      # Unduh rilis yang dipatok dan verifikasi checksum sebelum dipasang.
       - name: Pasang OfficeCLI
         run: |
           set -euo pipefail
-          curl -fsSL https://d.officecli.ai/install.sh | bash
+          base="https://github.com/iOfficeAI/OfficeCLI/releases/download/${OFFICECLI_VERSION}"
+          dir="$RUNNER_TEMP/officecli"
+          mkdir -p "$dir" "$HOME/.local/bin"
+          curl -fsSL "$base/officecli-linux-x64" -o "$dir/officecli-linux-x64"
+          curl -fsSL "$base/SHA256SUMS" -o "$dir/SHA256SUMS"
+          expected=$(awk '$2 == "officecli-linux-x64" { print $1 }' "$dir/SHA256SUMS")
+          actual=$(sha256sum "$dir/officecli-linux-x64" | awk '{ print $1 }')
+          test -n "$expected"
+          test "$expected" = "$actual"
+          install -m 755 "$dir/officecli-linux-x64" "$HOME/.local/bin/officecli"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           "$HOME/.local/bin/officecli" --version
 
@@ -50,7 +62,15 @@ jobs:
       - name: Periksa deck
         run: |
           officecli validate deck.pptx
-          officecli view deck.pptx issues --limit 50 || true
+          set +e
+          issues=$(officecli view deck.pptx issues --limit 50 2>&1)
+          status=$?
+          set -e
+          printf '%s\n' "$issues"
+          if [ "$status" -ne 0 ] || printf '%s\n' "$issues" | grep -qE 'Found [1-9][0-9]* issue'; then
+            echo "::error::OfficeCLI melaporkan masalah layout."
+            exit 1
+          fi
 
       - name: Ekspor PDF
         run: |
