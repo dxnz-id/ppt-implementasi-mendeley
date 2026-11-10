@@ -5,10 +5,10 @@ import xml.etree.ElementTree as ET
 
 P = "http://schemas.openxmlformats.org/presentationml/2006/main"
 NS = {"p": P}
-HIN, HOUT = "M 1 0 L 0 0 E", "M 0 0 L -1 0 E"
-VIN, VOUT = "M 0 1 L 0 0 E", "M 0 0 L 0 -1 E"
-SIN, SOUT = "M -0.12 0 L 0 0 E", "M 0 0 L -0.12 0 E"
-PDOWN = "M 0 -0.1522 L 0 0 E"
+HIN = "M 1 0 L -0.015 0 L 0 0 E"
+VIN = "M 0 1 L 0 -0.015 L 0 0 E"
+SIN = "M -0.12 0 L 0.003 0 L 0 0 E"
+PDOWN = "M 0 -0.1522 L 0 0.004 L 0 0 E"
 
 
 def parse(path):
@@ -18,6 +18,19 @@ def parse(path):
             key=lambda n: int(re.search(r"(\d+)", n).group(1)),
         )
         return [ET.fromstring(z.read(n)) for n in names]
+
+
+def motions(root):
+    """Return (spid, path, effect cTn) for every animated shape."""
+    found = []
+    for ctn in root.findall(".//p:cTn", NS):
+        if not ctn.get("presetID"):
+            continue
+        for motion in ctn.findall(".//p:animMotion", NS):
+            target = motion.find(".//p:spTgt", NS)
+            if target is not None:
+                found.append((target.get("spid"), motion.get("path", ""), ctn))
+    return found
 
 
 def main(path="deck.pptx"):
@@ -38,57 +51,52 @@ def main(path="deck.pptx"):
                 if f"#s{i}-{tag}" not in groups:
                     bad.append(f"slide {i}: group #s{i}-{tag} tidak ada")
 
-        motions = []
-        for m in root.findall(".//p:animMotion", NS):
-            tgt = m.find(".//p:spTgt", NS)
-            if tgt is not None:
-                motions.append((tgt.get("spid"), m.get("path", "")))
-        if not motions:
+        fx = motions(root)
+        if not fx:
             bad.append(f"slide {i}: tidak punya motion path")
-        for spid, _ in motions:
+        for spid, _, ctn in fx:
             if spid not in ids:
                 bad.append(f"slide {i}: target animasi spid={spid} tidak ada")
+            if ctn.get("nodeType") == "clickEffect":
+                bad.append(f"slide {i}: masih ada efek klik; satu slide harus satu klik")
+            for attr in ("accel", "decel"):
+                value = ctn.get(attr)
+                if not value or int(value) <= 0:
+                    bad.append(f"slide {i}: {ids.get(spid, spid)} tidak punya {attr}")
+
         if root.findall(".//p:animEffect", NS) or root.findall(".//p:anim", NS):
             bad.append(f"slide {i}: ada efek selain motion path")
 
         def paths(name):
             gid = groups.get(name)
-            return [p for sid, p in motions if sid == gid]
+            return [(p, ctn) for sid, p, ctn in fx if sid == gid]
 
         content = paths(f"#s{i}-content")
-        if i == 1:
-            want = [HOUT]
-        elif i in (2, 14):
-            want = [HIN, HOUT]
-        elif i == 16:
-            want = [HIN]
-        else:
-            want = [VIN, VOUT]
-        for p in want:
-            if p not in content:
-                bad.append(f"slide {i}: content tidak punya {p}")
+        want = HIN if i in (1, 2, 14, 16) else VIN
+        if not any(p == want for p, _ in content):
+            bad.append(f"slide {i}: content tidak punya {want}")
         if i in (3, 15):
             for tag in ("sidebar-bg", "sidebar-fg"):
-                if SIN not in paths(f"#s{i}-{tag}"):
+                if not any(p == SIN for p, _ in paths(f"#s{i}-{tag}")):
                     bad.append(f"slide {i}: {tag} tidak masuk dari kiri")
-        if i in (13, 15):
-            for tag in ("sidebar-bg", "sidebar-fg"):
-                if SOUT not in paths(f"#s{i}-{tag}"):
-                    bad.append(f"slide {i}: {tag} tidak keluar ke kiri")
+        if i in (3, 15):
+            if not any(p == VIN and ctn.get("nodeType") == "withEffect" for p, ctn in content):
+                bad.append(f"slide {i}: content tidak masuk bersama sidebar")
 
         pid = next((sid for sid, n in ids.items() if n == f"#s{i}-rail-pill"), None)
-        pill = [p for sid, p in motions if sid == pid]
-        if i in (3, 15) and SIN not in pill:
+        pill = [(p, ctn) for sid, p, ctn in fx if sid == pid]
+        if i in (3, 15) and not any(p == SIN for p, _ in pill):
             bad.append(f"slide {i}: pill tidak masuk dari kiri")
-        if i in (13, 15) and SOUT not in pill:
-            bad.append(f"slide {i}: pill tidak keluar ke kiri")
-        if i in (5, 8, 13) and PDOWN not in pill:
-            bad.append(f"slide {i}: pill tidak bergeser turun")
+        if i in (5, 8, 13):
+            if not any(p == PDOWN for p, _ in pill):
+                bad.append(f"slide {i}: pill tidak bergeser turun")
+            if not any(p == PDOWN and ctn.get("nodeType") == "withEffect" for p, ctn in pill):
+                bad.append(f"slide {i}: pill bergeser setelah konten, bukan bersamanya")
 
     if bad:
         print("\n".join(bad))
         return 1
-    print(f"{len(roots)} slide: motion path, group, dan urutan target valid")
+    print(f"{len(roots)} slide: satu klik, easing, arah, dan urutan animasi valid")
     return 0
 
 

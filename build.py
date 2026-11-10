@@ -258,12 +258,12 @@ tx(s,2.4,9.0,18,1.4,'Pertanyaan dan diskusi',24,P,True)
 pic(s,icon('MdQuestionAnswer',FLOWER,PC,ON_PC),23.0,4.8,8.4,'Ikon tanya jawab')
 notes(s,'Tutup dengan terima kasih dan ajak tanya jawab. Arahkan pertanyaan tentang langkah implementasi, kendala metadata, dan pilihan gaya sitasi ke slide terkait.')
 # --- animasi per objek: group dianimasikan lewat proxy, lalu targetnya dipindah ke group ---
-HIN,HOUT='M 1 0 L 0 0 E','M 0 0 L -1 0 E'
-VIN,VOUT='M 0 1 L 0 0 E','M 0 0 L 0 -1 E'
-SIN,SOUT='M -0.12 0 L 0 0 E','M 0 0 L -0.12 0 E'
-PDOWN='M 0 -0.1522 L 0 0 E'
-def anim(target,d,trigger,dur):
-    emit(target,'animation',{'class':'motion','path':'custom','d':d,'trigger':trigger,'duration':dur})
+HIN='M 1 0 L -0.015 0 L 0 0 E'
+VIN='M 0 1 L 0 -0.015 L 0 0 E'
+SIN='M -0.12 0 L 0.003 0 L 0 0 E'
+PDOWN='M 0 -0.1522 L 0 0.004 L 0 0 E'
+def anim(target,d,trigger,dur,easein=20,easeout=70):
+    emit(target,'animation',{'class':'motion','path':'custom','d':d,'trigger':trigger,'duration':dur,'easein':easein,'easeout':easeout})
 def proxy(i,tag):
     emit(f'/slide[{i}]','shape',{'x':'0cm','y':'0cm','width':'0.01cm','height':'0.01cm','fill':'none','line':'none','name':f'#s{i}-proxy-{tag}'})
 # AddAnimation hanya menghitung shape top-level, bukan group atau picture.
@@ -283,8 +283,7 @@ for i in range(1,TOTAL+1):
         proxy(i,'sidebar-bg');proxy(i,'sidebar-fg')
     c=f'/slide[{i}]/shape[{ct}]'
     if i in (1,2,14,16):
-        if i in (2,14,16):anim(c,HIN,'afterPrevious',420)
-        if i in (1,2,14):anim(c,HOUT,'onClick',220)
+        anim(c,HIN,'afterPrevious',420)
         continue
     if i in (3,15):
         b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[1]'
@@ -292,11 +291,7 @@ for i in range(1,TOTAL+1):
         anim(c,VIN,'withPrevious',500)
     else:
         anim(c,VIN,'afterPrevious',500)
-    if i in (5,8,13):anim(f'/slide[{i}]/shape[{1 if i==13 else pill}]',PDOWN,'afterPrevious',500)
-    anim(c,VOUT,'onClick',300)
-    if i in (13,15):
-        b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[1]'
-        anim(b,SOUT,'withPrevious',200);anim(f,SOUT,'withPrevious',200);anim(p,SOUT,'withPrevious',200)
+    if i in (5,8,13):anim(f'/slide[{i}]/shape[{1 if i==13 else pill}]',PDOWN,'withPrevious',500,easein=30,easeout=50)
 # --- bangun ---
 assert n==TOTAL,f'jumlah slide {n}, seharusnya {TOTAL}'
 json.dump(list(specs.values()),open('specs.json','w'))
