@@ -52,8 +52,8 @@ def frame(sec,title):
     for k,(ic,lab) in enumerate(SECT):
         y=3.5+k*2.9;on=k==sec
         if on:
-            pill_top[s]=counts[s]+1
-            pill_idx[s]=shape_counts[s]+1
+            pill_top[s]=counts[s]+1  # posisi top-level untuk grouping
+            pill_idx[s]=shape_counts[s]+1  # posisi shape untuk AddAnimation
             box(s,1.3,y,2.2,2.6,PC,1.1,name=f'#s{n}-rail-pill')
         pic(s,icon(ic,'none','x',ON_PC if on else MUT),1.9,y+0.35,1.0,lab)
         tx(s,1.3,y+1.6,2.2,0.7,lab,12,ON_PC if on else MUT,on,'center','middle','rail-label')
@@ -265,6 +265,7 @@ def anim(target,d,trigger,dur):
     emit(target,'animation',{'class':'motion','path':'custom','d':d,'trigger':trigger,'duration':dur})
 def proxy(i,tag):
     emit(f'/slide[{i}]','shape',{'x':'0cm','y':'0cm','width':'0.01cm','height':'0.01cm','fill':'none','line':'none','name':f'#s{i}-proxy-{tag}'})
+# AddAnimation hanya menghitung shape top-level, bukan group atau picture.
 for i in range(1,TOTAL+1):
     s=f'/slide[{i}]';total=counts[s];cs=content_start[s];se=sidebar_end.get(s,cs-1);pill=pill_idx.get(s)
     emit(s,'group',{'shapes':','.join(map(str,range(cs,total+1))),'name':f'#s{i}-content'})

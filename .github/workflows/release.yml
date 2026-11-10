@@ -96,15 +96,6 @@ jobs:
           montage "${slides[@]}" -tile 2x8 -geometry 800x450+8+8 -background '#F6F6F6' preview.png
           test -f preview.png
 
-      - uses: actions/upload-artifact@v4
-        if: github.ref != 'refs/heads/main'
-        with:
-          name: deck-${{ github.sha }}
-          path: |
-            deck.pptx
-            deck.pdf
-            preview.png
-
       - name: Ambil SHA pendek
         id: meta
         run: echo "short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
