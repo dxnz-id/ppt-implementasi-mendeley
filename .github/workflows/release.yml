@@ -59,6 +59,9 @@ jobs:
       - name: Bangun deck
         run: uv run build.py
 
+      - name: Periksa tumpang tindih panah
+        run: uv run python check_layout.py
+
       - name: Periksa deck
         run: |
           officecli validate deck.pptx

@@ -62,7 +62,7 @@ def card3(s,y,h,items,fills):
 # 1 sampul
 s=slide(BG)
 pic(s,icon('MdLibraryBooks','flower',PC,ON_PC),20.6,2.6,12,'Ilustrasi Mendeley')
-pic(s,icon('MdFormatQuote','cookie',TC,ON_TC),28.4,12.6,5,'Ikon kutipan')
+pic(s,icon('MdFormatQuote','cookie',TC,ON_TC),29.0,14.7,4.2,'Ikon kutipan')
 box(s,2.0,3.0,8.4,1.6,PC,0.8,name='label');tx(s,2.0,3.0,8.4,1.6,'Bahasa Indonesia',18,ON_PC,True,'center','middle')
 tx(s,2.0,4.4,18,7.8,'Implementasi aplikasi Mendeley dalam penulisan karya ilmiah',44,TX,True,name='judul')
 tx(s,2.0,13.4,18,1,'Mata kuliah Bahasa Indonesia',20,P,True)
@@ -72,12 +72,12 @@ s=slide(BG)
 tx(s,2.0,1.4,28,2.4,'Anggota kelompok',40,TX,True,valign='middle',name='judul')
 tx(s,2.0,3.6,28,1,'Mata kuliah Bahasa Indonesia',18,P,True)
 for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Muhammad Rifqi al Khafis','202551019'),('Arkano Hamada Moslem','202551034'),('Farrel Aufa Athaya Ardiyono','202551042'),("Muhammad La'azidannak Rusda",'202551049'),('Aksel Agustiyan','202551058'),('Muhammad Arief Satria Nugraha','202551151')]):
-    x=(2.0+k*7.3) if k<4 else (5.2+(k-4)*7.3);y=5.2 if k<4 else 11.0
+    x=(2.0+k*7.3) if k<4 else (5.65+(k-4)*7.3);y=5.2 if k<4 else 11.0
     fill=[PC,CARD,TC,CARD,PC,CARD,CARD][k];col=[ON_PC,TX,ON_TC,TX,ON_PC,TX,TX][k]
     box(s,x,y,6.8,5.2,fill,1.2)
     clipped(s,f'num-{k+1:02d}.png',x+0.05,y+0.04,6.7,5.12,'Nomor '+f'{k+1:02d}')
     tx(s,x+0.6,y+1.3,5.6,2.4,nm,18,col,True)
-    tx(s,x+0.6,y+3.8,5.6,1.2,nim,12,MUT)
+    tx(s,x+0.6,y+3.8,5.6,1.2,nim,12,col)
 page(s)
 notes(s,'Sebutkan anggota kelompok satu per satu sesuai urutan NIM.')
 # 3 latar belakang
@@ -113,7 +113,7 @@ for k,(ic,hd,bd) in enumerate([('MdLibraryBooks','Mendeley Reference Manager','P
     y=4.0+k*4.9;box(s,X0+10.8,y,17.2,4.2,CARD,1.2)
     pic(s,icon(ic,'cookie',SC,ON_SC),X0+11.5,y+0.8,2.6,hd)
     tx(s,X0+14.8,y+0.6,12.6,1.2,hd,24,TX,True);tx(s,X0+14.8,y+1.8,12.6,2.3,bd,18,MUT)
-tx(s,X0,18.3,20,0.4,'Sumber: Mendeley (n.d.); Mendeley Support (2025).',9,MUT)
+tx(s,X0,18.3,20,0.5,'Sumber: Mendeley (n.d.); Mendeley Support (2025).',10,MUT)
 notes(s,'Mendeley dikembangkan Elsevier. Ada tiga komponen: Reference Manager untuk pustaka, Mendeley Cite untuk Word, dan Web Importer untuk peramban. Mendeley Desktop masih tersedia, tetapi pengembangannya sudah dihentikan; Reference Manager menjadi fokus.')
 # 6 apa yang diolah
 s=frame(1,'Apa yang diolah Mendeley')
@@ -123,7 +123,7 @@ tx(s,X0+4.4,4.0,W-5.4,4.6,'Mendeley memindahkan metadata referensi ke sitasi dan
 card3(s,9.4,8.6,[('MdDescription','Metadata','Judul, penulis, tahun, DOI, dan nama jurnal menjadi bahan sitasi.'),
  ('MdStyle','Gaya sitasi','Mendeley menerapkan gaya yang dipilih, misalnya APA atau IEEE.'),
  ('MdListAlt','Daftar pustaka','Entri disusun otomatis dari metadata dan gaya yang sama.')],[(CARD,SC,ON_SC,TX),(CARD,TC,ON_TC,TX),(CARD,PC,ON_PC,TX)])
-tx(s,X0,18.3,20,0.4,'Sumber: Mendeley Support (2025).',9,MUT)
+tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025).',10,MUT)
 notes(s,'Mendeley mengolah metadata menjadi sitasi dan daftar pustaka. Jenis kutipan dan aturan tiap gaya dibahas Kelompok 4; fokus kita pada data yang diolah dan hasil yang dibuat Mendeley.')
 # 7 satu sumber dua keluaran
 s=frame(1,'Satu sumber, dua keluaran')
@@ -132,24 +132,24 @@ w3=(W-1.6)/3
 for k,(hd,bd,fill,col) in enumerate([('01 Metadata','Judul, penulis, tahun, dan sumber.',CARD,TX),
  ('02 Sitasi','Mendeley Cite menyisipkan sitasi ke naskah.',SC,ON_SC),
  ('03 Daftar pustaka','Entri tersusun dari metadata yang sama.',TC,ON_TC)]):
-    x=X0+k*(w3+0.8);box(s,x,4.6,w3,7.0,fill,1.3)
+    x=X0+k*(w3+0.8);box(s,x,4.6,w3,6.0,fill,1.3)
     tx(s,x+0.8,5.2,w3-1.6,2.05,hd,24,col,True)
     tx(s,x+0.8,6.6,w3-1.6,3.6,bd,18,col)
-    if k<2:pic(s,icon('MdArrowForward','none','x',P),x+w3+0.25,7.7,0.9,'Panah')
+    if k<2:pic(s,icon('MdArrowForward','none','x',P),x+w3+0.1,7.3,0.6,'Panah')
 box(s,X0,12.4,W,4.4,PC,1.4)
 pic(s,icon('MdFactCheck','circle',P,'FFFFFF'),X0+1.0,13.2,2.4,'Ikon pemeriksaan')
 tx(s,X0+4.0,12.8,W-5.0,3.6,'Yang tetap manual: periksa metadata dan pastikan gaya sitasi sesuai pedoman. Teori jenis sitasi dibahas Kelompok 4.',20,ON_PC,False,valign='middle')
-tx(s,X0,17.2,28,0.7,'Sumber: Mendeley Support (2025).',9,MUT)
+tx(s,X0,17.2,28,0.7,'Sumber: Mendeley Support (2025).',10,MUT)
 notes(s,'Satu referensi menghasilkan sitasi dalam teks dan entri daftar pustaka. Mendeley memakai metadata yang sama. Teori jenis sitasi dan aturan APA/IEEE tidak dibahas di sini; itu materi Kelompok 4.')
 # 8 persiapan
 s=frame(2,'Persiapan: akun, aplikasi, dan add-in')
 w3=(W-1.6)/3
 for k,(ic,hd,bd) in enumerate([('MdPersonAdd','Buat akun','Daftar dengan email aktif.'),('MdDownload','Pasang aplikasi','Unduh Reference Manager, lalu pasang add-in Mendeley Cite di Word.'),('MdExtension','Pasang ekstensi','Tambahkan Web Importer ke peramban untuk menyimpan referensi dari web.')]):
-    x=X0+k*(w3+0.8);box(s,x,4.2,w3,12.6,CARD if k!=1 else PC,1.4)
+    x=X0+k*(w3+0.8);box(s,x,4.2,w3,12.6,[CARD,SC,TC][k],1.4)
     clipped(s,f'mask-08-{k+1:02d}.png',x,4.2,w3,12.6,'Masking angka langkah')
-    pic(s,icon(ic,'flower',PC if k!=1 else P,ON_PC if k!=1 else 'FFFFFF'),x+w3-5.4,4.8,4.6,hd)
-    tx(s,x+0.9,10.4,w3-1.8,1.4,hd,24,TX if k!=1 else ON_PC,True);tx(s,x+0.9,12.2,w3-1.8,4.6,bd,20,MUT if k!=1 else ON_PC)
-tx(s,X0,18.3,20,0.4,'Sumber: Mendeley (n.d.).',9,MUT)
+    pic(s,icon(ic,'flower',PC,ON_PC),x+w3-5.4,4.8,4.6,hd)
+    tx(s,x+0.9,10.4,w3-1.8,1.4,hd,24,[TX,ON_SC,TX][k],True);tx(s,x+0.9,12.2,w3-1.8,4.6,bd,20,[MUT,ON_SC,MUT][k])
+tx(s,X0,18.3,20,0.5,'Sumber: Mendeley (n.d.).',10,MUT)
 notes(s,'Tiga persiapan: membuat akun dengan email aktif, memasang Reference Manager dan add-in Mendeley Cite di Word, lalu memasang Web Importer di peramban.')
 # 9 langkah 1
 s=frame(2,'Langkah 1: kumpulkan referensi')
@@ -186,7 +186,7 @@ for k,lab in enumerate(['Library','Mendeley Cite']):
     x=X0+k*14.4;y=4.6;fill=PC if k==0 else SC;col=ON_PC if k==0 else ON_SC
     box(s,x,y,13.6,12.4,fill,1.4)
     if k==0:
-        pic(s,'img-library-fade.png',x+0.6,y+0.6,12.4,'Ilustrasi Library',6.98)
+        pic(s,'img-library-fade.png',x+0.6,y+0.6,12.4,'Ilustrasi Library',6.97)
         box(s,x+0.6,y+8.0,3.6,1.0,CARD,0.55,name='label');tx(s,x+0.6,y+8.0,3.6,1.0,lab,14,col,True,'center','middle')
         tx(s,x+0.6,y+9.2,12.4,2.0,'Impor PDF, kelompokkan, dan rapikan metadata referensi.',16,col)
     else:
@@ -195,7 +195,7 @@ for k,lab in enumerate(['Library','Mendeley Cite']):
         box(s,x+0.6,y+6.6,5.4,1.0,CARD,0.55,name='label');tx(s,x+0.6,y+6.6,5.4,1.0,'Insert Bibliography',12,col,True,'center','middle')
         tx(s,x+0.6,y+7.9,6.8,2.2,'Klik More, lalu pilih Insert Bibliography.',14,col)
         pic(s,'img-cite-panel.png',x+7.7,y+1.75,5.4,'Ilustrasi Mendeley Cite',7.45)
-    tx(s,x+0.6,y+11.3,12.4,0.7,'Sumber: mendeley.com',9,col)
+    tx(s,x+0.6,y+11.3,12.4,0.7,'Sumber: mendeley.com',10,col)
 notes(s,'Peragakan alur: impor ke Library, cek metadata, sisipkan kutipan di Word, pilih gaya, lalu buat daftar pustaka. Gambar adalah ilustrasi dari aset resmi Mendeley (mendeley.com); ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.')
 # 13 kelebihan keterbatasan
 s=frame(3,'Kelebihan dan keterbatasan')
@@ -208,7 +208,7 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
         y=7.7+j*2.5
         box(s,x+0.8,y,12.0,1.9,pill,0.95,name='kapsul')
         tx(s,x+1.4,y,11.2,1.9,t,16,col,valign='middle')
-tx(s,X0,18.3,20,0.4,'Sumber: Mendeley Support (2025).',9,MUT)
+tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025).',10,MUT)
 notes(s,'Kelebihan: hemat waktu, format konsisten, dan sinkron. Keterbatasannya: metadata perlu dicek, gaya sitasi kampus tertentu mungkin tidak tersedia, penyimpanan gratis 2 GB, dan kesalahan tetap menjadi tanggung jawab penulis.')
 # 14 kesimpulan (terang)
 s=slide(BG);tx(s,2.0,1.4,30,2.4,'Kesimpulan dan saran',40,TX,True,valign='middle',name='judul')
@@ -240,12 +240,9 @@ tx(s,X0,16.8,28,0.8,'Semua sumber diakses 9 November 2026.',10,MUT)
 notes(s,'Daftar pustaka memuat sumber yang benar-benar dibuka: halaman resmi Mendeley, Mendeley Support, KBBI VI Daring, dan panduan gaya APA serta IEEE. Perbarui tanggal akses bila presentasi dilakukan pada hari lain.')
 # 16 penutup
 s=slide(BG)
-box(s,2.4,2.2,6.2,1.1,PC,0.55,name='label');tx(s,2.4,2.2,6.2,1.1,'Penutup',14,ON_PC,True,'center','middle')
 tx(s,2.4,4.2,19,4.0,'Terima kasih',72,TX,True)
 tx(s,2.4,9.0,18,1.4,'Pertanyaan dan diskusi',24,P,True)
-tx(s,2.4,16.3,18,0.8,'Mata kuliah Bahasa Indonesia',11,MUT)
 pic(s,icon('MdQuestionAnswer','flower',PC,ON_PC),23.0,4.8,8.4,'Ikon tanya jawab')
-page(s)
 notes(s,'Tutup dengan terima kasih dan ajak tanya jawab. Arahkan pertanyaan tentang langkah implementasi, kendala metadata, dan pilihan gaya sitasi ke slide terkait.')
 # --- bangun ---
 assert n==TOTAL,f'jumlah slide {n}, seharusnya {TOTAL}'
