@@ -299,5 +299,10 @@ subprocess.run(['node','icons.js','specs.json'],check=True)
 json.dump(ops,open('ops.json','w'))
 if os.path.exists(OUT):os.remove(OUT)
 subprocess.run(['officecli','create',OUT],check=True)
-r=subprocess.run(['officecli','batch',OUT,'--input','ops.json','--json'],capture_output=True,text=True);print(r.stdout[-1500:],r.stderr[-800:]);r.check_returncode()
+r=subprocess.run(['officecli','batch',OUT,'--input','ops.json','--json'],capture_output=True,text=True)
+if r.returncode:
+    print('STDOUT:',r.stdout);print('STDERR:',r.stderr)
+else:
+    print(r.stdout[-1500:],r.stderr[-800:])
+r.check_returncode()
 subprocess.run([sys.executable,'retarget_group_animations.py',OUT],check=True)
