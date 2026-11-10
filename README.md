@@ -10,7 +10,7 @@ Generator deck 16 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat de
 - `skills/`: skill yang dipakai selama pembuatan (lihat `skills/README.md`)
 
 ## Membangun ulang
-Prasyarat: uv, Node.js, dan officecli.
+Prasyarat: uv, Node.js, dan OfficeCLI `v1.0.160` (versi yang sama dengan workflow rilis). Unduh `officecli-linux-x64` dan `SHA256SUMS` dari [rilis v1.0.160](https://github.com/iOfficeAI/OfficeCLI/releases/tag/v1.0.160), pastikan checksum SHA-256 cocok, lalu pasang binary itu di `PATH`. `officecli --version` harus melaporkan `v1.0.160`.
 
     npm ci
     export OFFICECLI_NO_AUTO_RESIDENT=1
@@ -20,5 +20,15 @@ Hasilnya `deck.pptx`. Ikon ber-hash di `assets/` diabaikan Git karena selalu dib
 
 Animasi memakai motion path per objek dengan easing dan overshoot kecil. Tidak ada fade atau perubahan warna. Satu klik pindah slide; konten slide baru masuk otomatis. Animasi hanya tampil di PowerPoint 365/2021; PDF tetap statis di posisi akhir.
 
+## Uji manual sebelum rilis
+Animasinya tidak bisa diuji otomatis, jadi buka `deck.pptx` di PowerPoint 365/2021 dan periksa slide 1, 3, 5, 13, dan 16:
+
+- Satu klik memindahkan slide; konten masuk otomatis tanpa klik tambahan.
+- Sidebar dan pill pada slide 3, 5, dan 13 bergerak bersama konten, tanpa klik tambahan.
+- Easing dan durasi terasa halus, tanpa lompatan.
+- Tidak ada efek fade atau exit.
+
+Uji manual ini wajib dilakukan sebelum menerbitkan rilis dan tidak dicakup CI.
+
 ## Rilis otomatis
-Setiap push ke `main` menjalankan `.github/workflows/release.yml`: deck dibangun, divalidasi, diekspor ke `deck.pdf`, lalu diterbitkan sebagai release bertag `build-<sha>` dengan tiga aset: `deck.pptx`, `deck.pdf`, dan `preview.png`. Build dari branch lain hanya mengunggah artifact, tidak menerbitkan release. Tidak perlu mengisi rahasia; `GITHUB_TOKEN` sudah tersedia.
+Setiap push ke branch mana pun dan pull request menjalankan `.github/workflows/release.yml`: deck dibangun, divalidasi, diekspor ke `deck.pdf`, lalu artifact `deck.pptx`, `deck.pdf`, dan `preview.png` diunggah. Hanya push ke `main` yang menerbitkan release bertag `build-<sha>` dengan tiga aset tersebut. Rilis diserialkan agar build tidak saling menimpa. Tidak perlu mengisi rahasia; `GITHUB_TOKEN` sudah tersedia.

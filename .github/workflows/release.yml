@@ -2,30 +2,36 @@ name: Release deck
 
 on:
   push:
-    branches: [main]
+    branches: ["**"]
+  pull_request:
   workflow_dispatch:
 
+# Serialisasi per ref: dua push main tidak pernah merilis bersamaan.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     env:
       OFFICECLI_NO_AUTO_RESIDENT: "1"
       OFFICECLI_VERSION: "v1.0.160"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
 
       # uv menyediakan Python; build.py hanya memakai stdlib.
-      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           python-version: "3.12"
           enable-cache: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
           cache: "npm"
@@ -62,6 +68,7 @@ jobs:
       - name: Periksa animasi
         run: |
           uv run python test_retarget.py
+          uv run python test_check_anim.py
           uv run python check_anim.py
 
       - name: Periksa tumpang tindih panah
@@ -96,8 +103,7 @@ jobs:
           montage "${slides[@]}" -tile 2x8 -geometry 800x450+8+8 -background '#F6F6F6' preview.png
           test -f preview.png
 
-      - uses: actions/upload-artifact@v4
-        if: github.ref != 'refs/heads/main'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: deck-${{ github.sha }}
           path: |
@@ -105,12 +111,22 @@ jobs:
             deck.pdf
             preview.png
 
+  release:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: deck-${{ github.sha }}
+
       - name: Ambil SHA pendek
         id: meta
         run: echo "short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
-      - uses: softprops/action-gh-release@v2
-        if: github.ref == 'refs/heads/main'
+      - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
           tag_name: build-${{ steps.meta.outputs.short }}
           name: Build ${{ steps.meta.outputs.short }}

@@ -39,7 +39,7 @@ def pic(s,f,x,y,w,alt,h=None):add(s,'picture',src=os.path.abspath('assets/'+f),x
 def clipped(s,f,x,y,w,h,alt):
     with open(os.path.abspath('assets/'+f),'rb') as fh:head=fh.read(24)
     iw,ih=struct.unpack('>II',head[16:24])
-    assert abs(iw/ih-w/h)<0.01,f'{f}: rasio {iw/ih:.3f} tidak cocok dengan kartu {w/h:.3f}; jangan regangkan mask'
+    if not abs(iw/ih-w/h)<0.01:raise ValueError(f'{f}: rasio {iw/ih:.3f} tidak cocok dengan kartu {w/h:.3f}; jangan regangkan mask')
     pic(s,f,x,y,w,alt,h)
 def notes(s,t):add(s,'notes',text=t)
 def num(s,x,y,d,t,fill,col):
@@ -293,7 +293,7 @@ for i in range(1,TOTAL+1):
         anim(c,VIN,'afterPrevious',500)
     if i in (5,8,13):anim(f'/slide[{i}]/shape[{1 if i==13 else pill}]',PDOWN,'withPrevious',500,easein=30,easeout=50)
 # --- bangun ---
-assert n==TOTAL,f'jumlah slide {n}, seharusnya {TOTAL}'
+if n!=TOTAL:raise ValueError(f'jumlah slide {n}, seharusnya {TOTAL}')
 json.dump(list(specs.values()),open('specs.json','w'))
 subprocess.run(['node','icons.js','specs.json'],check=True)
 json.dump(ops,open('ops.json','w'))

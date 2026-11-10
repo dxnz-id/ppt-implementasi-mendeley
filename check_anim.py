@@ -2,6 +2,7 @@ import re
 import sys
 import zipfile
 import xml.etree.ElementTree as ET
+from collections import Counter
 
 P = "http://schemas.openxmlformats.org/presentationml/2006/main"
 NS = {"p": P}
@@ -20,17 +21,198 @@ def parse(path):
         return [ET.fromstring(z.read(n)) for n in names]
 
 
-def motions(root):
-    """Return (spid, path, effect cTn) for every animated shape."""
-    found = []
-    for ctn in root.findall(".//p:cTn", NS):
-        if not ctn.get("presetID"):
+def _spec(index):
+    """Exact (target name, path, duration, accel, decel) in effect order."""
+    content = f"#s{index}-content"
+    if index in (1, 2, 14, 16):
+        return [(content, HIN, 420, 20, 70)]
+    if index in (3, 15):
+        return [
+            (f"#s{index}-sidebar-bg", SIN, 400, 20, 70),
+            (f"#s{index}-sidebar-fg", SIN, 400, 20, 70),
+            (f"#s{index}-rail-pill", SIN, 400, 20, 70),
+            (content, VIN, 500, 20, 70),
+        ]
+    if index in (5, 8, 13):
+        return [
+            (content, VIN, 500, 20, 70),
+            (f"#s{index}-rail-pill", PDOWN, 500, 30, 50),
+        ]
+    return [(content, VIN, 500, 20, 70)]
+
+
+def _num(value):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _ease(value):
+    """XML stores easing in 1/1000 percent: 20000 is 20%."""
+    number = _num(value)
+    return None if number is None else number / 1000
+
+
+def _effects(top, bad, index, ids):
+    effects = []
+    groups = top.findall("p:cTn/p:childTnLst/p:par", NS) if top is not None else []
+    if not groups:
+        bad.append(f"slide {index}: tidak punya motion path")
+    for group in groups:
+        ctn = next((c for c in group.iter(f"{{{P}}}cTn") if c.get("presetID")), None)
+        if ctn is None:
+            bad.append(f"slide {index}: grup animasi tanpa efek path")
             continue
-        for motion in ctn.findall(".//p:animMotion", NS):
-            target = motion.find(".//p:spTgt", NS)
-            if target is not None:
-                found.append((target.get("spid"), motion.get("path", ""), ctn))
-    return found
+        if ctn.get("presetID") != "26" or ctn.get("presetClass") != "path":
+            bad.append(
+                f"slide {index}: efek bukan path animation "
+                f"(presetID={ctn.get('presetID')}, presetClass={ctn.get('presetClass')})"
+            )
+        child = ctn.find("p:childTnLst", NS)
+        moves = child.findall("p:animMotion", NS) if child is not None else []
+        other = [e.tag for e in child if e.tag != f"{{{P}}}animMotion"] if child is not None else []
+        if len(moves) != 1 or other:
+            bad.append(f"slide {index}: satu efek path harus tepat satu p:animMotion")
+            if not moves:
+                continue
+        motion = moves[0]
+        if motion.get("pathEditMode") != "relative":
+            bad.append(
+                f"slide {index}: pathEditMode={motion.get('pathEditMode')}, seharusnya relative"
+            )
+        target = motion.find(".//p:spTgt", NS)
+        spid = target.get("spid") if target is not None else None
+        if spid is None or spid not in ids:
+            bad.append(f"slide {index}: target animasi spid={spid} tidak ada")
+        duration = motion.find("p:cBhvr/p:cTn", NS)
+        effects.append(
+            {
+                "spid": spid,
+                "name": ids.get(spid, spid),
+                "path": motion.get("path"),
+                "dur": duration.get("dur") if duration is not None else None,
+                "accel": ctn.get("accel"),
+                "decel": ctn.get("decel"),
+                "trigger": ctn.get("nodeType"),
+            }
+        )
+    return effects
+
+
+def check_slide(index, root):
+    bad = []
+    ids = {e.get("id"): e.get("name") for e in root.findall(".//p:cNvPr", NS)}
+    groups = {
+        e.get("name"): e.get("id")
+        for e in root.findall(".//p:grpSp/p:nvGrpSpPr/p:cNvPr", NS)
+    }
+    names = set(ids.values())
+    if any("-proxy-" in (n or "") for n in names):
+        bad.append(f"slide {index}: proxy masih ada")
+    required = ["content"] + (["sidebar-bg", "sidebar-fg"] if index in (3, 13, 15) else [])
+    for tag in required:
+        if f"#s{index}-{tag}" not in groups:
+            bad.append(f"slide {index}: group #s{index}-{tag} tidak ada")
+
+    for tag in ("animEffect", "anim", "animClr", "animScale", "animRot", "set", "cmd"):
+        if root.findall(f".//p:{tag}", NS):
+            bad.append(f"slide {index}: ada efek {tag} selain motion path")
+
+    timing = root.find("p:timing", NS)
+    if timing is None:
+        bad.append(f"slide {index}: tidak punya timing")
+        return bad
+    mains = [
+        c for c in timing.findall(".//p:cTn", NS) if c.get("nodeType") == "mainSeq"
+    ]
+    if not mains:
+        bad.append(f"slide {index}: mainSeq tidak ada")
+        return bad
+    if len(mains) != 1:
+        bad.append(f"slide {index}: mainSeq {len(mains)}, seharusnya 1")
+    main = mains[0]
+
+    tops = main.findall("p:childTnLst/p:par", NS)
+    if len(tops) != 1:
+        bad.append(f"slide {index}: mainSeq punya {len(tops)} grup klik, seharusnya 1")
+    top = tops[0] if tops else None
+    if top is not None:
+        start = top.find("p:cTn", NS)
+        conds = start.findall("p:stCondLst/p:cond", NS) if start is not None else []
+        if len(conds) != 1 or conds[0].get("delay") != "0" or conds[0].get("evt"):
+            bad.append(f"slide {index}: sequence tidak mulai otomatis (delay 0)")
+
+    clicked = any(
+        "click" in (c.get("nodeType") or "").lower()
+        or "click" in (c.get("evt") or "").lower()
+        for c in timing.findall(".//p:cTn", NS) + timing.findall(".//p:cond", NS)
+    )
+    if clicked:
+        bad.append(f"slide {index}: ada trigger klik; slide harus mulai otomatis")
+
+    effects = _effects(top, bad, index, ids)
+    motions = len(timing.findall(".//p:animMotion", NS))
+    if motions != len(effects):
+        bad.append(f"slide {index}: jumlah animMotion {motions}, terdeteksi {len(effects)}")
+
+    want = _spec(index)
+    expected = {name: (name, path, dur, accel, decel) for name, path, dur, accel, decel in want}
+    actual = [e["name"] for e in effects]
+    counts = Counter(actual)
+    for name, count in counts.items():
+        if count > 1:
+            bad.append(f"slide {index}: animasi {name} muncul {count} kali")
+    for name, *_ in want:
+        if name not in counts:
+            bad.append(f"slide {index}: animasi {name} tidak ada")
+    for name in counts:
+        if name not in expected:
+            bad.append(f"slide {index}: animasi tambahan pada {name}")
+    wanted_order = [name for name, *_ in want]
+    if Counter(actual) == Counter(wanted_order) and actual != wanted_order:
+        bad.append(f"slide {index}: urutan animasi {actual}, seharusnya {wanted_order}")
+
+    for pos, effect in enumerate(effects):
+        target = expected.get(effect["name"])
+        if target:
+            _, path, dur, accel, decel = target
+            if effect["path"] != path:
+                bad.append(
+                    f"slide {index}: {effect['name']} path {effect['path']}, seharusnya {path}"
+                )
+            if _num(effect["dur"]) != dur:
+                bad.append(
+                    f"slide {index}: {effect['name']} durasi {effect['dur']} ms, seharusnya {dur} ms"
+                )
+            ease_in, ease_out = _ease(effect["accel"]), _ease(effect["decel"])
+            if ease_in != accel or ease_out != decel:
+                easing = (
+                    f"{ease_in:g}/{ease_out:g}"
+                    if ease_in is not None and ease_out is not None
+                    else f"{effect['accel']}/{effect['decel']}"
+                )
+                bad.append(
+                    f"slide {index}: {effect['name']} easing {easing}, seharusnya {accel}/{decel}"
+                )
+        if pos == 0:
+            if effect["trigger"] != "afterEffect":
+                bad.append(
+                    f"slide {index}: efek pertama harus afterEffect (start otomatis), "
+                    f"bukan {effect['trigger'] or 'tanpa nodeType'}"
+                )
+        elif effect["trigger"] != "withEffect":
+            bad.append(
+                f"slide {index}: {effect['name']} harus withEffect, "
+                f"bukan {effect['trigger'] or 'tanpa nodeType'}"
+            )
+
+    builds = [b.get("spid") for b in timing.findall("p:bldLst/p:bldP", NS)]
+    targets = [e["spid"] for e in effects]
+    if Counter(builds) != Counter(targets):
+        bad.append(f"slide {index}: bldLst {builds} tidak cocok dengan target animasi {targets}")
+
+    return bad
 
 
 def main(path="deck.pptx"):
@@ -39,60 +221,7 @@ def main(path="deck.pptx"):
     if len(roots) != 16:
         bad.append(f"jumlah slide {len(roots)}, seharusnya 16")
     for i, root in enumerate(roots, 1):
-        ids = {e.get("id"): e.get("name") for e in root.findall(".//p:cNvPr", NS)}
-        groups = {e.get("name"): e.get("id") for e in root.findall(".//p:grpSp/p:nvGrpSpPr/p:cNvPr", NS)}
-        names = set(ids.values())
-        if any("-proxy-" in (n or "") for n in names):
-            bad.append(f"slide {i}: proxy masih ada")
-        if f"#s{i}-content" not in groups:
-            bad.append(f"slide {i}: group #s{i}-content tidak ada")
-        if i in (3, 13, 15):
-            for tag in ("sidebar-bg", "sidebar-fg"):
-                if f"#s{i}-{tag}" not in groups:
-                    bad.append(f"slide {i}: group #s{i}-{tag} tidak ada")
-
-        fx = motions(root)
-        if not fx:
-            bad.append(f"slide {i}: tidak punya motion path")
-        for spid, _, ctn in fx:
-            if spid not in ids:
-                bad.append(f"slide {i}: target animasi spid={spid} tidak ada")
-            if ctn.get("nodeType") == "clickEffect":
-                bad.append(f"slide {i}: masih ada efek klik; satu slide harus satu klik")
-            for attr in ("accel", "decel"):
-                value = ctn.get(attr)
-                if not value or int(value) <= 0:
-                    bad.append(f"slide {i}: {ids.get(spid, spid)} tidak punya {attr}")
-
-        if root.findall(".//p:animEffect", NS) or root.findall(".//p:anim", NS):
-            bad.append(f"slide {i}: ada efek selain motion path")
-
-        def paths(name):
-            gid = groups.get(name)
-            return [(p, ctn) for sid, p, ctn in fx if sid == gid]
-
-        content = paths(f"#s{i}-content")
-        want = HIN if i in (1, 2, 14, 16) else VIN
-        if not any(p == want for p, _ in content):
-            bad.append(f"slide {i}: content tidak punya {want}")
-        if i in (3, 15):
-            for tag in ("sidebar-bg", "sidebar-fg"):
-                if not any(p == SIN for p, _ in paths(f"#s{i}-{tag}")):
-                    bad.append(f"slide {i}: {tag} tidak masuk dari kiri")
-        if i in (3, 15):
-            if not any(p == VIN and ctn.get("nodeType") == "withEffect" for p, ctn in content):
-                bad.append(f"slide {i}: content tidak masuk bersama sidebar")
-
-        pid = next((sid for sid, n in ids.items() if n == f"#s{i}-rail-pill"), None)
-        pill = [(p, ctn) for sid, p, ctn in fx if sid == pid]
-        if i in (3, 15) and not any(p == SIN for p, _ in pill):
-            bad.append(f"slide {i}: pill tidak masuk dari kiri")
-        if i in (5, 8, 13):
-            if not any(p == PDOWN for p, _ in pill):
-                bad.append(f"slide {i}: pill tidak bergeser turun")
-            if not any(p == PDOWN and ctn.get("nodeType") == "withEffect" for p, ctn in pill):
-                bad.append(f"slide {i}: pill bergeser setelah konten, bukan bersamanya")
-
+        bad.extend(check_slide(i, root))
     if bad:
         print("\n".join(bad))
         return 1
