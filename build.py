@@ -11,7 +11,7 @@ EC,ON_EC='FFDAD6','65000B'
 PILL_PC,PILL_EC='C9DBEC','F7C7C1'
 F='Calibri'
 ops=[];specs={};n=0
-counts={};content_start={};sidebar_end={};pill_idx={}
+counts={};shape_counts={};sidebar_shapes={};content_start={};sidebar_end={};pill_idx={};pill_top={}
 def cm(v):return f'{v:.2f}cm'
 def icon(name,shape,bg,fg):
     f=hashlib.md5(f'{name}{shape}{bg}{fg}'.encode()).hexdigest()[:10]+'.png'
@@ -20,9 +20,10 @@ def emit(parent,typ,props):ops.append(dict(command='add',parent=parent,type=typ,
 def add(parent,typ,**p):
     emit(parent,typ,p)
     if typ in ('shape','picture','chart','group'):counts[parent]=counts.get(parent,0)+1
+    if typ=='shape':shape_counts[parent]=shape_counts.get(parent,0)+1
     return counts.get(parent)
 def slide(bg):
-    global n;n+=1;add('/','slide',background=bg);s=f'/slide[{n}]';counts[s]=0;content_start[s]=1;return s
+    global n;n+=1;add('/','slide',background=bg);s=f'/slide[{n}]';counts[s]=0;shape_counts[s]=0;content_start[s]=1;return s
 def box(s,x,y,w,h,fill,r=1.0,line=None,dash=None,name='kartu'):
     a=min(50000,int(r/min(w,h)*100000))
     pr=dict(geometry='roundRect',adj=f'adj:val {a}',x=cm(x),y=cm(y),width=cm(w),height=cm(h),fill=fill,name=name)
@@ -51,11 +52,13 @@ def frame(sec,title):
     for k,(ic,lab) in enumerate(SECT):
         y=3.5+k*2.9;on=k==sec
         if on:
-            pill_idx[s]=counts[s]+1
+            pill_top[s]=counts[s]+1
+            pill_idx[s]=shape_counts[s]+1
             box(s,1.3,y,2.2,2.6,PC,1.1,name=f'#s{n}-rail-pill')
         pic(s,icon(ic,'none','x',ON_PC if on else MUT),1.9,y+0.35,1.0,lab)
         tx(s,1.3,y+1.6,2.2,0.7,lab,12,ON_PC if on else MUT,on,'center','middle','rail-label')
     sidebar_end[s]=counts[s]
+    sidebar_shapes[s]=shape_counts[s]
     content_start[s]=counts[s]+1
     tx(s,4.4,1.2,28,2.4,title,36,TX,True,valign='middle',name='judul')
     page(s)
@@ -268,11 +271,11 @@ for i in range(1,TOTAL+1):
     split=i in (3,13,15)
     if split:
         emit(s,'group',{'shapes':'1,2','name':f'#s{i}-sidebar-bg','zorder':'1'})
-        fg=[k-1 for k in range(3,se+1) if k!=pill]
+        fg=[k for k in range(2,se) if k!=pill_top[s]-1]
         emit(s,'group',{'shapes':','.join(map(str,fg)),'name':f'#s{i}-sidebar-fg','zorder':'3'})
-        ct,bt,ft=5,6,7
+        ct,bt,ft=2,3,4
     else:
-        ct=cs+1;bt=ft=None
+        ct=sidebar_shapes.get(s,0)+1;bt=ft=None
     proxy(i,'content')
     if split:
         proxy(i,'sidebar-bg');proxy(i,'sidebar-fg')
@@ -282,15 +285,15 @@ for i in range(1,TOTAL+1):
         if i in (1,2,14):anim(c,HOUT,'onClick',220)
         continue
     if i in (3,15):
-        b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[2]'
+        b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[1]'
         anim(b,SIN,'afterPrevious',400);anim(f,SIN,'withPrevious',400);anim(p,SIN,'withPrevious',400)
         anim(c,VIN,'withPrevious',500)
     else:
         anim(c,VIN,'afterPrevious',500)
-    if i in (5,8,13):anim(f'/slide[{i}]/shape[{2 if i==13 else pill}]',PDOWN,'afterPrevious',500)
+    if i in (5,8,13):anim(f'/slide[{i}]/shape[{1 if i==13 else pill}]',PDOWN,'afterPrevious',500)
     anim(c,VOUT,'onClick',300)
     if i in (13,15):
-        b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[2]'
+        b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[1]'
         anim(b,SOUT,'withPrevious',200);anim(f,SOUT,'withPrevious',200);anim(p,SOUT,'withPrevious',200)
 # --- bangun ---
 assert n==TOTAL,f'jumlah slide {n}, seharusnya {TOTAL}'
