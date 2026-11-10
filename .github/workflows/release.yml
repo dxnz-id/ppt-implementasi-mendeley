@@ -31,10 +31,10 @@ jobs:
           cache: "npm"
 
       # Carlito metrik-compatible dengan Calibri agar layout PDF tidak bergeser.
-      - name: Pasang LibreOffice, font, dan poppler
+      - name: Pasang LibreOffice, font, dan alat pratinjau
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libreoffice-impress fonts-crosextra-carlito poppler-utils
+          sudo apt-get install -y --no-install-recommends libreoffice-impress fonts-crosextra-carlito poppler-utils imagemagick
 
       # Unduh rilis yang dipatok dan verifikasi checksum sebelum dipasang.
       - name: Pasang OfficeCLI
@@ -80,31 +80,16 @@ jobs:
           soffice --headless --convert-to pdf --outdir . deck.pptx
           test -f deck.pdf
 
-      # PNG dipakai agar slide bisa dilihat langsung di halaman rilis.
+      # Satu contact sheet agar daftar aset rilis tetap bersih.
       - name: Render pratinjau slide
         run: |
           set -euo pipefail
           mkdir -p preview
           pdftoppm -png -r 120 deck.pdf preview/slide
-          test "$(find preview -maxdepth 1 -name 'slide-*.png' | wc -l)" -eq 16
-
-      - name: Siapkan body rilis
-        run: |
-          set -euo pipefail
-          tag="build-${GITHUB_SHA::7}"
-          base="https://github.com/${GITHUB_REPOSITORY}/releases/download/${tag}"
-          {
-            printf 'Dibangun otomatis dari commit `%s`.\n\n' "$GITHUB_SHA"
-            printf '<details>\n<summary>Pratinjau 16 slide</summary>\n\n'
-            while IFS= read -r img; do
-              name=$(basename "$img")
-              num=${name#slide-}
-              num=${num%.png}
-              printf '![Slide %d](%s/%s)\n\n' "$((10#$num))" "$base" "$name"
-            done < <(find preview -maxdepth 1 -name 'slide-*.png' | sort -V)
-            printf '</details>\n\n'
-            printf '[Unduh PDF](%s/deck.pdf) | [Unduh PPTX](%s/deck.pptx)\n' "$base" "$base"
-          } > release-body.md
+          mapfile -t slides < <(find preview -maxdepth 1 -name 'slide-*.png' | sort -V)
+          test "${#slides[@]}" -eq 16
+          montage "${slides[@]}" -tile 2x8 -geometry 800x450+8+8 -background '#F6F6F6' preview.png
+          test -f preview.png
 
       - name: Ambil SHA pendek
         id: meta
@@ -114,10 +99,20 @@ jobs:
         with:
           tag_name: build-${{ steps.meta.outputs.short }}
           name: Build ${{ steps.meta.outputs.short }}
-          body_path: release-body.md
+          body: |
+            Dibangun otomatis dari commit ${{ github.sha }}.
+
+            <details>
+            <summary>Pratinjau 16 slide</summary>
+
+            ![Pratinjau 16 slide](https://github.com/${{ github.repository }}/releases/download/build-${{ steps.meta.outputs.short }}/preview.png)
+
+            </details>
+
+            [Unduh PDF](https://github.com/${{ github.repository }}/releases/download/build-${{ steps.meta.outputs.short }}/deck.pdf) | [Unduh PPTX](https://github.com/${{ github.repository }}/releases/download/build-${{ steps.meta.outputs.short }}/deck.pptx)
           files: |
             deck.pptx
             deck.pdf
-            preview/*.png
+            preview.png
           fail_on_unmatched_files: true
           overwrite_files: true
