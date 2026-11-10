@@ -4,7 +4,7 @@ Generator deck 16 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat de
 
 ## Struktur
 - `build.py`: isi slide, palet, dan layout
-- `icons.js`: pembuat ikon Material dalam bentuk cookie atau flower
+- `icons.js`: pembuat ikon Material dengan bentuk cookie, flower, clover, squircle, burst, dan sunny
 - `assets/`: aset sumber (nomor, masking, ilustrasi); ikon ber-hash dibuat saat build
 - `docs/GUIDELINE.md`: panduan bahasa, desain, dan alur kerja
 - `skills/`: skill yang dipakai selama pembuatan (lihat `skills/README.md`)

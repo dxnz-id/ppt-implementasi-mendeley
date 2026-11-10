@@ -18,7 +18,8 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Jangan mengarang rujukan, angka, atau fitur. Klaim yang belum diverifikasi ditandai di catatan pembicara.
 
 ## Aturan desain
-- Referensi layout: pengaturan (settings) di https://github.com/satoxyan/expressive-pC, yaitu rail navigasi kiri, kartu tonal berradius besar, ikon dalam bentuk cookie atau flower.
+- Referensi layout: pengaturan (settings) di https://github.com/satoxyan/expressive-pC, yaitu rail navigasi kiri, kartu tonal berradius besar, ikon dalam bentuk cookie, flower, clover, squircle, burst, atau sunny.
+- Bentuk ikon mengikuti peran: flower untuk hero, cookie/clover/squircle untuk kartu, burst untuk peringatan atau pemeriksaan, sunny untuk ide dan waktu.
 - Palet: biru, teal, dan hijau pastel dengan aksen navy. Merah hanya untuk risiko. Tanpa ungu.
 - Font: Calibri. Judul 36 pt tebal, isi 18 sampai 24 pt, keterangan minimal 10 pt, sitasi kaki minimal 8 pt.
 - Margin tepi minimal 1 cm, jarak antarkartu 0,8 cm. Satu gagasan per slide.

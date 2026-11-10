@@ -1,13 +1,18 @@
 const fs=require('fs'),React=require('react'),S=require('react-dom/server'),sharp=require('sharp'),m=require('react-icons/md');
 const specs=JSON.parse(fs.readFileSync(process.argv[2]));
+const SHAPES=['none','cookie','flower','clover','burst','sunny','squircle'];
 fs.mkdirSync('assets',{recursive:true});
 function outline(shape,N=480){const p=[];for(let i=0;i<N;i++){const t=i/N*2*Math.PI;let r=1;
  if(shape==='cookie')r=(1+.055*Math.cos(9*t))/1.055;
  else if(shape==='flower')r=(1+.12*Math.cos(8*t))/1.12;
+ else if(shape==='clover')r=(1+.18*Math.cos(4*t))/1.18;
+ else if(shape==='burst')r=(1+.18*Math.cos(12*t))/1.18;
+ else if(shape==='sunny')r=(1+.10*Math.cos(16*t))/1.10;
  else if(shape==='squircle')r=1/Math.pow(Math.pow(Math.abs(Math.cos(t)),4)+Math.pow(Math.abs(Math.sin(t)),4),.25)/1.05;
  p.push([256+250*r*Math.cos(t),256+250*r*Math.sin(t)]);}
  return 'M'+p.map(a=>a[0].toFixed(1)+' '+a[1].toFixed(1)).join('L')+'Z';}
 (async()=>{for(const s of specs){
+ if(!SHAPES.includes(s.shape))throw new Error('bentuk tidak dikenal: '+s.shape);
  const sz=s.shape==='none'?512:290, ic=S.renderToStaticMarkup(React.createElement(m[s.icon],{size:sz})).replace(/currentColor/g,'#'+s.fg);
  const icon=await sharp(Buffer.from(ic)).resize(sz,sz).png().toBuffer();
  let base;
