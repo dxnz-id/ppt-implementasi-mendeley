@@ -18,5 +18,7 @@ Prasyarat: uv, Node.js, dan officecli.
 
 Hasilnya `deck.pptx`. Ikon ber-hash di `assets/` diabaikan Git karena selalu dibuat ulang oleh `icons.js`.
 
+Animasi memakai motion path per objek tanpa fade atau perubahan warna. Animasi hanya tampil di PowerPoint 365/2021; PDF tetap statis di posisi akhir.
+
 ## Rilis otomatis
 Setiap push ke `main` menjalankan `.github/workflows/release.yml`: deck dibangun, divalidasi, diekspor ke `deck.pdf`, lalu diterbitkan sebagai release bertag `build-<sha>` dengan kedua berkas. Tidak perlu mengisi rahasia; `GITHUB_TOKEN` sudah tersedia.

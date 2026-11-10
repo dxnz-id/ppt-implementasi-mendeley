@@ -59,6 +59,11 @@ jobs:
       - name: Bangun deck
         run: uv run build.py
 
+      - name: Periksa animasi
+        run: |
+          uv run python test_retarget.py
+          uv run python check_anim.py
+
       - name: Periksa tumpang tindih panah
         run: uv run python check_layout.py
 
@@ -96,6 +101,7 @@ jobs:
         run: echo "short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
       - uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
         with:
           tag_name: build-${{ steps.meta.outputs.short }}
           name: Build ${{ steps.meta.outputs.short }}

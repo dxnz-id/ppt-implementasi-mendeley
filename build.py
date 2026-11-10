@@ -1,4 +1,4 @@
-import json,subprocess,os,hashlib,struct
+import json,subprocess,os,hashlib,struct,sys
 OUT='deck.pptx'
 TOTAL=16
 # --- palet M3 Expressive dari #B0C8E0 #C1E0E0 #DCE7D6 #F6F6F6 ---
@@ -11,13 +11,18 @@ EC,ON_EC='FFDAD6','65000B'
 PILL_PC,PILL_EC='C9DBEC','F7C7C1'
 F='Calibri'
 ops=[];specs={};n=0
+counts={};content_start={};sidebar_end={};pill_idx={}
 def cm(v):return f'{v:.2f}cm'
 def icon(name,shape,bg,fg):
     f=hashlib.md5(f'{name}{shape}{bg}{fg}'.encode()).hexdigest()[:10]+'.png'
     specs[f]=dict(file=f,icon=name,shape=shape,bg=bg,fg=fg);return f
-def add(parent,typ,**p):ops.append(dict(command='add',parent=parent,type=typ,props={k:str(v) for k,v in p.items()}))
+def emit(parent,typ,props):ops.append(dict(command='add',parent=parent,type=typ,props={k:str(v) for k,v in props.items()}))
+def add(parent,typ,**p):
+    emit(parent,typ,p)
+    if typ in ('shape','picture','chart','group'):counts[parent]=counts.get(parent,0)+1
+    return counts.get(parent)
 def slide(bg):
-    global n;n+=1;add('/','slide',background=bg);return f'/slide[{n}]'
+    global n;n+=1;add('/','slide',background=bg);s=f'/slide[{n}]';counts[s]=0;content_start[s]=1;return s
 def box(s,x,y,w,h,fill,r=1.0,line=None,dash=None,name='kartu'):
     a=min(50000,int(r/min(w,h)*100000))
     pr=dict(geometry='roundRect',adj=f'adj:val {a}',x=cm(x),y=cm(y),width=cm(w),height=cm(h),fill=fill,name=name)
@@ -45,9 +50,13 @@ def frame(sec,title):
     pic(s,icon('MdLibraryBooks','cookie',P,'FFFFFF'),1.7,1.6,1.4,'Logo bagian')
     for k,(ic,lab) in enumerate(SECT):
         y=3.5+k*2.9;on=k==sec
-        if on:box(s,1.3,y,2.2,2.6,PC,1.1,name='rail-aktif')
+        if on:
+            pill_idx[s]=counts[s]+1
+            box(s,1.3,y,2.2,2.6,PC,1.1,name=f'#s{n}-rail-pill')
         pic(s,icon(ic,'none','x',ON_PC if on else MUT),1.9,y+0.35,1.0,lab)
         tx(s,1.3,y+1.6,2.2,0.7,lab,12,ON_PC if on else MUT,on,'center','middle','rail-label')
+    sidebar_end[s]=counts[s]
+    content_start[s]=counts[s]+1
     tx(s,4.4,1.2,28,2.4,title,36,TX,True,valign='middle',name='judul')
     page(s)
     return s
@@ -244,6 +253,45 @@ tx(s,2.4,4.2,19,4.0,'Terima kasih',72,TX,True)
 tx(s,2.4,9.0,18,1.4,'Pertanyaan dan diskusi',24,P,True)
 pic(s,icon('MdQuestionAnswer','flower',PC,ON_PC),23.0,4.8,8.4,'Ikon tanya jawab')
 notes(s,'Tutup dengan terima kasih dan ajak tanya jawab. Arahkan pertanyaan tentang langkah implementasi, kendala metadata, dan pilihan gaya sitasi ke slide terkait.')
+# --- animasi per objek: group dianimasikan lewat proxy, lalu targetnya dipindah ke group ---
+HIN,HOUT='M 1 0 L 0 0 E','M 0 0 L -1 0 E'
+VIN,VOUT='M 0 1 L 0 0 E','M 0 0 L 0 -1 E'
+SIN,SOUT='M -0.12 0 L 0 0 E','M 0 0 L -0.12 0 E'
+PDOWN='M 0 -0.1522 L 0 0 E'
+def anim(target,d,trigger,dur):
+    emit(target,'animation',{'class':'motion','path':'custom','d':d,'trigger':trigger,'duration':dur})
+def proxy(i,tag):
+    emit(f'/slide[{i}]','shape',{'x':'0cm','y':'0cm','width':'0.01cm','height':'0.01cm','fill':'none','line':'none','name':f'#s{i}-proxy-{tag}'})
+for i in range(1,TOTAL+1):
+    s=f'/slide[{i}]';total=counts[s];cs=content_start[s];se=sidebar_end.get(s,cs-1);pill=pill_idx.get(s)
+    emit(s,'group',{'shapes':','.join(map(str,range(cs,total+1))),'name':f'#s{i}-content'})
+    split=i in (3,13,15)
+    if split:
+        emit(s,'group',{'shapes':'1,2','name':f'#s{i}-sidebar-bg','zorder':'1'})
+        fg=[k-1 for k in range(3,se+1) if k!=pill]
+        emit(s,'group',{'shapes':','.join(map(str,fg)),'name':f'#s{i}-sidebar-fg','zorder':'3'})
+        ct,bt,ft=5,6,7
+    else:
+        ct=cs+1;bt=ft=None
+    proxy(i,'content')
+    if split:
+        proxy(i,'sidebar-bg');proxy(i,'sidebar-fg')
+    c=f'/slide[{i}]/shape[{ct}]'
+    if i in (1,2,14,16):
+        if i in (2,14,16):anim(c,HIN,'afterPrevious',420)
+        if i in (1,2,14):anim(c,HOUT,'onClick',220)
+        continue
+    if i in (3,15):
+        b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[2]'
+        anim(b,SIN,'afterPrevious',400);anim(f,SIN,'withPrevious',400);anim(p,SIN,'withPrevious',400)
+        anim(c,VIN,'withPrevious',500)
+    else:
+        anim(c,VIN,'afterPrevious',500)
+    if i in (5,8,13):anim(f'/slide[{i}]/shape[{2 if i==13 else pill}]',PDOWN,'afterPrevious',500)
+    anim(c,VOUT,'onClick',300)
+    if i in (13,15):
+        b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[2]'
+        anim(b,SOUT,'withPrevious',200);anim(f,SOUT,'withPrevious',200);anim(p,SOUT,'withPrevious',200)
 # --- bangun ---
 assert n==TOTAL,f'jumlah slide {n}, seharusnya {TOTAL}'
 json.dump(list(specs.values()),open('specs.json','w'))
@@ -252,3 +300,4 @@ json.dump(ops,open('ops.json','w'))
 if os.path.exists(OUT):os.remove(OUT)
 subprocess.run(['officecli','create',OUT],check=True)
 r=subprocess.run(['officecli','batch',OUT,'--input','ops.json','--json'],capture_output=True,text=True);print(r.stdout[-1500:],r.stderr[-800:]);r.check_returncode()
+subprocess.run([sys.executable,'retarget_group_animations.py',OUT],check=True)
