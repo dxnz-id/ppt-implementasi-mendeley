@@ -14,7 +14,7 @@ def overlaps(a, b):
 def main():
     slides = {}
     for op in json.load(open("ops.json")):
-        if op["type"] in ("picture", "shape"):
+        if op.get("type") in ("picture", "shape"):
             slides.setdefault(op["parent"], []).append(op)
 
     bad = 0
