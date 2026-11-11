@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 from collections import Counter
 
 P = "http://schemas.openxmlformats.org/presentationml/2006/main"
+P14 = "http://schemas.microsoft.com/office/powerpoint/2010/main"
 NS = {"p": P}
 HIN = "M 1 0 L -0.015 0 L 0 0 E"
 VIN = "M 0 1 L 0 -0.015 L 0 0 E"
@@ -100,6 +101,33 @@ def _effects(top, bad, index, ids):
     return effects
 
 
+def _transition_errors(index, root):
+    bad = []
+    transition = root.find("p:transition", NS)
+    if index == 1:
+        if transition is not None:
+            bad.append("slide 1: tidak boleh punya transisi")
+        return bad
+    if transition is None:
+        return [f"slide {index}: transisi push-left-400 tidak ada"]
+    push = transition.find("p:push", NS)
+    if push is None or push.get("dir") != "l":
+        bad.append(f"slide {index}: transisi bukan push kiri")
+    if transition.get(f"{{{P14}}}dur") != "400":
+        bad.append(
+            f"slide {index}: durasi transisi "
+            f"{transition.get(f'{{{P14}}}dur')}, seharusnya 400"
+        )
+    if transition.get("advTm") is not None:
+        bad.append(f"slide {index}: transisi auto-advance, seharusnya klik")
+    if transition.get("advClick") in ("0", "false"):
+        bad.append(f"slide {index}: klik maju dimatikan")
+    extra = [c.tag for c in transition if c.tag != f"{{{P}}}push"]
+    if extra:
+        bad.append(f"slide {index}: transisi punya efek tambahan")
+    return bad
+
+
 def check_slide(index, root):
     bad = []
     ids = {e.get("id"): e.get("name") for e in root.findall(".//p:cNvPr", NS)}
@@ -114,6 +142,8 @@ def check_slide(index, root):
     for tag in required:
         if f"#s{index}-{tag}" not in groups:
             bad.append(f"slide {index}: group #s{index}-{tag} tidak ada")
+
+    bad.extend(_transition_errors(index, root))
 
     for tag in ("animEffect", "anim", "animClr", "animScale", "animRot", "set", "cmd"):
         if root.findall(f".//p:{tag}", NS):
@@ -225,7 +255,7 @@ def main(path="deck.pptx"):
     if bad:
         print("\n".join(bad))
         return 1
-    print(f"{len(roots)} slide: satu klik, easing, arah, dan urutan animasi valid")
+    print(f"{len(roots)} slide: satu klik, transisi, easing, arah, dan urutan animasi valid")
     return 0
 
 
