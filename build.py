@@ -262,7 +262,6 @@ HIN='M 1 0 L -0.015 0 L 0 0 E'
 VIN='M 0 1 L 0 -0.015 L 0 0 E'
 SIN='M -0.12 0 L 0.003 0 L 0 0 E'
 PDOWN='M 0 -0.1522 L 0 0.004 L 0 0 E'
-TRANSITION='push-left-400'
 def anim(target,d,trigger,dur,easein=20,easeout=70):
     emit(target,'animation',{'class':'motion','path':'custom','d':d,'trigger':trigger,'duration':dur,'easein':easein,'easeout':easeout})
 def proxy(i,tag):
@@ -293,8 +292,6 @@ for i in range(1,TOTAL+1):
     else:
         anim(c,VIN,'afterPrevious',500)
     if i in (5,8,13):anim(f'/slide[{i}]/shape[{1 if i==13 else pill}]',PDOWN,'withPrevious',500,easein=30,easeout=50)
-for i in range(2,TOTAL+1):
-    ops.append(dict(command='set',path=f'/slide[{i}]',props={'transition':TRANSITION}))
 # --- bangun ---
 if n!=TOTAL:raise ValueError(f'jumlah slide {n}, seharusnya {TOTAL}')
 json.dump(list(specs.values()),open('specs.json','w'))
