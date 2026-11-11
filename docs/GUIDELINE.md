@@ -27,13 +27,11 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Setiap slide membawa elemen visual (ikon, bentuk). Sampul, kesimpulan, dan penutup terang.
 
 ## Aturan gerak
-- Satu slide satu klik. Slide berikutnya masuk dengan transisi fade 400 ms; tidak ada fade per objek.
-- Transisi dipasang pada slide 2 sampai 16; slide 1 tidak punya transisi masuk.
-- Tidak ada auto-advance atau `advanceClick=false`. Satu klik tetap memajukan slide.
+- Satu slide satu klik. Tidak ada animasi keluar; slide berikutnya langsung masuk.
 - Masuk horizontal 420 ms, vertikal 500 ms, sidebar 400 ms. Konten memakai ease-in 20 dan ease-out 70; pil memakai 30 dan 50.
 - Path masuk melewati target sedikit lalu kembali: 1,5% lebar atau tinggi slide, sidebar 0,3% lebar.
 - Pil sidebar bergerak bersama konten memakai `withPrevious`, bukan `afterPrevious`.
-- Tanpa fade/opacity per objek atau perubahan warna. Fade hanya transisi antar-slide 400 ms. Animasi hanya tampil di PowerPoint 365/2021.
+- Tanpa fade, opacity, atau perubahan warna. Animasi hanya tampil di PowerPoint 365/2021.
 - Referensi gerak: `MediaPager.qml` dan `SidebarPop.qml` di https://github.com/satoxyan/expressive-pC.
 
 ## Token warna (ada di bagian atas build.py)
