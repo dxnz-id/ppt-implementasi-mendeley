@@ -18,15 +18,16 @@ Prasyarat: uv, Node.js, dan OfficeCLI `v1.0.160` (versi yang sama dengan workflo
 
 Hasilnya `deck.pptx`. Ikon ber-hash di `assets/` diabaikan Git karena selalu dibuat ulang oleh `icons.js`.
 
-Animasi memakai motion path per objek dengan easing dan overshoot kecil. Tidak ada fade atau perubahan warna. Satu klik pindah slide; konten slide baru masuk otomatis. Animasi hanya tampil di PowerPoint 365/2021; PDF tetap statis di posisi akhir.
+Animasi memakai motion path per objek dengan easing dan overshoot kecil. Perpindahan antar-slide memakai transisi push kiri 400 ms: slide lama terdorong keluar saat slide baru masuk. Tidak ada animasi exit per objek, fade, atau perubahan warna. Satu klik pindah slide; konten slide baru masuk otomatis. Animasi hanya tampil di PowerPoint 365/2021; PDF tetap statis di posisi akhir.
 
 ## Uji manual sebelum rilis
 Animasinya tidak bisa diuji otomatis, jadi buka `deck.pptx` di PowerPoint 365/2021 dan periksa slide 1, 3, 5, 13, dan 16:
 
 - Satu klik memindahkan slide; konten masuk otomatis tanpa klik tambahan.
+- Saat klik, slide lama keluar ke kiri dengan halus; slide baru masuk tanpa klik tambahan dan tanpa auto-advance.
 - Sidebar dan pill pada slide 3, 5, dan 13 bergerak bersama konten, tanpa klik tambahan.
 - Easing dan durasi terasa halus, tanpa lompatan.
-- Tidak ada efek fade atau exit.
+- Tidak ada fade atau animasi exit per objek; efek keluar berasal dari transisi push antar-slide.
 
 Uji manual ini wajib dilakukan sebelum menerbitkan rilis dan tidak dicakup CI.
 

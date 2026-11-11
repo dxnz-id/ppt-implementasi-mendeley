@@ -27,7 +27,9 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Setiap slide membawa elemen visual (ikon, bentuk). Sampul, kesimpulan, dan penutup terang.
 
 ## Aturan gerak
-- Satu slide satu klik. Tidak ada animasi keluar; slide berikutnya langsung masuk.
+- Satu slide satu klik. Slide berikutnya masuk dengan transisi push kiri 400 ms; slide lama terdorong keluar. Tidak ada animasi exit per objek.
+- Transisi dipasang pada slide 2 sampai 16; slide 1 tidak punya transisi masuk. Transisi berada di slide tujuan, bukan animasi exit per objek.
+- Tidak ada auto-advance atau `advanceClick=false`. Satu klik tetap memajukan slide.
 - Masuk horizontal 420 ms, vertikal 500 ms, sidebar 400 ms. Konten memakai ease-in 20 dan ease-out 70; pil memakai 30 dan 50.
 - Path masuk melewati target sedikit lalu kembali: 1,5% lebar atau tinggi slide, sidebar 0,3% lebar.
 - Pil sidebar bergerak bersama konten memakai `withPrevious`, bukan `afterPrevious`.
