@@ -169,40 +169,62 @@ notes(s,'Satu referensi di Library menjadi sumber untuk sitasi di Word dan entri
 # 8 persiapan
 s=frame(2,'Persiapan: akun, aplikasi, dan add-in')
 w3=(W-1.6)/3
-for k,(ic,hd,bd) in enumerate([('MdPersonAdd','Buat akun','Daftar dengan email aktif.'),('MdDownload','Pasang aplikasi','Unduh Reference Manager, lalu pasang add-in Mendeley Cite di Word.'),('MdExtension','Pasang ekstensi','Tambahkan Web Importer ke peramban untuk menyimpan referensi dari web.')]):
+for k,(f,hd,bd) in enumerate([
+    ('shot-account.png','Buat akun','Daftar dengan email aktif.'),
+    ('shot-app.png','Pasang aplikasi','Unduh Reference Manager, lalu pasang add-in Mendeley Cite di Word.'),
+    ('shot-extension.png','Pasang ekstensi','Tambahkan Web Importer ke peramban untuk menyimpan referensi dari web.')]):
     x=X0+k*(w3+0.8);box(s,x,4.2,w3,12.6,[CARD,SC,TC][k],1.4)
-    clipped(s,f'mask-08-{k+1:02d}.png',x,4.2,w3,12.6,'Masking angka langkah')
-    pic(s,icon(ic,[SUNNY,CLOVER,SQUIRCLE][k],PC,ON_PC),x+w3-5.4,4.8,4.6,hd)
-    tx(s,x+0.9,10.4,w3-1.8,1.4,hd,24,[TX,ON_SC,TX][k],True);tx(s,x+0.9,12.2,w3-1.8,4.6,bd,20,[MUT,ON_SC,MUT][k])
-tx(s,X0,18.3,20,0.5,'Sumber: Mendeley (n.d.).',10,MUT)
+    shot(s,f,x+0.5,4.7,w3-1.0,hd)
+    num(s,x+0.7,9.4,1.2,str(k+1),P,'FFFFFF')
+    tx(s,x+2.1,9.3,w3-2.8,1.6,hd,22,[TX,ON_SC,TX][k],True)
+    tx(s,x+0.8,10.9,w3-1.6,5.0,bd,18,[MUT,ON_SC,MUT][k])
+tx(s,X0,18.3,20,0.5,'Sumber: Mendeley (n.d.); UCL Library (2019) untuk tangkapan layar akun.',10,MUT)
 notes(s,'Tiga persiapan: membuat akun dengan email aktif, memasang Reference Manager dan add-in Mendeley Cite di Word, lalu memasang Web Importer di peramban.')
 # 9 langkah 1
 s=frame(2,'Langkah 1: kumpulkan referensi')
-for k,(ic,hd,bd) in enumerate([('MdUploadFile','Impor PDF','Tambahkan PDF jurnal ke Library.'),('MdLanguage','Simpan dari web','Gunakan Web Importer pada halaman artikel.'),('MdFactCheck','Periksa metadata','Cek judul, penulis, tahun, dan DOI; koreksi yang salah.'),('MdFolder','Rapikan','Kelompokkan dengan folder dan tag per bab atau topik.')]):
+for k,(f,hd,bd) in enumerate([
+    ('shot-import.png','Impor PDF','Tambahkan PDF jurnal ke Library.'),
+    ('shot-web-save.png','Simpan dari web','Gunakan Web Importer pada halaman artikel.'),
+    ('shot-details.png','Periksa metadata','Cek judul, penulis, tahun, dan DOI; koreksi yang salah.'),
+    ('shot-organize.png','Rapikan','Kelompokkan dengan folder dan tag per bab atau topik.')]):
     x=X0+(k%2)*14.4;y=4.0+(k//2)*7.4;box(s,x,y,13.6,6.6,[CARD,SC,TC,CARD][k],1.3)
-    pic(s,icon(ic,[COOKIE,CLOVER,BURST,SQUIRCLE][k],[PC,P,SC,SC][k],[ON_PC,'FFFFFF',ON_TC,ON_SC][k]),x+0.9,y+1.6,3.4,hd)
-    tx(s,x+5.0,y+1.2,8.0,1.3,hd,24,TX,True);tx(s,x+5.0,y+2.7,8.0,3.4,bd,19,MUT)
+    shot(s,f,x+0.6,y+0.5,6.2,hd)
+    tx(s,x+7.2,y+0.5,5.8,1.6,hd,20,TX,True)
+    tx(s,x+7.2,y+2.2,5.8,3.8,bd,18,MUT)
+tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025); tangkapan layar Mendeley.',10,MUT)
 notes(s,'Mulai dari mengumpulkan sumber. Metadata hasil impor sering keliru, jadi periksa judul, penulis, tahun, dan DOI satu per satu. Folder dan tag per bab memudahkan pencarian saat menulis.')
 # 10 langkah 2
 s=frame(2,'Langkah 2: baca dan catat')
 box(s,X0,4.0,17.6,14.0,CARD,1.4)
-for k,(ic,hd,bd) in enumerate([('MdBorderColor','Highlight dan anotasi','Tandai bagian penting langsung pada PDF.'),('MdStickyNote2','Catatan per referensi','Tulis ide utama dengan kata sendiri sebelum menulis naskah.')]):
-    y=4.9+k*6.6;pic(s,icon(ic,[CLOVER,SQUIRCLE][k],SC,ON_SC),X0+1.0,y+0.6,3.6,hd)
-    tx(s,X0+5.4,y+0.6,11.2,1.4,hd,24,TX,True);tx(s,X0+5.4,y+2.2,11.2,3.4,bd,20,MUT)
+for k,(f,hd,bd) in enumerate([
+    ('shot-highlight.png','Highlight dan anotasi','Tandai bagian penting langsung pada PDF.'),
+    ('shot-notes.png','Catatan per referensi','Tulis ide utama dengan kata sendiri sebelum menulis naskah.')]):
+    y=4.9+k*6.6;shot(s,f,X0+0.8,y+0.5,6.6,hd)
+    tx(s,X0+7.9,y+0.5,8.7,1.3,hd,22,TX,True)
+    tx(s,X0+7.9,y+1.9,8.7,4.0,bd,18,MUT)
 box(s,X0+18.4,4.0,9.6,14.0,TC,1.4)
 clipped(s,'mask-10-panah.png',X0+18.4,4.0,9.6,14.0,'Masking panah hasil')
 pic(s,icon('MdLightbulb',SUNNY,SC,ON_TC),X0+19.6,5.2,4.2,'Ikon ide')
 tx(s,X0+19.4,10.6,7.6,1.4,'Hasilnya',24,ON_TC,True);tx(s,X0+19.4,12.2,7.6,5,'Bahan parafrasa untuk menyusun kutipan tidak langsung.',22,ON_TC)
+tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025); tangkapan layar Mendeley.',10,MUT)
 notes(s,'Anotasi dan catatan membantu kita memahami sumber lebih dulu. Dari catatan itulah kutipan tidak langsung ditulis ulang dengan kalimat sendiri, lengkap dengan sitasinya.')
 # 11 langkah 3
 s=frame(2,'Langkah 3: sisipkan kutipan di Word')
 w4=(W-3*1.6)/4
-for k,(ic,hd,bd) in enumerate([('MdDescription','Buka add-in','Buka Mendeley Cite di Microsoft Word.'),('MdFormatQuote','Sisipkan kutipan','Pilih referensi, lalu tempatkan pada kalimat.'),('MdStyle','Pilih gaya','Sesuaikan dengan pedoman kampus.'),('MdListAlt','Buat daftar pustaka','Daftar pustaka tersusun otomatis.')]):
+for k,(f,hd,bd) in enumerate([
+    ('shot-addin.png','Buka add-in','Buka Mendeley Cite di Microsoft Word.'),
+    ('shot-cite.png','Sisipkan kutipan','Pilih referensi, lalu tempatkan pada kalimat.'),
+    ('shot-style.png','Pilih gaya','Sesuaikan dengan pedoman kampus.'),
+    ('shot-bibliography.png','Buat daftar pustaka','Daftar pustaka tersusun otomatis.')]):
     x=X0+k*(w4+1.6);box(s,x,4.4,w4,13.0,[CARD,SC,TC,PC][k],1.3)
     num(s,x+0.7,5.1,1.5,str(k+1),P,'FFFFFF')
-    pic(s,icon(ic,[COOKIE,CLOVER,SQUIRCLE,BURST][k],[PC,P,SC,P][k],[ON_PC,'FFFFFF',ON_TC,'FFFFFF'][k]),x+0.7,7.2,3.4,hd)
-    tx(s,x+0.7,11.0,w4-1.4,2.4,hd,22,TX,True);tx(s,x+0.7,13.6,w4-1.4,3.4,bd,18,MUT)
+    shot(s,f,x+0.5,7.0,w4-1.0,hd)
+    tcol=ON_PC if k==3 else TX
+    bcol=ON_PC if k==3 else MUT
+    tx(s,x+0.6,10.0,w4-1.2,2.2,hd,20,tcol,True)
+    tx(s,x+0.6,12.2,w4-1.2,4.2,bd,18,bcol)
     if k<3:pic(s,icon('MdArrowForward','none','x',P),x+w4+0.3,10.2,1.0,'Panah')
+tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025); tangkapan layar Mendeley.',10,MUT)
 notes(s,'Alurnya empat langkah di Word: buka Mendeley Cite, sisipkan kutipan, pilih gaya sesuai pedoman kampus, lalu buat daftar pustaka. Daftar pustaka ikut berubah otomatis saat kutipan ditambah atau dihapus.')
 # 13 kelebihan keterbatasan
 s=frame(3,'Kelebihan dan keterbatasan')
