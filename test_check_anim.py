@@ -1,7 +1,7 @@
 import unittest
 import xml.etree.ElementTree as ET
 
-from check_anim import HIN, check_slide
+from check_anim import HIN, PDOWN, SIN, VIN, _spec, check_slide
 
 
 def effect_group(
@@ -87,6 +87,29 @@ class CheckAnimTest(unittest.TestCase):
     def test_extra_click_group_fails(self):
         errors = self.errors(slide_xml(extra_top=click_group()))
         self.assertTrue(any("klik" in error.lower() for error in errors), errors)
+
+    def test_slides_remapped_after_demo_removed(self):
+        self.assertEqual(
+            [(name, path) for name, path, *_ in _spec(12)],
+            [("#s12-content", VIN), ("#s12-rail-pill", PDOWN)],
+        )
+        self.assertEqual(
+            [(name, path) for name, path, *_ in _spec(13)],
+            [("#s13-content", HIN)],
+        )
+        self.assertEqual(
+            [(name, path) for name, path, *_ in _spec(14)],
+            [
+                ("#s14-sidebar-bg", SIN),
+                ("#s14-sidebar-fg", SIN),
+                ("#s14-rail-pill", SIN),
+                ("#s14-content", VIN),
+            ],
+        )
+        self.assertEqual(
+            [(name, path) for name, path, *_ in _spec(15)],
+            [("#s15-content", HIN)],
+        )
 
 
 if __name__ == "__main__":

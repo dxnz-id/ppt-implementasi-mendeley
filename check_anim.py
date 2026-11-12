@@ -24,16 +24,16 @@ def parse(path):
 def _spec(index):
     """Exact (target name, path, duration, accel, decel) in effect order."""
     content = f"#s{index}-content"
-    if index in (1, 2, 14, 16):
+    if index in (1, 2, 13, 15):
         return [(content, HIN, 420, 20, 70)]
-    if index in (3, 15):
+    if index in (3, 14):
         return [
             (f"#s{index}-sidebar-bg", SIN, 400, 20, 70),
             (f"#s{index}-sidebar-fg", SIN, 400, 20, 70),
             (f"#s{index}-rail-pill", SIN, 400, 20, 70),
             (content, VIN, 500, 20, 70),
         ]
-    if index in (5, 8, 13):
+    if index in (5, 8, 12):
         return [
             (content, VIN, 500, 20, 70),
             (f"#s{index}-rail-pill", PDOWN, 500, 30, 50),
@@ -110,7 +110,7 @@ def check_slide(index, root):
     names = set(ids.values())
     if any("-proxy-" in (n or "") for n in names):
         bad.append(f"slide {index}: proxy masih ada")
-    required = ["content"] + (["sidebar-bg", "sidebar-fg"] if index in (3, 13, 15) else [])
+    required = ["content"] + (["sidebar-bg", "sidebar-fg"] if index in (3, 12, 14) else [])
     for tag in required:
         if f"#s{index}-{tag}" not in groups:
             bad.append(f"slide {index}: group #s{index}-{tag} tidak ada")
@@ -218,8 +218,8 @@ def check_slide(index, root):
 def main(path="deck.pptx"):
     roots = parse(path)
     bad = []
-    if len(roots) != 16:
-        bad.append(f"jumlah slide {len(roots)}, seharusnya 16")
+    if len(roots) != 15:
+        bad.append(f"jumlah slide {len(roots)}, seharusnya 15")
     for i, root in enumerate(roots, 1):
         bad.extend(check_slide(i, root))
     if bad:
