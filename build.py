@@ -269,10 +269,9 @@ tx(s,X0,16.8,28,0.8,'Semua sumber diakses 9 November 2026.',10,MUT)
 notes(s,'Daftar pustaka memuat sumber yang benar-benar dibuka: halaman resmi Mendeley, Mendeley Support, KBBI VI Daring, dan panduan gaya APA serta IEEE. Perbarui tanggal akses bila presentasi dilakukan pada hari lain.')
 # 16 penutup
 s=slide(BG)
-tx(s,2.4,4.2,19,4.0,'Terima kasih',72,TX,True)
-tx(s,2.4,9.0,18,1.4,'Pertanyaan dan diskusi',24,P,True)
-pic(s,icon('MdQuestionAnswer',FLOWER,PC,ON_PC),23.0,4.8,8.4,'Ikon tanya jawab')
-notes(s,'Tutup dengan terima kasih dan ajak tanya jawab. Arahkan pertanyaan tentang langkah implementasi, kendala metadata, dan pilihan gaya sitasi ke slide terkait.')
+tx(s,2.4,6.6,19,4.0,'Terima kasih',72,TX,True)
+pic(s,icon('MdWavingHand',FLOWER,PC,ON_PC),23.0,4.8,8.4,'Ikon penutup')
+notes(s,'Tutup dengan terima kasih.')
 # --- animasi per objek: group dianimasikan lewat proxy, lalu targetnya dipindah ke group ---
 HIN='M 1 0 L -0.015 0 L 0 0 E'
 VIN='M 0 1 L 0 -0.015 L 0 0 E'
