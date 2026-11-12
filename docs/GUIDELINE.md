@@ -1,7 +1,7 @@
 # Panduan deck Implementasi Mendeley
 
 ## Tujuan
-Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
+Deck 15 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
 
 ## Alur kerja
 1. Baca skill yang dipakai (urutan: bahasa-skills, stop-slop, material-3, officecli). Sebagian ada di `skills/`, sisanya dipasang dari sumber di `skills/README.md`.
@@ -24,7 +24,7 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Font: Calibri. Judul 36 pt tebal, isi 18 sampai 24 pt, keterangan minimal 10 pt, sitasi kaki minimal 8 pt.
 - Margin tepi minimal 1 cm, jarak antarkartu 0,8 cm. Satu gagasan per slide.
 - Gradasi hanya untuk opacity gambar; permukaan, kartu, dan latar memakai warna tonal solid.
-- Setiap slide membawa elemen visual (ikon, bentuk). Sampul, kesimpulan, dan penutup terang.
+- Setiap slide membawa elemen visual berupa ikon, bentuk, atau screenshot. Sampul, kesimpulan, dan penutup terang.
 
 ## Aturan gerak
 - Satu slide satu klik. Tidak ada animasi keluar; slide berikutnya langsung masuk.
@@ -48,10 +48,10 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Slide 2: nama dan NIM anggota, urut NIM; nomor besar memakai aset `num-01.png` sampai `num-07.png` yang dipotong mask kartu. Ikon ber-hash tidak disimpan di Git; `icons.js` membuatnya saat build.
 - Slide 6: batas Mendeley, bukan teori sitasi; teori jenis sitasi ada di Kelompok 4.
 - Slide 7: contoh satu sumber menjadi sitasi dan daftar pustaka; jangan menambah teori jenis sitasi atau aturan APA/IEEE.
-- Slide 4, 5, 8, 10, 14: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks. Rasio PNG harus sama dengan kartu; `build.py` gagal jika berbeda, jadi jangan meregangkan mask.
-- Slide 12: `assets/img-library-fade.png` dan `assets/img-cite-panel.png`; ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.
-- Slide 15: daftar pustaka; perbarui tanggal akses bila presentasi dilakukan pada hari lain.
-- Slide 16: penutup terang dengan bentuk tonal solid; jangan tambahkan gradasi latar.
+- Slide 4, 5, 10, 13: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks. Rasio PNG harus sama dengan kartu; `build.py` gagal jika berbeda, jadi jangan meregangkan mask.
+- Slide 5 sampai 11: screenshot Mendeley 16:9; tangkapan layar akun memakai UCL Library (2019); jangan regangkan; kredit di slide.
+- Slide 14: daftar pustaka; perbarui tanggal akses bila presentasi dilakukan pada hari lain.
+- Slide 15: penutup terang dengan bentuk tonal solid; jangan tambahkan gradasi latar.
 - Verifikasi ke situs resmi Mendeley: status Desktop dan batas penyimpanan gratis.
 
 ## Catatan teknis OfficeCLI
