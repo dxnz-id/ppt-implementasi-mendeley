@@ -41,6 +41,11 @@ def clipped(s,f,x,y,w,h,alt):
     iw,ih=struct.unpack('>II',head[16:24])
     if not abs(iw/ih-w/h)<0.01:raise ValueError(f'{f}: rasio {iw/ih:.3f} tidak cocok dengan kartu {w/h:.3f}; jangan regangkan mask')
     pic(s,f,x,y,w,alt,h)
+def shot(s,f,x,y,w,alt):
+    h=w*9/16
+    box(s,x-0.08,y-0.08,w+0.16,h+0.16,'FFFFFF',0.4,name='bingkai')
+    clipped(s,f,x,y,w,h,alt)
+    return h
 def notes(s,t):add(s,'notes',text=t)
 def num(s,x,y,d,t,fill,col):
     add(s,'shape',geometry='ellipse',x=cm(x),y=cm(y),width=cm(d),height=cm(d),text=t,size=20,bold='true',color=col,
@@ -118,14 +123,14 @@ s=frame(1,'Tiga komponen utama Mendeley')
 box(s,X0,4.0,10.0,14.0,PC,1.4)
 clipped(s,'mask-05-tiga.png',X0,4.0,10.0,14.0,'Masking angka tiga')
 pic(s,icon('MdLibraryBooks',FLOWER,P,'FFFFFF'),X0+1.2,4.9,3.6,'Ikon Mendeley')
-tx(s,X0+1.0,9.4,8,5.6,'Mendeley adalah aplikasi pengelola referensi dan jejaring akademik. Elsevier mengembangkannya.',22,ON_PC,True)
-tx(s,X0+1.0,15.0,8,2.6,'Pengembangan Mendeley Desktop dihentikan; Reference Manager menjadi fokus.',16,ON_PC)
-for k,(ic,hd,bd) in enumerate([('MdLibraryBooks','Mendeley Reference Manager','Pustaka pribadi untuk menyimpan, mengelompokkan, dan menganotasi PDF jurnal.'),
- ('MdDescription','Mendeley Cite','Add-in Microsoft Word untuk menyisipkan kutipan dan membuat daftar pustaka.'),
- ('MdExtension','Web Importer','Ekstensi peramban untuk menyimpan referensi dari halaman web.')]):
+tx(s,X0+1.0,9.4,8,5.8,'Mendeley adalah aplikasi pengelola referensi dan jejaring akademik. Elsevier mengembangkannya.',20,ON_PC,True)
+tx(s,X0+1.0,15.2,8,2.4,'Mendeley Desktop dihentikan; Reference Manager menjadi fokus.',16,ON_PC)
+for k,(f,hd,bd) in enumerate([('shot-rm-add.png','Mendeley Reference Manager','Pustaka pribadi untuk menyimpan, mengelompokkan, dan menganotasi PDF jurnal.'),
+ ('shot-cite-panel.png','Mendeley Cite','Add-in Microsoft Word untuk menyisipkan kutipan dan membuat daftar pustaka.'),
+ ('shot-web-importer.png','Web Importer','Ekstensi peramban untuk menyimpan referensi dari halaman web.')]):
     y=4.0+k*4.9;box(s,X0+10.8,y,17.2,4.2,CARD,1.2)
-    pic(s,icon(ic,[COOKIE,CLOVER,SQUIRCLE][k],SC,ON_SC),X0+11.5,y+0.8,2.6,hd)
-    tx(s,X0+14.8,y+0.6,12.6,1.2,hd,24,TX,True);tx(s,X0+14.8,y+1.8,12.6,2.3,bd,18,MUT)
+    shot(s,f,X0+11.5,y+0.5,5.6,hd)
+    tx(s,X0+17.5,y+0.4,10.0,1.9,hd,20,TX,True);tx(s,X0+17.5,y+2.1,10.0,2.0,bd,16,MUT)
 tx(s,X0,18.3,20,0.5,'Sumber: Mendeley (n.d.); Mendeley Support (2025).',10,MUT)
 notes(s,'Mendeley dikembangkan Elsevier. Ada tiga komponen: Reference Manager untuk pustaka, Mendeley Cite untuk Word, dan Web Importer untuk peramban. Mendeley Desktop masih tersedia, tetapi pengembangannya sudah dihentikan; Reference Manager menjadi fokus.')
 # 6 apa yang diolah
@@ -133,9 +138,13 @@ s=frame(1,'Apa yang diolah Mendeley')
 box(s,X0,4.0,W,4.6,P,1.4)
 pic(s,icon('MdDescription',SQUIRCLE,PC,ON_PC),X0+1.0,5.0,2.6,'Ikon metadata')
 tx(s,X0+4.4,4.0,W-5.4,4.6,'Mendeley memindahkan metadata referensi ke sitasi dan daftar pustaka. Isi dan ketepatan data tetap diperiksa penulis.',24,'FFFFFF',True,valign='middle')
-card3(s,9.4,8.6,[('MdDescription','Metadata','Judul, penulis, tahun, DOI, dan nama jurnal menjadi bahan sitasi.'),
- ('MdStyle','Gaya sitasi','Mendeley menerapkan gaya yang dipilih, misalnya APA atau IEEE.'),
- ('MdListAlt','Daftar pustaka','Entri disusun otomatis dari metadata dan gaya yang sama.')],[(CARD,SC,ON_SC,TX),(CARD,TC,ON_TC,TX),(CARD,PC,ON_PC,TX)])
+w3=(W-1.6)/3
+for k,(f,hd,bd) in enumerate([('shot-metadata.png','Metadata','Judul, penulis, tahun, DOI, dan nama jurnal menjadi bahan sitasi.'),
+ ('shot-style.png','Gaya sitasi','Mendeley menerapkan gaya yang dipilih, misalnya APA atau IEEE.'),
+ ('shot-bibliography.png','Daftar pustaka','Entri disusun otomatis dari metadata dan gaya yang sama.')]):
+    x=X0+k*(w3+0.8);box(s,x,9.4,w3,8.6,CARD,1.2)
+    shot(s,f,x+0.5,9.9,w3-1.0,hd)
+    tx(s,x+0.8,14.7,w3-1.6,1.2,hd,24,TX,True);tx(s,x+0.8,15.9,w3-1.6,2.0,bd,16,MUT)
 tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025).',10,MUT)
 notes(s,'Mendeley mengolah metadata menjadi sitasi dan daftar pustaka. Jenis kutipan dan aturan tiap gaya dibahas Kelompok 4; fokus kita pada data yang diolah dan hasil yang dibuat Mendeley.')
 # 7 satu sumber dua keluaran
