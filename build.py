@@ -1,6 +1,6 @@
 import json,subprocess,os,hashlib,struct,sys
 OUT='deck.pptx'
-TOTAL=16
+TOTAL=15
 # --- palet M3 Expressive dari #B0C8E0 #C1E0E0 #DCE7D6 #F6F6F6 ---
 BG,RAIL,CARD='F6F6F6','ECEEEE','E6E9E9'
 TX,MUT='2F3334','5B6061'
@@ -192,24 +192,6 @@ for k,(ic,hd,bd) in enumerate([('MdDescription','Buka add-in','Buka Mendeley Cit
     tx(s,x+0.7,11.0,w4-1.4,2.4,hd,22,TX,True);tx(s,x+0.7,13.6,w4-1.4,3.4,bd,18,MUT)
     if k<3:pic(s,icon('MdArrowForward','none','x',P),x+w4+0.3,10.2,1.0,'Panah')
 notes(s,'Alurnya empat langkah di Word: buka Mendeley Cite, sisipkan kutipan, pilih gaya sesuai pedoman kampus, lalu buat daftar pustaka. Daftar pustaka ikut berubah otomatis saat kutipan ditambah atau dihapus.')
-# 12 demo
-s=frame(2,'Demo alur: impor sampai daftar pustaka')
-tx(s,X0,3.4,W,1.55,'Dua tahap: rapikan referensi di Library, lalu sisipkan sitasi sampai daftar pustaka.',18,MUT)
-for k,lab in enumerate(['Library','Mendeley Cite']):
-    x=X0+k*14.4;y=4.6;fill=PC if k==0 else SC;col=ON_PC if k==0 else ON_SC
-    box(s,x,y,13.6,12.4,fill,1.4)
-    if k==0:
-        pic(s,'img-library-fade.png',x+0.6,y+0.6,12.4,'Ilustrasi Library',6.97)
-        box(s,x+0.6,y+8.0,3.6,1.0,CARD,0.55,name='label');tx(s,x+0.6,y+8.0,3.6,1.0,lab,14,col,True,'center','middle')
-        tx(s,x+0.6,y+9.2,12.4,2.0,'Impor PDF, kelompokkan, dan rapikan metadata referensi.',16,col)
-    else:
-        tx(s,x+0.6,y+0.9,6.8,1.2,'Mendeley Cite',24,col,True)
-        tx(s,x+0.6,y+2.2,6.8,4.0,'Sisipkan kutipan, pilih satu gaya, lalu buat daftar pustaka dari Word.',16,col)
-        box(s,x+0.6,y+6.6,5.4,1.0,CARD,0.55,name='label');tx(s,x+0.6,y+6.6,5.4,1.0,'Insert Bibliography',12,col,True,'center','middle')
-        tx(s,x+0.6,y+7.9,6.8,2.2,'Klik More, lalu pilih Insert Bibliography.',14,col)
-        pic(s,'img-cite-panel.png',x+7.7,y+1.75,5.4,'Ilustrasi Mendeley Cite',7.45)
-    tx(s,x+0.6,y+11.3,12.4,0.7,'Sumber: mendeley.com',10,col)
-notes(s,'Peragakan alur: impor ke Library, cek metadata, sisipkan kutipan di Word, pilih gaya, lalu buat daftar pustaka. Gambar adalah ilustrasi dari aset resmi Mendeley (mendeley.com); ganti dengan tangkapan layar sendiri bila sudah mencoba alurnya.')
 # 13 kelebihan keterbatasan
 s=frame(3,'Kelebihan dan keterbatasan')
 for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Format konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi antarperangkat'],PC,ON_PC,P,'FFFFFF'),
@@ -270,7 +252,7 @@ def proxy(i,tag):
 for i in range(1,TOTAL+1):
     s=f'/slide[{i}]';total=counts[s];cs=content_start[s];se=sidebar_end.get(s,cs-1);pill=pill_idx.get(s)
     emit(s,'group',{'shapes':','.join(map(str,range(cs,total+1))),'name':f'#s{i}-content'})
-    split=i in (3,13,15)
+    split=i in (3,12,14)
     if split:
         emit(s,'group',{'shapes':'1,2','name':f'#s{i}-sidebar-bg','zorder':'1'})
         fg=[k for k in range(2,se) if k!=pill_top[s]-1]
@@ -282,16 +264,16 @@ for i in range(1,TOTAL+1):
     if split:
         proxy(i,'sidebar-bg');proxy(i,'sidebar-fg')
     c=f'/slide[{i}]/shape[{ct}]'
-    if i in (1,2,14,16):
+    if i in (1,2,13,15):
         anim(c,HIN,'afterPrevious',420)
         continue
-    if i in (3,15):
+    if i in (3,14):
         b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[1]'
         anim(b,SIN,'afterPrevious',400);anim(f,SIN,'withPrevious',400);anim(p,SIN,'withPrevious',400)
         anim(c,VIN,'withPrevious',500)
     else:
         anim(c,VIN,'afterPrevious',500)
-    if i in (5,8,13):anim(f'/slide[{i}]/shape[{1 if i==13 else pill}]',PDOWN,'withPrevious',500,easein=30,easeout=50)
+    if i in (5,8,12):anim(f'/slide[{i}]/shape[{1 if i==12 else pill}]',PDOWN,'withPrevious',500,easein=30,easeout=50)
 # --- bangun ---
 if n!=TOTAL:raise ValueError(f'jumlah slide {n}, seharusnya {TOTAL}')
 json.dump(list(specs.values()),open('specs.json','w'))
