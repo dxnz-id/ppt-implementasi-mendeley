@@ -49,9 +49,9 @@ Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Slide 6: batas Mendeley, bukan teori sitasi; teori jenis sitasi ada di Kelompok 4.
 - Slide 7: contoh satu sumber menjadi sitasi dan daftar pustaka; jangan menambah teori jenis sitasi atau aturan APA/IEEE.
 - Slide 4, 5, 10: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks. Rasio PNG harus sama dengan kartu; `build.py` gagal jika berbeda, jadi jangan meregangkan mask.
-- Slide 5 sampai 11: screenshot Mendeley 16:9; tangkapan layar akun memakai UCL Library (2019); jangan regangkan; kredit di slide.
+- Slide 5 sampai 11: screenshot Mendeley 16:9; tangkapan layar akun memakai UCL Library (2019); jangan regangkan; crop bilah hitam; kredit di speaker notes.
 - Slide 13: kesimpulan; slide 14: penutup. Keduanya memakai rail Penutup dan latar terang; jangan tambahkan gradasi latar.
-- Verifikasi ke situs resmi Mendeley: status Desktop dan batas penyimpanan gratis.
+- Verifikasi ke situs resmi Mendeley: batas penyimpanan gratis dan ketersediaan fitur.
 
 ## Catatan teknis OfficeCLI
 - Jalankan dengan `OFFICECLI_NO_AUTO_RESIDENT=1` agar hasil langsung tertulis ke disk.
