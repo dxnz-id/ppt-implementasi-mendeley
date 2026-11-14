@@ -286,7 +286,7 @@ for i in range(1,TOTAL+1):
         anim(c,VIN,'withPrevious',500)
     else:
         anim(c,VIN,'afterPrevious',500)
-    if i in (5,8,12):anim(f'/slide[{i}]/shape[{1 if i==12 else pill}]',PDOWN,'withPrevious',500,easein=30,easeout=50)
+    if i in (5,8,12,13,14):anim(f'/slide[{i}]/shape[{1 if i in (12,13,14) else pill}]',PDOWN,'withPrevious',500,easein=30,easeout=50)
 # --- bangun ---
 if n!=TOTAL:raise ValueError(f'jumlah slide {n}, seharusnya {TOTAL}')
 json.dump(list(specs.values()),open('specs.json','w'))
@@ -300,4 +300,5 @@ if r.returncode:
 else:
     print(r.stdout[-1500:],r.stderr[-800:])
 r.check_returncode()
+subprocess.run(['officecli','close',OUT],check=True)
 subprocess.run([sys.executable,'retarget_group_animations.py',OUT],check=True)

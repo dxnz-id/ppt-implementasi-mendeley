@@ -37,7 +37,7 @@ Semua aset disimpan sebagai PNG 1200 x 675 (16:9) di `assets/`.
 | `shot-metadata.png` | `adding_references_4.1b6afdd6.png` | slide 6 |
 | `shot-style.png` | `citation_settings.ad5ff2e1.png` | slide 6, 11 |
 | `shot-bibliography.png` | `help_guide_cite_05.dcfc0068.png` | slide 6, 11 |
-| `shot-source.png` | `reading_and_annotating_1.5d79deea.png` | slide 7 |
+| `shot-source.png` | `reading_and_annotating_2.png` | slide 7 |
 | `shot-citation.png` | `help_guide_cite_10.ca2a4d5e.png` | slide 7 |
 | `shot-bib-menu.png` | `help_guide_cite_05.dcfc0068.png` | slide 7 |
 | `shot-account.png` | `Mendeley_website.PNG` | slide 8 |
@@ -49,7 +49,7 @@ Semua aset disimpan sebagai PNG 1200 x 675 (16:9) di `assets/`.
 | `shot-organize.png` | `searching_your_library_2.fd4049ea.png` | slide 9 |
 | `shot-highlight.png` | `reading_and_annotating_1.5d79deea.png` | slide 10 |
 | `shot-notes.png` | `reading_and_annotating_4.8809ba7d.png` | slide 10 |
-| `shot-addin.png` | `help_guide_cite_02.281a79c9.png` | slide 11 |
+| `shot-addin.png` | `cite_word.png` | slide 11 |
 | `shot-cite.png` | `cite_desktop.5a079955.png` | slide 11 |
 
 Sumber halaman:
