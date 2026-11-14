@@ -28,7 +28,7 @@ Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 
 ## Aturan gerak
 - Satu slide satu klik. Tidak ada animasi keluar; slide berikutnya langsung masuk.
-- Masuk horizontal 420 ms, vertikal 500 ms, sidebar 400 ms. Konten memakai ease-in 20 dan ease-out 70; pil memakai 30 dan 50.
+- Sampul masuk horizontal 420 ms; slide dengan sidebar masuk vertikal 500 ms. Sidebar 400 ms. Konten memakai ease-in 20 dan ease-out 70; pil memakai 30 dan 50.
 - Path masuk melewati target sedikit lalu kembali: 1,5% lebar atau tinggi slide, sidebar 0,3% lebar.
 - Pil sidebar bergerak bersama konten memakai `withPrevious`, bukan `afterPrevious`.
 - Tanpa fade, opacity, atau perubahan warna. Animasi hanya tampil di PowerPoint 365/2021.

@@ -24,7 +24,7 @@ def parse(path):
 def _spec(index):
     """Exact (target name, path, duration, accel, decel) in effect order."""
     content = f"#s{index}-content"
-    if index in (1, 2, 13, 14):
+    if index in (1, 2):
         return [(content, HIN, 420, 20, 70)]
     if index == 3:
         return [

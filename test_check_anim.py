@@ -95,11 +95,11 @@ class CheckAnimTest(unittest.TestCase):
         )
         self.assertEqual(
             [(name, path) for name, path, *_ in _spec(13)],
-            [("#s13-content", HIN)],
+            [("#s13-content", VIN)],
         )
         self.assertEqual(
             [(name, path) for name, path, *_ in _spec(14)],
-            [("#s14-content", HIN)],
+            [("#s14-content", VIN)],
         )
 
 

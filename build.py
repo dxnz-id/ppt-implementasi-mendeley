@@ -277,7 +277,7 @@ for i in range(1,TOTAL+1):
     if split:
         proxy(i,'sidebar-bg');proxy(i,'sidebar-fg')
     c=f'/slide[{i}]/shape[{ct}]'
-    if i in (1,2,13,14):
+    if i in (1,2):
         anim(c,HIN,'afterPrevious',420)
         continue
     if i==3:
