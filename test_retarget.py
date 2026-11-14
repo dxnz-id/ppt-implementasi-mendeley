@@ -4,7 +4,7 @@ import unittest
 import xml.etree.ElementTree as ET
 import zipfile
 
-from retarget_group_animations import NS, main, retarget_slide
+from retarget_group_animations import NS, main, retarget_slide, set_prev_ac
 
 
 def slide_xml(proxies):
@@ -25,9 +25,9 @@ def slide_xml(proxies):
     <p:grpSp><p:nvGrpSpPr><p:cNvPr id="10" name="#s3-content"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr/></p:grpSp>
     {shapes}
   </p:spTree></p:cSld>
-  <p:timing><p:tnLst><p:par><p:cTn id="1"><p:childTnLst><p:par><p:cTn id="2" start="indefinite">
+  <p:timing><p:tnLst><p:par><p:cTn id="1"><p:childTnLst><p:seq><p:cTn id="2" start="indefinite">
     <p:childTnLst>{targets}</p:childTnLst>
-  </p:cTn></p:par></p:childTnLst></p:cTn></p:par></p:tnLst>
+  </p:cTn></p:seq></p:childTnLst></p:cTn></p:par></p:tnLst>
   <p:bldLst>{builds}</p:bldLst></p:timing>
 </p:sld>'''.encode()
 
@@ -51,6 +51,11 @@ class RetargetTest(unittest.TestCase):
     def test_missing_group_is_an_error(self):
         with self.assertRaises(ValueError):
             retarget_slide(slide_xml([("#s3-proxy-sidebar-bg", "20")]))
+
+    def test_back_skips_timed_sequence(self):
+        out = set_prev_ac(slide_xml([("#s3-proxy-content", "20")]))
+        root = ET.fromstring(out)
+        self.assertEqual(root.find(".//p:seq", NS).get("prevAc"), "skipTimed")
 
     def test_namespace_used_by_ignorable_survives(self):
         xml = slide_xml([("#s3-proxy-content", "20")]).replace(

@@ -52,7 +52,7 @@ def slide_xml(effects=None, extra_shapes="", extra_top="", build_ids=("100",)):
     {extra_shapes}
   </p:spTree></p:cSld>
   <p:timing><p:tnLst><p:par><p:cTn id="1" nodeType="tmRoot"><p:childTnLst>
-    <p:seq><p:cTn id="2" nodeType="mainSeq"><p:childTnLst>{tops}</p:childTnLst></p:cTn></p:seq>
+    <p:seq prevAc="skipTimed"><p:cTn id="2" nodeType="mainSeq"><p:childTnLst>{tops}</p:childTnLst></p:cTn></p:seq>
   </p:childTnLst></p:cTn></p:par></p:tnLst>
   <p:bldLst>{builds}</p:bldLst></p:timing>
 </p:sld>"""
@@ -87,6 +87,10 @@ class CheckAnimTest(unittest.TestCase):
     def test_extra_click_group_fails(self):
         errors = self.errors(slide_xml(extra_top=click_group()))
         self.assertTrue(any("klik" in error.lower() for error in errors), errors)
+
+    def test_missing_prev_ac_fails(self):
+        errors = self.errors(slide_xml().replace(' prevAc="skipTimed"', ""))
+        self.assertTrue(any("prevAc" in error for error in errors), errors)
 
     def test_slides_remapped_after_bibliography_removed(self):
         self.assertEqual(

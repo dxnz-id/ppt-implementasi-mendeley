@@ -1,4 +1,4 @@
-"""Pindahkan animasi proxy ke group dan buang proxy dari deck."""
+"""Pindahkan animasi proxy ke group, buang proxy, dan buat Back melewati animasi timed."""
 import re
 import sys
 import zipfile
@@ -97,13 +97,25 @@ def retarget_slide(xml):
     return _restore_ns(ET.tostring(root, encoding="utf-8", xml_declaration=True), _decls(text))
 
 
+def set_prev_ac(xml):
+    """Back harus keluar slide, bukan memutar ulang animasi otomatis."""
+    text = xml.decode("utf-8")
+    _register(text)
+    root = ET.fromstring(xml)
+    seq = root.find("p:timing/p:tnLst/p:par/p:cTn/p:childTnLst/p:seq", NS)
+    if seq is None or seq.get("prevAc") == "skipTimed":
+        return xml
+    seq.set("prevAc", "skipTimed")
+    return _restore_ns(ET.tostring(root, encoding="utf-8", xml_declaration=True), _decls(text))
+
+
 def main(path):
     tmp = path + ".tmp"
     with zipfile.ZipFile(path) as zin, zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
         for item in zin.infolist():
             data = zin.read(item.filename)
             if re.fullmatch(r"ppt/slides/slide\d+\.xml", item.filename):
-                data = retarget_slide(data)
+                data = set_prev_ac(retarget_slide(data))
             zout.writestr(item, data)
     os.replace(tmp, path)
 

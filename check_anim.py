@@ -131,6 +131,13 @@ def check_slide(index, root):
         return bad
     if len(mains) != 1:
         bad.append(f"slide {index}: mainSeq {len(mains)}, seharusnya 1")
+    seq = timing.find(".//p:seq", NS)
+    if seq is None:
+        bad.append(f"slide {index}: p:seq tidak ada")
+    elif seq.get("prevAc") != "skipTimed":
+        bad.append(
+            f"slide {index}: prevAc={seq.get('prevAc')}, seharusnya skipTimed"
+        )
     main = mains[0]
 
     tops = main.findall("p:childTnLst/p:par", NS)
