@@ -25,6 +25,7 @@ Animasinya tidak bisa diuji otomatis, jadi buka `deck.pptx` di PowerPoint 365/20
 
 - Satu klik memindahkan slide; konten masuk otomatis tanpa klik tambahan.
 - Sidebar dan pill pada slide 3, 5, dan 12 bergerak bersama konten, tanpa klik tambahan.
+- Slide 13 dan 14 menampilkan rail Penutup dengan pill aktif.
 - Easing dan durasi terasa halus, tanpa lompatan.
 - Tidak ada efek fade atau exit.
 

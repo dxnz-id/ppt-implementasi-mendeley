@@ -110,7 +110,7 @@ def check_slide(index, root):
     names = set(ids.values())
     if any("-proxy-" in (n or "") for n in names):
         bad.append(f"slide {index}: proxy masih ada")
-    required = ["content"] + (["sidebar-bg", "sidebar-fg"] if index in (3, 12) else [])
+    required = ["content"] + (["sidebar-bg", "sidebar-fg"] if index in (3, 12, 13, 14) else [])
     for tag in required:
         if f"#s{index}-{tag}" not in groups:
             bad.append(f"slide {index}: group #s{index}-{tag} tidak ada")

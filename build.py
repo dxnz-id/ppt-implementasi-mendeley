@@ -240,20 +240,19 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
 tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025).',10,MUT)
 notes(s,'Kelebihan: hemat waktu, format konsisten, dan sinkron. Keterbatasannya: metadata perlu dicek, gaya sitasi kampus tertentu mungkin tidak tersedia, penyimpanan gratis 2 GB, dan kesalahan tetap menjadi tanggung jawab penulis.')
 # 13 kesimpulan (terang)
-s=slide(BG);tx(s,2.0,1.4,30,2.4,'Kesimpulan',40,TX,True,valign='middle',name='judul')
-w3=14.5
+s=frame(4,'Kesimpulan')
+w3=13.6
 for k,(ic,hd,bd,fill,col,ib,ifg) in enumerate([
  ('MdCheckCircle','Implementasinya','Impor referensi, sisipkan sitasi di Word, lalu buat daftar pustaka otomatis.',PC,ON_PC,P,ON_P),
  ('MdSchool','Manfaat dan batasannya','Format menjadi konsisten, tetapi metadata dan kaidah tetap harus diperiksa.',CARD,TX,SC,ON_SC)]):
-    x=2.0+k*15.3;box(s,x,4.6,w3,12.6,fill,1.4)
+    x=X0+k*14.4;box(s,x,4.6,w3,12.6,fill,1.4)
     pic(s,icon(ic,[COOKIE,CLOVER][k],ib,ifg),x+0.9,5.6,3.8,hd)
     tx(s,x+0.9,10.0,w3-1.8,2.6,hd,28,col,True)
     tx(s,x+0.9,13.0,w3-1.8,3.6,bd,20,col)
-page(s)
 notes(s,'Jawab kedua rumusan: implementasinya lewat impor, sitasi, dan daftar pustaka otomatis; manfaatnya format konsisten, tetapi metadata dan kaidah tetap harus diperiksa.')
 # 14 penutup
-s=slide(BG)
-tx(s,2.4,6.6,19,4.0,'Terima kasih',72,TX,True)
+s=frame(4,'')
+tx(s,X0,6.6,19,4.0,'Terima kasih',72,TX,True)
 pic(s,icon('MdWavingHand',FLOWER,PC,ON_PC),23.0,4.8,8.4,'Ikon penutup')
 notes(s,'Tutup dengan terima kasih.')
 # --- animasi per objek: group dianimasikan lewat proxy, lalu targetnya dipindah ke group ---
@@ -269,7 +268,7 @@ def proxy(i,tag):
 for i in range(1,TOTAL+1):
     s=f'/slide[{i}]';total=counts[s];cs=content_start[s];se=sidebar_end.get(s,cs-1);pill=pill_idx.get(s)
     emit(s,'group',{'shapes':','.join(map(str,range(cs,total+1))),'name':f'#s{i}-content'})
-    split=i in (3,12)
+    split=i in (3,12,13,14)
     if split:
         emit(s,'group',{'shapes':'1,2','name':f'#s{i}-sidebar-bg','zorder':'1'})
         fg=[k for k in range(2,se) if k!=pill_top[s]-1]
