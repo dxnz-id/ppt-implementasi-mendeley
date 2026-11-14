@@ -1,6 +1,6 @@
 import json,subprocess,os,hashlib,struct,sys
 OUT='deck.pptx'
-TOTAL=15
+TOTAL=14
 # --- palet M3 Expressive dari #B0C8E0 #C1E0E0 #DCE7D6 #F6F6F6 ---
 BG,RAIL,CARD='F6F6F6','ECEEEE','E6E9E9'
 TX,MUT='2F3334','5B6061'
@@ -123,7 +123,7 @@ s=frame(1,'Tiga komponen utama Mendeley')
 box(s,X0,4.0,10.0,14.0,PC,1.4)
 clipped(s,'mask-05-tiga.png',X0,4.0,10.0,14.0,'Masking angka tiga')
 pic(s,icon('MdLibraryBooks',FLOWER,P,'FFFFFF'),X0+1.2,4.9,3.6,'Ikon Mendeley')
-tx(s,X0+1.0,9.4,8,5.8,'Mendeley adalah aplikasi pengelola referensi dan jejaring akademik. Elsevier mengembangkannya.',20,ON_PC,True)
+tx(s,X0+1.0,9.4,8,5.8,'Mendeley adalah aplikasi pengelola referensi dan jejaring akademik.',20,ON_PC,True)
 tx(s,X0+1.0,15.2,8,2.4,'Mendeley Desktop dihentikan; Reference Manager menjadi fokus.',16,ON_PC)
 for k,(f,hd,bd) in enumerate([('shot-rm-add.png','Mendeley Reference Manager','Pustaka pribadi untuk menyimpan, mengelompokkan, dan menganotasi PDF jurnal.'),
  ('shot-cite-panel.png','Mendeley Cite','Add-in Microsoft Word untuk menyisipkan kutipan dan membuat daftar pustaka.'),
@@ -226,7 +226,7 @@ for k,(f,hd,bd) in enumerate([
     if k<3:pic(s,icon('MdArrowForward','none','x',P),x+w4+0.3,10.2,1.0,'Panah')
 tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025); tangkapan layar Mendeley.',10,MUT)
 notes(s,'Alurnya empat langkah di Word: buka Mendeley Cite, sisipkan kutipan, pilih gaya sesuai pedoman kampus, lalu buat daftar pustaka. Daftar pustaka ikut berubah otomatis saat kutipan ditambah atau dihapus.')
-# 13 kelebihan keterbatasan
+# 12 kelebihan keterbatasan
 s=frame(3,'Kelebihan dan keterbatasan')
 for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Format konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi antarperangkat'],PC,ON_PC,P,'FFFFFF'),
  ('MdWarning','Keterbatasan',['Metadata impor perlu dicek manual','Gaya sitasi kampus tertentu mungkin tidak tersedia','Penyimpanan gratis 2 GB','Kesalahan tetap menjadi tanggung jawab penulis'],EC,ON_EC,'F56965','FFFFFF')]):
@@ -239,7 +239,7 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
         tx(s,x+1.4,y,11.2,1.9,t,16,col,valign='middle')
 tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025).',10,MUT)
 notes(s,'Kelebihan: hemat waktu, format konsisten, dan sinkron. Keterbatasannya: metadata perlu dicek, gaya sitasi kampus tertentu mungkin tidak tersedia, penyimpanan gratis 2 GB, dan kesalahan tetap menjadi tanggung jawab penulis.')
-# 14 kesimpulan (terang)
+# 13 kesimpulan (terang)
 s=slide(BG);tx(s,2.0,1.4,30,2.4,'Kesimpulan dan saran',40,TX,True,valign='middle',name='judul')
 w3=9.6
 for k,(ic,hd,bd) in enumerate([('MdCheckCircle','Implementasinya','Impor referensi, sisipkan sitasi di Word, lalu buat daftar pustaka otomatis.'),('MdSchool','Manfaat dan batasannya','Format menjadi konsisten, tetapi metadata dan kaidah tetap harus diperiksa.'),('MdFlag','Saran','Mulai dari tugas kecil, cek metadata, dan gunakan satu gaya sitasi.')]):
@@ -249,25 +249,7 @@ for k,(ic,hd,bd) in enumerate([('MdCheckCircle','Implementasinya','Impor referen
     tx(s,x+0.9,9.8,w3-1.8,2.8,hd,24,[ON_PC,TX,ON_TC][k],True);tx(s,x+0.9,12.8,w3-1.8,4.2,bd,18,[ON_PC,TX,ON_TC][k])
 page(s)
 notes(s,'Jawab kedua rumusan: implementasinya lewat impor, sitasi, dan daftar pustaka otomatis; manfaatnya format konsisten, tetapi metadata dan kaidah tetap harus diperiksa. Sarankan mulai dari tugas kecil dan satu gaya sitasi.')
-# 15 pustaka
-s=frame(4,'Daftar pustaka')
-refs=[
- 'Badan Pengembangan dan Pembinaan Bahasa. (n.d.). Parafrasa. KBBI VI Daring. https://kbbi.kemendikdasmen.go.id/entri/parafrasa',
- 'Elsevier. (n.d.). Mendeley Reference Manager. https://www.mendeley.com/reference-management/reference-manager',
- 'Elsevier. (n.d.). Mendeley Cite. https://www.mendeley.com/reference-management/mendeley-cite/',
- 'Elsevier. (n.d.). Mendeley Web Importer. https://www.mendeley.com/reference-management/web-importer',
- 'Elsevier Support. (2025). What do I get with a free Mendeley account? https://www.elsevier.support/mendeley/answer/what-do-i-get-with-a-free-mendeley-account',
- 'Elsevier Support. (2025). What is Mendeley Reference Manager? https://www.elsevier.support/mendeley/answer/what-is-mendeley-reference-manager',
- 'American Psychological Association. (2020). Publication manual of the American Psychological Association (7th ed.). https://doi.org/10.1037/0000165-000',
- 'IEEE. (2024). IEEE editorial style manual for authors. https://journals.ieeeauthorcenter.ieee.org/wp-content/uploads/sites/7/IEEE-Editorial-Style-Manual-for-Authors.pdf']
-for k,t in enumerate(refs):
-    x=X0+(k%2)*14.4;y=4.2+(k//2)*3.0
-    fill=[CARD,SC,TC,PC][k%4];col=[TX,ON_SC,ON_TC,ON_PC][k%4]
-    box(s,x,y,13.6,2.8,fill,1.2)
-    tx(s,x+0.6,y+0.4,12.4,2.2,f'{k+1}. {t}',11.5,col)
-tx(s,X0,16.8,28,0.8,'Semua sumber diakses 9 November 2026.',10,MUT)
-notes(s,'Daftar pustaka memuat sumber yang benar-benar dibuka: halaman resmi Mendeley, Mendeley Support, KBBI VI Daring, dan panduan gaya APA serta IEEE. Perbarui tanggal akses bila presentasi dilakukan pada hari lain.')
-# 16 penutup
+# 14 penutup
 s=slide(BG)
 tx(s,2.4,6.6,19,4.0,'Terima kasih',72,TX,True)
 pic(s,icon('MdWavingHand',FLOWER,PC,ON_PC),23.0,4.8,8.4,'Ikon penutup')
@@ -285,7 +267,7 @@ def proxy(i,tag):
 for i in range(1,TOTAL+1):
     s=f'/slide[{i}]';total=counts[s];cs=content_start[s];se=sidebar_end.get(s,cs-1);pill=pill_idx.get(s)
     emit(s,'group',{'shapes':','.join(map(str,range(cs,total+1))),'name':f'#s{i}-content'})
-    split=i in (3,12,14)
+    split=i in (3,12)
     if split:
         emit(s,'group',{'shapes':'1,2','name':f'#s{i}-sidebar-bg','zorder':'1'})
         fg=[k for k in range(2,se) if k!=pill_top[s]-1]
@@ -297,10 +279,10 @@ for i in range(1,TOTAL+1):
     if split:
         proxy(i,'sidebar-bg');proxy(i,'sidebar-fg')
     c=f'/slide[{i}]/shape[{ct}]'
-    if i in (1,2,13,15):
+    if i in (1,2,13,14):
         anim(c,HIN,'afterPrevious',420)
         continue
-    if i in (3,14):
+    if i==3:
         b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[1]'
         anim(b,SIN,'afterPrevious',400);anim(f,SIN,'withPrevious',400);anim(p,SIN,'withPrevious',400)
         anim(c,VIN,'withPrevious',500)

@@ -1,6 +1,6 @@
 # Implementasi Mendeley: generator slide
 
-Generator deck 15 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat dengan OfficeCLI dan bergaya Material 3.
+Generator deck 14 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat dengan OfficeCLI dan bergaya Material 3.
 
 ## Struktur
 - `build.py`: isi slide, palet, dan layout
@@ -21,7 +21,7 @@ Hasilnya `deck.pptx`. Ikon ber-hash di `assets/` diabaikan Git karena selalu dib
 Animasi memakai motion path per objek dengan easing dan overshoot kecil. Tidak ada fade atau perubahan warna. Satu klik pindah slide; konten slide baru masuk otomatis. Animasi hanya tampil di PowerPoint 365/2021; PDF tetap statis di posisi akhir.
 
 ## Uji manual sebelum rilis
-Animasinya tidak bisa diuji otomatis, jadi buka `deck.pptx` di PowerPoint 365/2021 dan periksa slide 1, 3, 5, 12, 13, dan 15:
+Animasinya tidak bisa diuji otomatis, jadi buka `deck.pptx` di PowerPoint 365/2021 dan periksa slide 1, 3, 5, 12, 13, dan 14:
 
 - Satu klik memindahkan slide; konten masuk otomatis tanpa klik tambahan.
 - Sidebar dan pill pada slide 3, 5, dan 12 bergerak bersama konten, tanpa klik tambahan.

@@ -99,8 +99,8 @@ jobs:
           mkdir -p preview
           pdftoppm -png -r 120 deck.pdf preview/slide
           mapfile -t slides < <(find preview -maxdepth 1 -name 'slide-*.png' | sort -V)
-          test "${#slides[@]}" -eq 15
-          montage "${slides[@]}" -tile 2x8 -geometry 800x450+8+8 -background '#F6F6F6' preview.png
+          test "${#slides[@]}" -eq 14
+          montage "${slides[@]}" -tile 2x7 -geometry 800x450+8+8 -background '#F6F6F6' preview.png
           test -f preview.png
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -134,9 +134,9 @@ jobs:
             Dibangun otomatis dari commit ${{ github.sha }}.
 
             <details>
-            <summary>Pratinjau 15 slide</summary>
+            <summary>Pratinjau 14 slide</summary>
 
-            ![Pratinjau 15 slide](https://github.com/${{ github.repository }}/releases/download/build-${{ steps.meta.outputs.short }}/preview.png)
+            ![Pratinjau 14 slide](https://github.com/${{ github.repository }}/releases/download/build-${{ steps.meta.outputs.short }}/preview.png)
 
             </details>
 

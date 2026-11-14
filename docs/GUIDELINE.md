@@ -1,7 +1,7 @@
 # Panduan deck Implementasi Mendeley
 
 ## Tujuan
-Deck 15 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
+Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
 
 ## Alur kerja
 1. Baca skill yang dipakai (urutan: bahasa-skills, stop-slop, material-3, officecli). Sebagian ada di `skills/`, sisanya dipasang dari sumber di `skills/README.md`.
@@ -50,8 +50,7 @@ Deck 15 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Slide 7: contoh satu sumber menjadi sitasi dan daftar pustaka; jangan menambah teori jenis sitasi atau aturan APA/IEEE.
 - Slide 4, 5, 10, 13: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks. Rasio PNG harus sama dengan kartu; `build.py` gagal jika berbeda, jadi jangan meregangkan mask.
 - Slide 5 sampai 11: screenshot Mendeley 16:9; tangkapan layar akun memakai UCL Library (2019); jangan regangkan; kredit di slide.
-- Slide 14: daftar pustaka; perbarui tanggal akses bila presentasi dilakukan pada hari lain.
-- Slide 15: penutup terang dengan bentuk tonal solid; jangan tambahkan gradasi latar.
+- Slide 14: penutup terang dengan bentuk tonal solid; jangan tambahkan gradasi latar.
 - Verifikasi ke situs resmi Mendeley: status Desktop dan batas penyimpanan gratis.
 
 ## Catatan teknis OfficeCLI
