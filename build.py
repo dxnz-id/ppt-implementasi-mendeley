@@ -240,15 +240,17 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
 tx(s,X0,18.3,20,0.5,'Sumber: Mendeley Support (2025).',10,MUT)
 notes(s,'Kelebihan: hemat waktu, format konsisten, dan sinkron. Keterbatasannya: metadata perlu dicek, gaya sitasi kampus tertentu mungkin tidak tersedia, penyimpanan gratis 2 GB, dan kesalahan tetap menjadi tanggung jawab penulis.')
 # 13 kesimpulan (terang)
-s=slide(BG);tx(s,2.0,1.4,30,2.4,'Kesimpulan dan saran',40,TX,True,valign='middle',name='judul')
-w3=9.6
-for k,(ic,hd,bd) in enumerate([('MdCheckCircle','Implementasinya','Impor referensi, sisipkan sitasi di Word, lalu buat daftar pustaka otomatis.'),('MdSchool','Manfaat dan batasannya','Format menjadi konsisten, tetapi metadata dan kaidah tetap harus diperiksa.'),('MdFlag','Saran','Mulai dari tugas kecil, cek metadata, dan gunakan satu gaya sitasi.')]):
-    x=2.0+k*10.4;box(s,x,4.6,w3,12.6,[PC,CARD,TC][k],1.4)
-    clipped(s,f'mask-14-{k+1:02d}.png',x,4.6,w3,12.6,'Masking angka kesimpulan')
-    pic(s,icon(ic,[COOKIE,CLOVER,SQUIRCLE][k],[P,SC,ON_TC][k],[ON_P,ON_SC,TC][k]),x+0.9,5.6,3.4,hd)
-    tx(s,x+0.9,9.8,w3-1.8,2.8,hd,24,[ON_PC,TX,ON_TC][k],True);tx(s,x+0.9,12.8,w3-1.8,4.2,bd,18,[ON_PC,TX,ON_TC][k])
+s=slide(BG);tx(s,2.0,1.4,30,2.4,'Kesimpulan',40,TX,True,valign='middle',name='judul')
+w3=14.5
+for k,(ic,hd,bd,fill,col,ib,ifg) in enumerate([
+ ('MdCheckCircle','Implementasinya','Impor referensi, sisipkan sitasi di Word, lalu buat daftar pustaka otomatis.',PC,ON_PC,P,ON_P),
+ ('MdSchool','Manfaat dan batasannya','Format menjadi konsisten, tetapi metadata dan kaidah tetap harus diperiksa.',CARD,TX,SC,ON_SC)]):
+    x=2.0+k*15.3;box(s,x,4.6,w3,12.6,fill,1.4)
+    pic(s,icon(ic,[COOKIE,CLOVER][k],ib,ifg),x+0.9,5.6,3.8,hd)
+    tx(s,x+0.9,10.0,w3-1.8,2.6,hd,28,col,True)
+    tx(s,x+0.9,13.0,w3-1.8,3.6,bd,20,col)
 page(s)
-notes(s,'Jawab kedua rumusan: implementasinya lewat impor, sitasi, dan daftar pustaka otomatis; manfaatnya format konsisten, tetapi metadata dan kaidah tetap harus diperiksa. Sarankan mulai dari tugas kecil dan satu gaya sitasi.')
+notes(s,'Jawab kedua rumusan: implementasinya lewat impor, sitasi, dan daftar pustaka otomatis; manfaatnya format konsisten, tetapi metadata dan kaidah tetap harus diperiksa.')
 # 14 penutup
 s=slide(BG)
 tx(s,2.4,6.6,19,4.0,'Terima kasih',72,TX,True)
