@@ -1,6 +1,7 @@
 import json,subprocess,os,hashlib,struct,sys
 OUT='deck.pptx'
 TOTAL=14
+SPLIT={3,12,13,14}
 # --- palet M3 Expressive dari #B0C8E0 #C1E0E0 #DCE7D6 #F6F6F6 ---
 BG,RAIL,CARD='F6F6F6','ECEEEE','E6E9E9'
 TX,MUT='2F3334','5B6061'
@@ -55,9 +56,14 @@ def page(s):tx(s,29.4,18.2,3,0.6,f'{n} / {TOTAL}',10,MUT,align='right',name='nom
 def frame(sec,title):
     s=slide(BG);box(s,1.0,1.0,2.8,17.05,RAIL,1.2,name='rail')
     pic(s,icon('MdLibraryBooks',COOKIE,P,'FFFFFF'),1.7,1.6,1.4,'Logo bagian')
+    if n not in SPLIT:
+        y=3.5+sec*2.9
+        pill_top[s]=counts[s]+1  # posisi top-level untuk grouping
+        pill_idx[s]=shape_counts[s]+1  # posisi shape untuk AddAnimation
+        box(s,1.3,y,2.2,2.6,PC,1.1,name=f'#s{n}-rail-pill')
     for k,(ic,lab) in enumerate(SECT):
         y=3.5+k*2.9;on=k==sec
-        if on:
+        if on and n in SPLIT:
             pill_top[s]=counts[s]+1  # posisi top-level untuk grouping
             pill_idx[s]=shape_counts[s]+1  # posisi shape untuk AddAnimation
             box(s,1.3,y,2.2,2.6,PC,1.1,name=f'#s{n}-rail-pill')
@@ -146,7 +152,7 @@ for k,(f,hd,bd) in enumerate([('shot-metadata.png','Metadata','Judul, penulis, t
     tx(s,x+0.8,14.7,w3-1.6,1.2,hd,24,TX,True);tx(s,x+0.8,15.9,w3-1.6,2.0,bd,16,MUT)
 notes(s,'Mendeley mengolah metadata menjadi sitasi dan daftar pustaka. Jenis kutipan dan aturan tiap gaya dibahas Kelompok 4; fokus kita pada data yang diolah dan hasil yang dibuat Mendeley. Tangkapan layar: Mendeley Support (2025).')
 # 7 satu sumber dua keluaran
-s=frame(1,'Satu sumber, dua keluaran')
+s=frame(1,'Satu sumber untuk dua rujukan')
 tx(s,X0,3.3,W,0.9,'Metadata yang sama menjadi bahan sitasi dan daftar pustaka.',18,MUT)
 box(s,X0,4.2,11.0,13.2,PC,1.4)
 tx(s,X0+0.8,4.8,9.4,0.8,'Satu sumber',14,ON_PC,True)
@@ -221,7 +227,7 @@ notes(s,'Alurnya empat langkah di Word: buka Mendeley Cite, sisipkan kutipan, pi
 # 12 kelebihan keterbatasan
 s=frame(3,'Kelebihan dan keterbatasan')
 for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Gaya sitasi konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi lintas perangkat'],PC,ON_PC,P,'FFFFFF'),
- ('MdWarning','Keterbatasan',['Metadata hasil impor perlu diperiksa','Gaya sitasi kampus tertentu belum tentu tersedia','Penyimpanan gratis 2 GB','Penulis tetap bertanggung jawab atas kesalahan'],EC,ON_EC,'F56965','FFFFFF')]):
+ ('MdWarning','Keterbatasan',['Metadata hasil impor perlu diperiksa','Gaya sitasi khusus kampus perlu ditambahkan manual','Penyimpanan gratis hanya 2 GB','PDF hasil pindai biasanya masuk tanpa metadata'],EC,ON_EC,'F56965','FFFFFF')]):
     x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
     pic(s,icon(ic,[CLOVER,BURST][k],sh,fg),x+0.9,4.8,2.2,hd);tx(s,x+3.6,4.8,9.4,2.2,hd,24,col,True,valign='middle')
     pill=PILL_PC if k==0 else PILL_EC
@@ -229,7 +235,7 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
         y=7.7+j*2.5
         box(s,x+0.8,y,12.0,1.9,pill,0.95,name='kapsul')
         tx(s,x+1.4,y,11.2,1.9,t,16,col,valign='middle')
-notes(s,'Kelebihan: hemat waktu, gaya sitasi konsisten, dan sinkron. Keterbatasannya: metadata hasil impor perlu diperiksa, gaya sitasi kampus tertentu belum tentu tersedia, penyimpanan gratis 2 GB, dan penulis tetap bertanggung jawab atas kesalahan.')
+notes(s,'Kelebihan: hemat waktu, gaya sitasi konsisten, dan sinkron. Keterbatasannya: metadata hasil impor perlu diperiksa, gaya sitasi khusus kampus perlu ditambahkan manual, penyimpanan gratis hanya 2 GB, dan PDF hasil pindai biasanya masuk tanpa metadata.')
 # 13 kesimpulan (terang)
 s=frame(4,'Kesimpulan')
 w3=13.6
@@ -259,7 +265,7 @@ def proxy(i,tag):
 for i in range(1,TOTAL+1):
     s=f'/slide[{i}]';total=counts[s];cs=content_start[s];se=sidebar_end.get(s,cs-1);pill=pill_idx.get(s)
     emit(s,'group',{'shapes':','.join(map(str,range(cs,total+1))),'name':f'#s{i}-content'})
-    split=i in (3,12,13,14)
+    split=i in SPLIT
     if split:
         emit(s,'group',{'shapes':'1,2','name':f'#s{i}-sidebar-bg','zorder':'1'})
         fg=[k for k in range(2,se) if k!=pill_top[s]-1]
