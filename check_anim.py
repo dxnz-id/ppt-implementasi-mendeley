@@ -33,7 +33,7 @@ def _spec(index):
             (f"#s{index}-rail-pill", SIN, 400, 20, 70),
             (content, VIN, 500, 20, 70),
         ]
-    if index in (5, 8, 12, 13, 14):
+    if index in (5, 8, 12):
         return [
             (content, VIN, 500, 20, 70),
             (f"#s{index}-rail-pill", PDOWN, 500, 30, 50),
