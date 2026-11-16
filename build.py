@@ -107,16 +107,17 @@ for k,(ic,hd,its,pitch,fill,col,nb,nc) in enumerate([('MdQuestionAnswer','Rumusa
         y=8.2+j*pitch;num(s,x+0.9,y,1.5,str(j+1),nb,nc);tx(s,x+3.0,y-0.2,10,pitch-0.4,t,20,col,valign='top')
 notes(s,'Dua rumusan masalah menuntun presentasi ini: cara implementasi dan manfaat serta keterbatasan. Tiga tujuan mengikuti urutan tersebut: fungsi, langkah, lalu evaluasi.')
 # 5 mengenal
-s=frame('Tiga komponen utama Mendeley')
-box(s,X0,4.0,10.0,14.0,PC,1.4)
-clipped(s,'mask-05-tiga.png',X0,4.0,10.0,14.0,'Masking angka tiga')
-pic(s,icon('MdLibraryBooks',FLOWER,P,'FFFFFF'),X0+1.2,4.9,3.6,'Ikon Mendeley')
-tx(s,X0+1.0,9.4,8,5.8,'Mendeley adalah aplikasi pengelola referensi dan jejaring akademik.',20,ON_PC,True)
-tx(s,X0+1.0,15.2,8,2.4,'Kita akan fokus pada Reference Manager.',16,ON_PC)
+s=frame('')
+Y=2.4
+box(s,X0,Y,10.0,14.0,PC,1.4)
+clipped(s,'mask-05-tiga.png',X0,Y,10.0,14.0,'Masking angka tiga')
+pic(s,icon('MdLibraryBooks',FLOWER,P,'FFFFFF'),X0+1.2,Y+0.9,3.6,'Ikon Mendeley')
+tx(s,X0+1.0,Y+5.4,8,5.8,'Mendeley adalah aplikasi pengelola referensi dan jejaring akademik.',20,ON_PC,True)
+tx(s,X0+1.0,Y+11.2,8,2.4,'Kita akan fokus pada Reference Manager.',16,ON_PC)
 for k,(f,hd,bd) in enumerate([('shot-rm-add.png','Mendeley Reference Manager','Pustaka pribadi untuk menyimpan, mengelompokkan, dan menganotasi PDF jurnal.'),
  ('shot-cite-panel.png','Mendeley Cite','Add-in Microsoft Word untuk menyisipkan kutipan dan membuat daftar pustaka.'),
  ('shot-web-importer.png','Web Importer','Ekstensi peramban untuk menyimpan referensi dari halaman web.')]):
-    y=4.0+k*4.9;box(s,X0+10.8,y,W-10.8,4.2,CARD,1.2)
+    y=Y+k*4.9;box(s,X0+10.8,y,W-10.8,4.2,CARD,1.2)
     shot(s,f,X0+11.5,y+0.5,6.2,hd)
     tx(s,X0+18.2,y+0.4,W-19.2,1.9,hd,20,TX,True);tx(s,X0+18.2,y+2.1,W-19.2,2.0,bd,16,MUT)
 notes(s,'Mendeley dikembangkan Elsevier. Ada tiga komponen: Reference Manager untuk pustaka, Mendeley Cite untuk Word, dan Web Importer untuk peramban. Tangkapan layar: Mendeley (n.d.); Mendeley Support (2025).')
