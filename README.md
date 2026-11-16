@@ -1,6 +1,6 @@
 # Implementasi Mendeley: generator slide
 
-Generator deck 16 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat dengan OfficeCLI dan bergaya editorial Mastercard: cream, ink, bentuk pill, potret lingkaran, satelit, dan orbit oranye.
+Generator deck 16 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat dengan OfficeCLI dan bergaya editorial Mastercard: latar Light Signal Orange, teks ink, kartu cream, bentuk pill, potret lingkaran, satelit, dan orbit cream.
 
 ## Struktur
 - `build.py`: isi slide, palet, dan layout

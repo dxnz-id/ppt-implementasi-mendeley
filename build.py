@@ -5,7 +5,8 @@ TOTAL=16
 CREAM,LIFT,SOFT,BONE,DUST='F3F0EE','FCFBFA','F4F4F4','E8E2DA','D1CDC7'
 INK,CHAR,SLATE='141413','262627','696969'
 ORANGE,ORANGE_L,CLAY,WHITE='CF4500','F37338','9A3A0A','FFFFFF'
-BG,CARD,TX,MUT=CREAM,LIFT,INK,SLATE
+BG,CARD,TX,MUT=ORANGE_L,LIFT,INK,SLATE
+BODY=CHAR
 P,ON_P=INK,CREAM
 PC,ON_PC=SOFT,INK
 SC,ON_SC=BONE,INK
@@ -46,17 +47,17 @@ def clipped(s,f,x,y,w,h,alt):
     iw,ih=struct.unpack('>II',head[16:24])
     if not abs(iw/ih-w/h)<0.01:raise ValueError(f'{f}: rasio {iw/ih:.3f} tidak cocok dengan kartu {w/h:.3f}; jangan regangkan mask')
     pic(s,f,x,y,w,alt,h)
-def shot(s,f,x,y,w,alt):
+def shot(s,f,x,y,w,alt,mask='shot-mask-orange.png'):
     h=w*9/16
     clipped(s,f,x,y,w,h,alt)
-    pic(s,'shot-mask.png',x,y,w,'Bingkai',h)
+    pic(s,mask,x,y,w,'Bingkai',h)
     return h
 def notes(s,t):add(s,'notes',text=t)
 def num(s,x,y,d,t,fill=INK,col=CREAM):
     add(s,'shape',geometry='ellipse',x=cm(x),y=cm(y),width=cm(d),height=cm(d),text=t,size=20,bold='true',color=col,
         align='center',valign='middle',font=F,fill=fill,line='none',margin='0',name='nomor')
-def eyebrow(s,x,y,t,w=10,color=MUT):
-    box(s,x,y+0.18,0.18,0.18,ORANGE_L,999,name='titik')
+def eyebrow(s,x,y,t,w=10,color=INK):
+    box(s,x,y+0.18,0.18,0.18,INK,999,name='titik')
     tx(s,x+0.42,y,w,0.55,t.upper(),10,color,True,spacing=0.7,name='eyebrow')
 def satellite(s,x,y,d=0.95,size=11):
     box(s,x,y,d,d,WHITE,999,name='satelit')
@@ -66,10 +67,10 @@ def portrait(s,ic,x,y,d,bg=INK,fg=CREAM):
     satellite(s,x+d*0.68,y+d*0.68,d*0.34,max(7,int(d*4)))
 def orbit(s,f,x,y,w):
     pic(s,f,x,y,w,'Orbit',w*0.30)
-def page(s,col=MUT):
-    box(s,28.95,18.30,0.14,0.14,ORANGE_L,999,name='titik-halaman')
+def page(s,col=INK):
+    box(s,28.95,18.30,0.14,0.14,INK,999,name='titik-halaman')
     tx(s,29.3,18.2,3,0.6,f'{n} / {TOTAL}',9,col,align='right',name='nomor-slide')
-def frame(title,eyebrow_text=None,title_color=TX,page_color=MUT):
+def frame(title,eyebrow_text=None,title_color=TX,page_color=INK):
     s=slide(BG)
     if eyebrow_text:eyebrow(s,X0,0.85,eyebrow_text)
     if title:tx(s,X0,1.55,31.2,2.1,title,32,title_color,True,valign='middle',spacing=-0.7,name='judul')
@@ -79,7 +80,7 @@ X0,W=1.2,31.2
 
 # 1 sampul
 s=slide(BG)
-orbit(s,'orbit-2.png',15.5,4.4,17.0)
+orbit(s,'orbit-cream-2.png',15.5,4.4,17.0)
 eyebrow(s,X0,2.6,'Bahasa Indonesia',10)
 tx(s,X0,3.6,19.2,8.2,'Implementasi Mendeley dalam penulisan karya ilmiah',48,INK,True,spacing=-1.0,lineSpacing='0.95x',name='judul')
 box(s,X0,13.4,7.8,1.5,INK,999,name='label')
@@ -91,12 +92,12 @@ notes(s,'Salam pembuka. Perkenalkan topik: cara Mendeley dipakai untuk menyusun 
 s=slide(BG)
 eyebrow(s,X0,0.85,'Kelompok')
 tx(s,X0,1.55,31.2,2.1,'Anggota kelompok',32,INK,True,valign='middle',spacing=-0.7,name='judul')
-tx(s,X0,3.55,31.2,0.8,'Mata kuliah Bahasa Indonesia',14,MUT)
+tx(s,X0,3.55,31.2,0.8,'Mata kuliah Bahasa Indonesia',14,BODY)
 page(s)
 for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Muhammad Rifqi al Khafis','202551019'),('Arkano Hamada Moslem','202551034'),('Farrel Aufa Athaya Ardiyono','202551042'),("Muhammad La'azidannak Rusda",'202551049'),('Aksel Agustiyan','202551058'),('Muhammad Arief Satria Nugraha','202551151')]):
     x=(X0+k*8.0) if k<4 else (5.335+(k-4)*8.0);y=4.8 if k<4 else 10.8
     box(s,x,y,7.2,5.2,LIFT if k%2==0 else SOFT,1.05)
-    tx(s,x+0.6,y+0.45,1.6,1.2,f'{k+1:02d}',28,ORANGE_L,True,spacing=-1.0)
+    tx(s,x+0.6,y+0.45,1.6,1.2,f'{k+1:02d}',28,ORANGE,True,spacing=-1.0)
     tx(s,x+0.6,y+1.7,6.0,2.5,nm,18,INK,True,spacing=-0.2)
     tx(s,x+0.6,y+4.2,6.0,0.7,nim,11,MUT)
 notes(s,'Sebutkan anggota kelompok satu per satu sesuai urutan NIM.')
@@ -142,13 +143,13 @@ for k,(ic,hd,bd) in enumerate(feats):
     x=X0+(k%3)*(w3+0.8);y=4.0+(k//3)*(rh+0.8)
     portrait(s,ic,x+0.2,y,2.6,INK if k%2==0 else BONE,CREAM if k%2==0 else INK)
     tx(s,x+0.2,y+3.3,w3-0.4,1.2,hd,20,INK,True,spacing=-0.3)
-    tx(s,x+0.2,y+4.5,w3-0.4,1.8,bd,15,MUT)
+    tx(s,x+0.2,y+4.5,w3-0.4,1.8,bd,15,BODY)
 notes(s,'Enam fitur utama Mendeley: Reference Library untuk menyimpan referensi, PDF Reader untuk membaca dan menandai, Mendeley Cite untuk sitasi di Word, sinkronisasi cloud, Groups untuk berbagi, dan Web Importer untuk menyimpan referensi dari browser.')
 
 # 6 instalasi akun dan aplikasi
 s=frame('Instalasi: akun dan aplikasi','Instalasi')
 shot(s,'shot-account.png',X0,4.0,18.0,'Situs resmi Mendeley')
-tx(s,X0,14.3,18.0,0.6,'Situs resmi Mendeley',10,MUT,align='center')
+tx(s,X0,14.3,18.0,0.6,'Situs resmi Mendeley',10,BODY,align='center')
 for k,t in enumerate(['Buka situs resmi Mendeley.','Buat akun dengan email atau akun Elsevier.','Unduh Mendeley Reference Manager.','Instal aplikasi, lalu login.']):
     y=4.2+k*3.2;num(s,20.0,y,1.3,str(k+1));tx(s,21.6,y-0.2,10.8,3.0,t,18,INK,valign='top')
 notes(s,'Instalasi dimulai dari situs resmi Mendeley. Buat akun dengan email atau akun Elsevier, unduh Reference Manager, lalu instal dan login. Tangkapan layar: Mendeley (n.d.).')
@@ -158,15 +159,15 @@ s=frame('Instalasi: Web Importer dan Cite','Instalasi')
 for k,(f,hd,bd) in enumerate([('shot-extension.png','Web Importer','Pasang ekstensi di browser, lalu simpan referensi dari halaman artikel.'),('shot-addin.png','Mendeley Cite','Pasang add-in di Microsoft Word, lalu buka tab References.')]):
     x=X0+k*16.0;shot(s,f,x,4.0,15.2,hd)
     num(s,x,12.9,1.2,str(k+5));tx(s,x+1.7,12.8,13.5,1.2,hd,22,INK,True,spacing=-0.3)
-    tx(s,x,14.2,15.2,1.8,bd,15,MUT)
+    tx(s,x,14.2,15.2,1.8,bd,15,BODY)
 notes(s,'Langkah kelima memasang Web Importer di browser. Langkah keenam memasang Mendeley Cite di Microsoft Word. Tangkapan layar: Mendeley (n.d.).')
 
 # 8 antarmuka
 s=frame('Tampilan antarmuka','Antarmuka')
 shot(s,'shot-details.png',X0,4.0,19.2,'Antarmuka Mendeley Reference Manager')
-tx(s,X0,14.9,19.2,0.6,'Antarmuka Mendeley Reference Manager',10,MUT,align='center')
+tx(s,X0,14.9,19.2,0.6,'Antarmuka Mendeley Reference Manager',10,BODY,align='center')
 for k,(hd,bd) in enumerate([('Panel kiri','Koleksi, folder, dan grup.'),('Panel tengah','Daftar referensi.'),('Panel kanan','Detail metadata.')]):
-    y=4.2+k*4.2;box(s,21.2,y+0.2,0.18,0.18,ORANGE_L,999,name='titik');tx(s,21.6,y,9.8,1.0,hd,20,INK,True,spacing=-0.3);tx(s,21.6,y+1.0,9.8,2.2,bd,16,MUT)
+    y=4.2+k*4.2;box(s,21.2,y+0.2,0.18,0.18,INK,999,name='titik');tx(s,21.6,y,9.8,1.0,hd,20,INK,True,spacing=-0.3);tx(s,21.6,y+1.0,9.8,2.2,bd,16,BODY)
 notes(s,'Tampilan Reference Manager dibagi tiga panel: koleksi, folder, dan grup di kiri; daftar referensi di tengah; detail metadata di kanan. Tangkapan layar: Mendeley (n.d.).')
 
 # 9 pdf reader
@@ -174,22 +175,22 @@ s=frame('PDF Reader: baca dan tandai','Antarmuka')
 for k,(f,hd,bd) in enumerate([('shot-highlight.png','Highlight dan anotasi','Tandai bagian penting langsung di PDF.'),('shot-notes.png','Catatan','Tulis ringkasan atau komentar per referensi.')]):
     x=X0+k*16.0;shot(s,f,x,4.0,15.2,hd)
     tx(s,x,12.9,15.2,1.2,hd,22,INK,True,spacing=-0.3)
-    tx(s,x,14.2,15.2,1.8,bd,15,MUT)
+    tx(s,x,14.2,15.2,1.8,bd,15,BODY)
 notes(s,'PDF Reader terintegrasi dengan Reference Manager. Bagian penting bisa di-highlight, diberi anotasi, atau dicatat di Notebook. Tangkapan layar: Mendeley (n.d.).')
 
 # 10 menambahkan referensi
 s=frame('Menambahkan referensi','Referensi')
 shot(s,'shot-rm-add.png',X0,4.0,18.0,'Menu Add reference')
-tx(s,X0,14.3,18.0,0.6,'Menu Add reference',10,MUT,align='center')
+tx(s,X0,14.3,18.0,0.6,'Menu Add reference',10,BODY,align='center')
 for k,(ic,hd,bd) in enumerate([('MdUploadFile','Unggah PDF','Tarik file ke Library.'),('MdExtension','Web Importer','Simpan dari halaman artikel.'),('MdEdit','Input manual','Isi DOI, ISBN, atau PMID.'),('MdFileUpload','Impor file','RIS, BibTeX, EndNote XML.')]):
     y=4.2+k*3.2;portrait(s,ic,20.0,y,1.5,INK if k%2==0 else BONE,CREAM if k%2==0 else INK)
-    tx(s,21.8,y-0.2,10.6,1.0,hd,20,INK,True,spacing=-0.3);tx(s,21.8,y+0.9,10.6,2.0,bd,15,MUT)
+    tx(s,21.8,y-0.2,10.6,1.0,hd,20,INK,True,spacing=-0.3);tx(s,21.8,y+0.9,10.6,2.0,bd,15,BODY)
 notes(s,'Referensi bisa masuk lewat unggahan PDF, Web Importer, input manual DOI/ISBN/PMID, atau impor RIS, BibTeX, dan EndNote XML. Tangkapan layar menu Add reference: Mendeley (n.d.).')
 
 # 11 mendeley cite
 s=frame('Mendeley Cite di Word','Cite')
 shot(s,'shot-addin.png',X0,4.0,14.0,'Mendeley Cite di Microsoft Word')
-tx(s,X0,12.2,14.0,0.6,'Mendeley Cite di Microsoft Word',10,MUT,align='center')
+tx(s,X0,12.2,14.0,0.6,'Mendeley Cite di Microsoft Word',10,BODY,align='center')
 box(s,X0,13.2,14.0,4.2,INK,1.05)
 tx(s,X0+0.9,13.2,12.2,4.2,'Gaya sitasi bisa diganti tanpa menulis ulang.',17,CREAM,False,valign='middle')
 for k,t in enumerate(['Buka Microsoft Word, lalu tab References.','Klik Mendeley Cite.','Pilih referensi dari pustaka.','Klik Insert Citation.','Pilih gaya sitasi.','Klik Insert Bibliography.']):
@@ -205,25 +206,25 @@ for k,(style,field) in enumerate([('APA','Psikologi, pendidikan, sosial'),('IEEE
     y=5.5+k*2.3;box(s,X0,y,W,2.1,[LIFT,SOFT][k%2],999,name='baris')
     tx(s,X0+1.0,y,6.0,2.1,style,18,INK,True,valign='middle',spacing=-0.2)
     tx(s,X0+8.0,y,22.0,2.1,field,17,MUT,valign='middle')
-tx(s,X0,17.0,W,0.8,'Gaya dapat diganti kapan saja tanpa menulis ulang.',12,MUT)
+tx(s,X0,17.0,W,0.8,'Gaya dapat diganti kapan saja tanpa menulis ulang.',12,BODY)
 notes(s,'Lima gaya yang umum: APA untuk psikologi, pendidikan, dan sosial; IEEE untuk teknik dan informatika; Harvard untuk bisnis dan manajemen; Chicago untuk humaniora dan sejarah; Vancouver untuk kedokteran dan kesehatan. Gaya bisa diganti kapan saja.')
 
 # 13 satu sumber dua keluaran
 s=frame('Satu sumber untuk dua rujukan','Alur')
-tx(s,X0,3.3,W,0.8,'Metadata yang sama menjadi bahan sitasi dan daftar pustaka.',14,MUT)
+tx(s,X0,3.3,W,0.8,'Metadata yang sama menjadi bahan sitasi dan daftar pustaka.',14,BODY)
 wL,wR=12.0,18.4
 box(s,X0,4.2,wL,13.2,LIFT,1.05)
 tx(s,X0+0.8,4.8,wL-1.6,0.7,'Satu sumber',11,ORANGE,True,spacing=0.5)
-shot(s,'shot-source.png',X0+1.2,5.6,9.6,'PDF jurnal dan metadata')
+shot(s,'shot-source.png',X0+1.2,5.6,9.6,'PDF jurnal dan metadata',mask='shot-mask.png')
 tx(s,X0+0.8,11.2,wL-1.6,0.8,'PDF jurnal dan metadata',15,INK,True)
 tx(s,X0+0.8,12.0,wL-1.6,3.2,'Penulis, tahun, judul, dan DOI dipakai untuk keduanya.',15,MUT)
 xR=X0+wL+0.8
 for k,(f,hd,bd,fill) in enumerate([('shot-citation.png','Sitasi dalam teks','Mendeley Cite menyisipkan sitasi ke dalam kalimat.',SOFT),('shot-bib-menu.png','Daftar pustaka','Mendeley menyusun entri lengkap dari metadata yang sama.',LIFT)]):
     y=4.2+k*6.9;box(s,xR,y,wR,6.3,fill,1.05)
     tx(s,xR+0.8,y+0.5,wR-1.6,0.7,hd,11,ORANGE,True,spacing=0.5)
-    shot(s,f,xR+0.8,y+1.3,7.2,hd)
+    shot(s,f,xR+0.8,y+1.3,7.2,hd,mask='shot-mask.png')
     tx(s,xR+8.4,y+1.5,wR-9.2,2.6,bd,16,INK)
-    tx(s,X0+wL+0.05,7.0 if k==0 else 13.9,0.7,1.1,'→',20,ORANGE,True,'center','middle')
+    tx(s,X0+wL+0.05,7.0 if k==0 else 13.9,0.7,1.1,'→',20,INK,True,'center','middle')
 notes(s,'Satu referensi di Library menjadi sumber untuk sitasi di Word dan entri daftar pustaka. Tangkapan layar menunjukkan panel Cite dan menu Insert Bibliography; teori gaya sitasi tetap di Kelompok 4. Tangkapan layar: Mendeley Support (2025).')
 
 # 14 kelebihan keterbatasan
@@ -246,14 +247,14 @@ for k,(ic,hd,bd,fill,col,ib,ifg) in enumerate([('MdCheckCircle','Implementasinya
 notes(s,'Jawab kedua rumusan: implementasinya lewat impor, sitasi, dan daftar pustaka otomatis; manfaatnya gaya sitasi konsisten, tetapi metadata dan pedoman kampus tetap perlu diperiksa.')
 
 # 16 penutup
-s=slide(INK)
-orbit(s,'orbit-1.png',13.5,4.8,17.0)
-eyebrow(s,X0,1.0,'Penutup',10,DUST)
-tx(s,2.0,6.0,20.0,4.0,'Terima kasih',64,CREAM,True,spacing=-1.2)
+s=slide(BG)
+orbit(s,'orbit-cream-1.png',13.5,4.8,17.0)
+eyebrow(s,X0,1.0,'Penutup',10)
+tx(s,2.0,6.0,20.0,4.0,'Terima kasih',64,INK,True,spacing=-1.2)
 portrait(s,'MdWavingHand',23.0,4.2,8.4,CREAM,INK)
-tx(s,2.0,14.0,20.0,0.8,'Mata kuliah Bahasa Indonesia',14,DUST)
-box(s,28.95,18.30,0.14,0.14,ORANGE_L,999,name='titik-halaman')
-tx(s,29.3,18.2,3,0.6,f'{n} / {TOTAL}',9,DUST,align='right',name='nomor-slide')
+tx(s,2.0,14.0,20.0,0.8,'Mata kuliah Bahasa Indonesia',14,BODY)
+box(s,28.95,18.30,0.14,0.14,INK,999,name='titik-halaman')
+tx(s,29.3,18.2,3,0.6,f'{n} / {TOTAL}',9,INK,align='right',name='nomor-slide')
 notes(s,'Tutup dengan terima kasih.')
 
 # --- bangun ---

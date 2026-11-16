@@ -18,14 +18,15 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Jangan mengarang rujukan, angka, atau fitur. Klaim yang belum diverifikasi ditandai di catatan pembicara.
 
 ## Aturan desain
-- Referensi layout: editorial Mastercard dengan permukaan cream/ink, kartu beradius besar, pill, potret ikon lingkaran, satelit panah putih, dan orbit oranye tipis.
-- Screenshot tetap 16:9 di dalam bingkai stadium putih; jangan dipotong lingkaran atau diregangkan.
+- Referensi layout: editorial Mastercard dengan latar Light Signal Orange `F37338`, teks ink, kartu cream/ink, bentuk pill, potret ikon lingkaran, satelit panah putih, dan orbit cream tipis.
+- Screenshot tetap 16:9 di dalam bingkai stadium putih; mask luar oranye untuk screenshot di atas latar oranye, mask luar cream untuk screenshot di dalam kartu cream. Jangan dipotong lingkaran atau diregangkan.
 - Palet: Canvas Cream `F3F0EE`, Lifted Cream `FCFBFA`, Soft Bone `F4F4F4`, Dust `D1CDC7`, Ink `141413`, Charcoal `262627`, Slate `696969`, Signal Orange `CF4500`, Light Signal Orange `F37338`, Clay `9A3A0A`, White `FFFFFF`.
-- Oranye hanya untuk aksen, nomor, tautan, dan penanda; jangan memakai oranye sebagai latar teks panjang.
+- Latar dominan adalah Light Signal Orange. Teks langsung di atas oranye memakai ink atau charcoal; teks sekunder di dalam kartu cream boleh memakai Slate.
+- Signal Orange `CF4500` dipakai untuk nomor besar dan aksen di kartu cream, bukan untuk teks di atas latar oranye.
 - Font: Arial. Judul slide 32 pt tebal, sampul 48 pt, isi 15 sampai 20 pt, keterangan minimal 10 pt.
 - Margin tepi 1,2 cm, jarak antarkartu 0,8 cm. Satu gagasan per slide.
 - Tanpa gradasi, bayangan keras, atau logo Mastercard. Permukaan memakai warna solid.
-- Setiap slide membawa elemen visual berupa ikon, bentuk, atau screenshot. Sampul dan kesimpulan terang; penutup memakai latar ink.
+- Setiap slide membawa elemen visual berupa ikon, bentuk, atau screenshot. Sampul, isi, dan penutup memakai latar oranye; kartu memberi kontras cream atau ink.
 
 ## Aturan gerak
 - Deck statis. Tidak ada animasi, transisi, fade, atau perubahan warna.
@@ -35,17 +36,17 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 ## Token warna (ada di bagian atas build.py)
 | Peran | Hex |
 |---|---|
-| Canvas Cream | F3F0EE |
-| Lifted Cream | FCFBFA |
-| Soft Bone | F4F4F4 |
-| Dust | D1CDC7 |
-| Ink | 141413 |
-| Charcoal | 262627 |
-| Slate | 696969 |
-| Signal Orange | CF4500 |
-| Light Signal Orange | F37338 |
-| Clay | 9A3A0A |
-| White | FFFFFF |
+| Latar utama | F37338 |
+| Kartu utama | F3F0EE |
+| Kartu terangkat | FCFBFA |
+| Kartu sekunder | F4F4F4 |
+| Teks utama | 141413 |
+| Teks sekunder di atas oranye | 262627 |
+| Teks sekunder di kartu | 696969 |
+| Aksen di kartu cream | CF4500 |
+| Orbit dan aksen terang | F3F0EE |
+| Risiko | 9A3A0A |
+| Bingkai screenshot | FFFFFF |
 
 ## Yang harus diisi manual
 - Slide 2: nama dan NIM anggota, urut NIM; nomor besar digambar sebagai teks oranye, bukan aset `num-*.png`. Ikon ber-hash tidak disimpan di Git; `icons.js` membuatnya saat build.
@@ -57,8 +58,8 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Slide 11: enam langkah Mendeley Cite; teori gaya sitasi tetap di Kelompok 4.
 - Slide 12: tabel lima gaya sitasi; jangan menambah aturan format rinci.
 - Slide 13: contoh satu sumber menjadi sitasi dan daftar pustaka.
-- Slide 6-11: screenshot Mendeley 16:9 di dalam `shot-mask.png`; tangkapan layar akun memakai Mendeley (n.d.); jangan regangkan; crop bilah hitam; kredit di speaker notes.
-- Slide 15: kesimpulan terang; slide 16: penutup berlatar ink. Jangan menambahkan gradasi latar.
+- Slide 6-11: screenshot Mendeley 16:9 di dalam `shot-mask-orange.png`; slide 13 memakai `shot-mask.png` karena screenshot berada di kartu cream. Tangkapan layar akun memakai Mendeley (n.d.); jangan regangkan; crop bilah hitam; kredit di speaker notes.
+- Slide 15: kesimpulan dengan kartu ink dan cream; slide 16: penutup berlatar oranye, teks ink, potret cream. Jangan menambahkan gradasi latar.
 - Verifikasi ke situs resmi Mendeley: batas penyimpanan gratis dan ketersediaan fitur.
 
 ## Catatan teknis OfficeCLI

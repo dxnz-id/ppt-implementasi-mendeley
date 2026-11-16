@@ -4,7 +4,7 @@
 
 **Goal:** Mengganti desain deck Mendeley ke bahasa visual Mastercard pada branch preview, tanpa mengubah isi atau urutan 16 slide.
 
-**Architecture:** `build.py` tetap menjadi satu-satunya generator. Token dan helper diubah lebih dulu, lalu slide 1-16 ditulis ulang memakai `frame`, `portrait`, `satellite`, `shot`, `eyebrow`, dan `orbit`. `icons.js` mendapat bentuk `circle`; orbit disimpan sebagai SVG.
+**Architecture:** `build.py` tetap menjadi satu-satunya generator. Token dan helper diubah lebih dulu, lalu slide 1-16 ditulis ulang memakai `frame`, `portrait`, `satellite`, `shot`, `eyebrow`, dan `orbit`. `icons.js` mendapat bentuk `circle`; orbit dan mask disimpan sebagai PNG.
 
 **Tech Stack:** Python stdlib, Node/react-icons/sharp, OfficeCLI, LibreOffice, GitHub Actions.
 
@@ -13,12 +13,22 @@
 ## Global Constraints
 
 - 16 slide; isi dan urutan tetap.
-- Canvas `F3F0EE`; ink `141413`; aksen `CF4500`/`F37338`.
+- Latar dominan `F37338`; teks ink `141413`; teks sekunder di atas oranye `262627`; kartu cream/ink.
 - Font Arial.
-- Screenshot 16:9; frame stadium radius 1,05 cm.
+- Screenshot 16:9; frame stadium radius 1,05 cm; mask luar oranye, kecuali screenshot di kartu cream.
 - Tidak ada animasi atau sidebar.
 - Jangan memakai logo Mastercard.
 - Preview release dari branch, bukan `main`.
+
+## Revisi oranye dominan (dieksekusi)
+
+- [x] Ubah `BG` menjadi `F37338`; tambah `BODY=262627`.
+- [x] Ganti eyebrow, titik halaman, dan nomor halaman menjadi ink.
+- [x] Ganti teks sekunder langsung di atas oranye menjadi charcoal.
+- [x] Tambah `orbit-cream-1/2.png` dan `shot-mask-orange.png`.
+- [x] Screenshot slide 6-11 memakai mask oranye; slide 13 memakai mask cream.
+- [x] Penutup menjadi latar oranye dengan teks ink dan potret cream.
+- [x] Build, validasi, render, dan periksa kontras.
 
 ## Tasks
 
@@ -54,10 +64,10 @@
 
 ### Task 5: Slide 13-16
 
-- [ ] Satu sumber: kartu cream + screenshot + panah oranye.
+- [ ] Satu sumber: kartu cream + screenshot + panah ink.
 - [ ] Kelebihan/keterbatasan: kartu cream dan ink.
 - [ ] Kesimpulan: kartu ink dan cream.
-- [ ] Penutup: latar ink + orbit.
+- [ ] Penutup: latar oranye + teks ink + orbit cream.
 
 ### Task 6: Verifikasi dan preview release
 
