@@ -85,14 +85,14 @@ for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Muhammad Rifqi al 
 page(s)
 notes(s,'Sebutkan anggota kelompok satu per satu sesuai urutan NIM.')
 # 3 latar belakang
-s=frame('Sitasi manual rawan salah dan lambat')
+s=frame('Kekurangan sitasi manual')
 card3(s,4.0,8.2,[('MdFormatAlignLeft','Format berbeda','Gaya sitasi bisa berbeda antarbagian karena diketik satu per satu.'),
  ('MdLinkOff','Sumber terlupa','Kutipan ada di naskah, tetapi rujukannya tidak masuk daftar pustaka.'),
- ('MdCompareArrows','Daftar tak cocok','Isi daftar pustaka tidak sama dengan sumber yang dikutip di teks.')],[(CARD,PC,ON_PC,TX)]*3)
+ ('MdCompareArrows','Daftar tidak cocok','Isi daftar pustaka tidak sama dengan sumber yang dikutip di teks.')],[(CARD,PC,ON_PC,TX)]*3)
 box(s,X0,13.0,W,5.0,PC,1.4)
 pic(s,icon('MdTimer',SUNNY,P,'FFFFFF'),X0+1.0,14.2,2.6,'Ikon waktu')
-tx(s,X0+4.4,13.4,W-5.4,4.2,'Menulis kutipan dan daftar pustaka secara manual memakan waktu. Sumber yang lupa dicantumkan bisa dianggap plagiarisme.',22,ON_PC,False,valign='middle')
-notes(s,'Mahasiswa sering salah pada tiga hal: format kutipan tidak seragam, sumber lupa dicantumkan, dan daftar pustaka tidak cocok dengan isi. Semua itu berkaitan dengan etika kutipan dan plagiarisme yang kita pelajari di mata kuliah ini.')
+tx(s,X0+4.4,13.4,W-5.4,4.2,'Sitasi manual memakan waktu. Sumber yang lupa dicantumkan bisa dianggap plagiarisme.',22,ON_PC,False,valign='middle')
+notes(s,'Tiga kekurangan sitasi manual: format tidak konsisten, sumber terlupa, dan daftar pustaka tidak cocok dengan teks. Ketiganya berkaitan dengan etika kutipan dan plagiarisme yang kita pelajari di mata kuliah ini.')
 # 4 rumusan
 s=frame('Rumusan masalah dan tujuan')
 w2,gap=13.6,0.8
