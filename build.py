@@ -1,9 +1,8 @@
-import json,subprocess,os,hashlib,struct,sys
+import json,subprocess,os,hashlib,struct
 OUT='deck.pptx'
 TOTAL=14
-SPLIT={3,12,13,14}
 # --- palet M3 Expressive dari #B0C8E0 #C1E0E0 #DCE7D6 #F6F6F6 ---
-BG,RAIL,CARD='F6F6F6','ECEEEE','E6E9E9'
+BG,CARD='F6F6F6','E6E9E9'
 TX,MUT='2F3334','5B6061'
 P,ON_P,PC,ON_PC='46627A','F6F9FF','B0C8E0','355169'
 SC,ON_SC='C1E0E0','3D6060'
@@ -13,7 +12,7 @@ PILL_PC,PILL_EC='C9DBEC','F7C7C1'
 COOKIE,FLOWER,CLOVER,SQUIRCLE,BURST,SUNNY='cookie','flower','clover','squircle','burst','sunny'
 F='Calibri'
 ops=[];specs={};n=0
-counts={};shape_counts={};sidebar_shapes={};content_start={};sidebar_end={};pill_idx={};pill_top={}
+counts={}
 def cm(v):return f'{v:.2f}cm'
 def icon(name,shape,bg,fg):
     f=hashlib.md5(f'{name}{shape}{bg}{fg}'.encode()).hexdigest()[:10]+'.png'
@@ -22,10 +21,9 @@ def emit(parent,typ,props):ops.append(dict(command='add',parent=parent,type=typ,
 def add(parent,typ,**p):
     emit(parent,typ,p)
     if typ in ('shape','picture','chart','group'):counts[parent]=counts.get(parent,0)+1
-    if typ=='shape':shape_counts[parent]=shape_counts.get(parent,0)+1
     return counts.get(parent)
 def slide(bg):
-    global n;n+=1;add('/','slide',background=bg);s=f'/slide[{n}]';counts[s]=0;shape_counts[s]=0;content_start[s]=1;return s
+    global n;n+=1;add('/','slide',background=bg);s=f'/slide[{n}]';counts[s]=0;return s
 def box(s,x,y,w,h,fill,r=1.0,line=None,dash=None,name='kartu'):
     a=min(50000,int(r/min(w,h)*100000))
     pr=dict(geometry='roundRect',adj=f'adj:val {a}',x=cm(x),y=cm(y),width=cm(w),height=cm(h),fill=fill,name=name)
@@ -51,31 +49,13 @@ def notes(s,t):add(s,'notes',text=t)
 def num(s,x,y,d,t,fill,col):
     add(s,'shape',geometry='ellipse',x=cm(x),y=cm(y),width=cm(d),height=cm(d),text=t,size=20,bold='true',color=col,
         align='center',valign='middle',font=F,fill=fill,line='none',margin='0',name='nomor')
-SECT=[('MdMenuBook','Latar'),('MdLibraryBooks','Mengenal'),('MdBuild','Praktik'),('MdBalance','Evaluasi'),('MdFlag','Penutup')]
 def page(s):tx(s,29.4,18.2,3,0.6,f'{n} / {TOTAL}',10,MUT,align='right',name='nomor-slide')
-def frame(sec,title):
-    s=slide(BG);box(s,1.0,1.0,2.8,17.05,RAIL,1.2,name='rail')
-    pic(s,icon('MdLibraryBooks',COOKIE,P,'FFFFFF'),1.7,1.6,1.4,'Logo bagian')
-    if n not in SPLIT:
-        y=3.5+sec*2.9
-        pill_top[s]=counts[s]+1  # posisi top-level untuk grouping
-        pill_idx[s]=shape_counts[s]+1  # posisi shape untuk AddAnimation
-        box(s,1.3,y,2.2,2.6,PC,1.1,name=f'#s{n}-rail-pill')
-    for k,(ic,lab) in enumerate(SECT):
-        y=3.5+k*2.9;on=k==sec
-        if on and n in SPLIT:
-            pill_top[s]=counts[s]+1  # posisi top-level untuk grouping
-            pill_idx[s]=shape_counts[s]+1  # posisi shape untuk AddAnimation
-            box(s,1.3,y,2.2,2.6,PC,1.1,name=f'#s{n}-rail-pill')
-        pic(s,icon(ic,'none','x',ON_PC if on else MUT),1.9,y+0.35,1.0,lab)
-        tx(s,1.3,y+1.6,2.2,0.7,lab,12,ON_PC if on else MUT,on,'center','middle','rail-label')
-    sidebar_end[s]=counts[s]
-    sidebar_shapes[s]=shape_counts[s]
-    content_start[s]=counts[s]+1
-    tx(s,4.4,1.2,28,2.4,title,36,TX,True,valign='middle',name='judul')
+def frame(title):
+    s=slide(BG)
+    if title:tx(s,1.2,1.2,31.2,2.4,title,36,TX,True,valign='middle',name='judul')
     page(s)
     return s
-X0,W=4.4,28.0
+X0,W=1.2,31.2
 def card3(s,y,h,items,fills):
     w=(W-1.6)/3
     for k,(ic,hd,bd) in enumerate(items):
@@ -87,16 +67,16 @@ def card3(s,y,h,items,fills):
 s=slide(BG)
 pic(s,icon('MdLibraryBooks',FLOWER,PC,ON_PC),20.6,2.6,12,'Ilustrasi Mendeley')
 pic(s,icon('MdFormatQuote',CLOVER,TC,ON_TC),29.0,14.7,4.2,'Ikon kutipan')
-box(s,2.0,3.0,8.4,1.6,PC,0.8,name='label');tx(s,2.0,3.0,8.4,1.6,'Bahasa Indonesia',18,ON_PC,True,'center','middle')
-tx(s,2.0,4.4,18,7.8,'Implementasi Mendeley dalam penulisan karya ilmiah',44,TX,True,name='judul')
-tx(s,2.0,13.4,18,1,'Mata kuliah Bahasa Indonesia',20,P,True)
+box(s,1.2,3.0,8.4,1.6,PC,0.8,name='label');tx(s,1.2,3.0,8.4,1.6,'Bahasa Indonesia',18,ON_PC,True,'center','middle')
+tx(s,1.2,4.4,18.8,7.8,'Implementasi Mendeley dalam penulisan karya ilmiah',44,TX,True,name='judul')
+tx(s,1.2,13.4,18.8,1,'Mata kuliah Bahasa Indonesia',20,P,True)
 notes(s,'Salam pembuka. Perkenalkan topik: cara Mendeley dipakai untuk menyusun kutipan dan daftar pustaka karya ilmiah.')
 # 2 anggota
 s=slide(BG)
-tx(s,2.0,1.4,28,2.4,'Anggota kelompok',40,TX,True,valign='middle',name='judul')
-tx(s,2.0,3.6,28,1,'Mata kuliah Bahasa Indonesia',18,P,True)
+tx(s,1.2,1.4,31.2,2.4,'Anggota kelompok',40,TX,True,valign='middle',name='judul')
+tx(s,1.2,3.6,31.2,1,'Mata kuliah Bahasa Indonesia',18,P,True)
 for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Muhammad Rifqi al Khafis','202551019'),('Arkano Hamada Moslem','202551034'),('Farrel Aufa Athaya Ardiyono','202551042'),("Muhammad La'azidannak Rusda",'202551049'),('Aksel Agustiyan','202551058'),('Muhammad Arief Satria Nugraha','202551151')]):
-    x=(2.0+k*7.3) if k<4 else (5.65+(k-4)*7.3);y=5.2 if k<4 else 11.0
+    x=(1.2+k*7.6) if k<4 else (5.8+(k-4)*7.6);y=5.2 if k<4 else 11.0
     fill=[PC,CARD,TC,CARD,PC,CARD,CARD][k];col=[ON_PC,TX,ON_TC,TX,ON_PC,TX,TX][k]
     box(s,x,y,6.8,5.2,fill,1.2)
     clipped(s,f'num-{k+1:02d}.png',x+0.05,y+0.04,6.7,5.12,'Nomor '+f'{k+1:02d}')
@@ -105,7 +85,7 @@ for k,(nm,nim) in enumerate([('Aminadab Yunus','202451028'),('Muhammad Rifqi al 
 page(s)
 notes(s,'Sebutkan anggota kelompok satu per satu sesuai urutan NIM.')
 # 3 latar belakang
-s=frame(0,'Sitasi manual rawan salah dan lambat')
+s=frame('Sitasi manual rawan salah dan lambat')
 card3(s,4.0,8.2,[('MdFormatAlignLeft','Format berbeda','Gaya sitasi bisa berbeda antarbagian karena diketik satu per satu.'),
  ('MdLinkOff','Sumber terlupa','Kutipan ada di naskah, tetapi rujukannya tidak masuk daftar pustaka.'),
  ('MdCompareArrows','Daftar tak cocok','Isi daftar pustaka tidak sama dengan sumber yang dikutip di teks.')],[(CARD,PC,ON_PC,TX)]*3)
@@ -114,18 +94,20 @@ pic(s,icon('MdTimer',SUNNY,P,'FFFFFF'),X0+1.0,14.2,2.6,'Ikon waktu')
 tx(s,X0+4.4,13.4,W-5.4,4.2,'Menulis kutipan dan daftar pustaka secara manual memakan waktu. Sumber yang lupa dicantumkan bisa dianggap plagiarisme.',22,ON_PC,False,valign='middle')
 notes(s,'Mahasiswa sering salah pada tiga hal: format kutipan tidak seragam, sumber lupa dicantumkan, dan daftar pustaka tidak cocok dengan isi. Semua itu berkaitan dengan etika kutipan dan plagiarisme yang kita pelajari di mata kuliah ini.')
 # 4 rumusan
-s=frame(0,'Rumusan masalah dan tujuan')
+s=frame('Rumusan masalah dan tujuan')
+w2,gap=13.6,0.8
+start=X0+(W-(2*w2+gap))/2
 for k,(ic,hd,its,pitch,fill,col,nb,nc) in enumerate([('MdQuestionAnswer','Rumusan masalah',['Bagaimana cara mengimplementasikan Mendeley dalam penulisan karya ilmiah?','Apa manfaat dan keterbatasan Mendeley bagi mahasiswa?'],4.2,CARD,TX,P,'FFFFFF'),
  ('MdFlag','Tujuan',['Menjelaskan fungsi Mendeley.','Menguraikan langkah penggunaannya.','Menilai manfaat dan keterbatasannya.'],2.9,TC,ON_TC,ON_TC,'FFFFFF')]):
-    x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
-    clipped(s,'mask-04-tanya.png' if k==0 else 'mask-04-tujuan.png',x,4.0,13.6,14.0,'Masking tanda')
+    x=start+k*(w2+gap);box(s,x,4.0,w2,14.0,fill,1.4)
+    clipped(s,'mask-04-tanya.png' if k==0 else 'mask-04-tujuan.png',x,4.0,w2,14.0,'Masking tanda')
     pic(s,icon(ic,[COOKIE,CLOVER][k],PC if k==0 else SC,ON_PC if k==0 else ON_TC),x+0.9,4.9,2.2,hd)
     tx(s,x+3.6,4.9,9,2.2,hd,24,col,True,valign='middle')
     for j,t in enumerate(its):
         y=8.2+j*pitch;num(s,x+0.9,y,1.5,str(j+1),nb,nc);tx(s,x+3.0,y-0.2,10,pitch-0.4,t,20,col,valign='top')
 notes(s,'Dua rumusan masalah menuntun presentasi ini: cara implementasi dan manfaat serta keterbatasan. Tiga tujuan mengikuti urutan tersebut: fungsi, langkah, lalu evaluasi.')
 # 5 mengenal
-s=frame(1,'Tiga komponen utama Mendeley')
+s=frame('Tiga komponen utama Mendeley')
 box(s,X0,4.0,10.0,14.0,PC,1.4)
 clipped(s,'mask-05-tiga.png',X0,4.0,10.0,14.0,'Masking angka tiga')
 pic(s,icon('MdLibraryBooks',FLOWER,P,'FFFFFF'),X0+1.2,4.9,3.6,'Ikon Mendeley')
@@ -134,12 +116,12 @@ tx(s,X0+1.0,15.2,8,2.4,'Kita akan fokus pada Reference Manager.',16,ON_PC)
 for k,(f,hd,bd) in enumerate([('shot-rm-add.png','Mendeley Reference Manager','Pustaka pribadi untuk menyimpan, mengelompokkan, dan menganotasi PDF jurnal.'),
  ('shot-cite-panel.png','Mendeley Cite','Add-in Microsoft Word untuk menyisipkan kutipan dan membuat daftar pustaka.'),
  ('shot-web-importer.png','Web Importer','Ekstensi peramban untuk menyimpan referensi dari halaman web.')]):
-    y=4.0+k*4.9;box(s,X0+10.8,y,17.2,4.2,CARD,1.2)
-    shot(s,f,X0+11.5,y+0.5,5.6,hd)
-    tx(s,X0+17.5,y+0.4,10.0,1.9,hd,20,TX,True);tx(s,X0+17.5,y+2.1,10.0,2.0,bd,16,MUT)
+    y=4.0+k*4.9;box(s,X0+10.8,y,W-10.8,4.2,CARD,1.2)
+    shot(s,f,X0+11.5,y+0.5,6.2,hd)
+    tx(s,X0+18.2,y+0.4,W-19.2,1.9,hd,20,TX,True);tx(s,X0+18.2,y+2.1,W-19.2,2.0,bd,16,MUT)
 notes(s,'Mendeley dikembangkan Elsevier. Ada tiga komponen: Reference Manager untuk pustaka, Mendeley Cite untuk Word, dan Web Importer untuk peramban. Tangkapan layar: Mendeley (n.d.); Mendeley Support (2025).')
 # 6 apa yang diolah
-s=frame(1,'Data yang diolah Mendeley')
+s=frame('Data yang diolah Mendeley')
 box(s,X0,4.0,W,4.6,P,1.4)
 pic(s,icon('MdDescription',SQUIRCLE,PC,ON_PC),X0+1.0,5.0,2.6,'Ikon metadata')
 tx(s,X0+4.4,4.0,W-5.4,4.6,'Mendeley memakai metadata referensi untuk menyusun sitasi dan daftar pustaka. Penulis tetap harus memeriksa isi dan ketepatan datanya.',24,'FFFFFF',True,valign='middle')
@@ -148,67 +130,72 @@ for k,(f,hd,bd) in enumerate([('shot-metadata.png','Metadata','Judul, penulis, t
  ('shot-style.png','Gaya sitasi','Mendeley menerapkan gaya yang dipilih, misalnya APA atau IEEE.'),
  ('shot-bibliography.png','Daftar pustaka','Mendeley menyusun entri dari metadata dan gaya yang sama.')]):
     x=X0+k*(w3+0.8);box(s,x,9.4,w3,8.6,CARD,1.2)
-    shot(s,f,x+0.5,9.9,w3-1.0,hd)
+    shot(s,f,x+0.9,9.9,w3-1.8,hd)
     tx(s,x+0.8,14.7,w3-1.6,1.2,hd,24,TX,True);tx(s,x+0.8,15.9,w3-1.6,2.0,bd,16,MUT)
 notes(s,'Mendeley mengolah metadata menjadi sitasi dan daftar pustaka. Jenis kutipan dan aturan tiap gaya dibahas Kelompok 4; fokus kita pada data yang diolah dan hasil yang dibuat Mendeley. Tangkapan layar: Mendeley Support (2025).')
 # 7 satu sumber dua keluaran
-s=frame(1,'Satu sumber untuk dua rujukan')
+s=frame('Satu sumber untuk dua rujukan')
 tx(s,X0,3.3,W,0.9,'Metadata yang sama menjadi bahan sitasi dan daftar pustaka.',18,MUT)
-box(s,X0,4.2,11.0,13.2,PC,1.4)
-tx(s,X0+0.8,4.8,9.4,0.8,'Satu sumber',14,ON_PC,True)
-shot(s,'shot-source.png',X0+0.8,5.7,9.6,'PDF jurnal dan metadata')
-tx(s,X0+0.8,11.3,9.4,0.8,'PDF jurnal dan metadata',16,ON_PC,True)
-tx(s,X0+0.8,12.1,9.4,3.2,'Penulis, tahun, judul, dan DOI dipakai untuk keduanya.',16,ON_PC)
+wL,wR=12.0,18.4
+box(s,X0,4.2,wL,13.2,PC,1.4)
+tx(s,X0+0.8,4.8,wL-1.6,0.8,'Satu sumber',14,ON_PC,True)
+shot(s,'shot-source.png',X0+1.2,5.7,9.6,'PDF jurnal dan metadata')
+tx(s,X0+0.8,11.3,wL-1.6,0.8,'PDF jurnal dan metadata',16,ON_PC,True)
+tx(s,X0+0.8,12.1,wL-1.6,3.2,'Penulis, tahun, judul, dan DOI dipakai untuk keduanya.',16,ON_PC)
+xR=X0+wL+0.8
 for k,(f,hd,bd,fill,col) in enumerate([('shot-citation.png','Sitasi dalam teks','Mendeley Cite menyisipkan sitasi ke dalam kalimat.',SC,ON_SC),
  ('shot-bib-menu.png','Daftar pustaka','Mendeley menyusun entri lengkap dari metadata yang sama.',TC,ON_TC)]):
-    y=4.2+k*6.9;box(s,16.2,y,16.2,6.3,fill,1.4)
-    tx(s,17.0,y+0.5,7.2,0.7,hd,14,col,True)
-    shot(s,f,17.0,y+1.4,7.2,hd)
-    tx(s,24.8,y+1.6,7.0,2.6,bd,18,col)
-    if k==0:pic(s,icon('MdArrowForward','none','x',P),15.45,7.1,0.7,'Panah')
-    else:pic(s,icon('MdArrowForward','none','x',P),15.45,14.0,0.7,'Panah')
+    y=4.2+k*6.9;box(s,xR,y,wR,6.3,fill,1.4)
+    tx(s,xR+0.8,y+0.5,wR-1.6,0.7,hd,14,col,True)
+    shot(s,f,xR+0.8,y+1.4,7.2,hd)
+    tx(s,xR+8.4,y+1.6,wR-9.2,2.6,bd,18,col)
+    if k==0:pic(s,icon('MdArrowForward','none','x',P),X0+wL+0.05,7.1,0.7,'Panah')
+    else:pic(s,icon('MdArrowForward','none','x',P),X0+wL+0.05,14.0,0.7,'Panah')
 notes(s,'Satu referensi di Library menjadi sumber untuk sitasi di Word dan entri daftar pustaka. Tangkapan layar menunjukkan panel Cite dan menu Insert Bibliography; teori gaya sitasi tetap di Kelompok 4. Tangkapan layar: Mendeley Support (2025).')
 # 8 persiapan
-s=frame(2,'Persiapan: akun, aplikasi, dan add-in')
+s=frame('Persiapan: akun, aplikasi, dan add-in')
 w3=(W-1.6)/3
 for k,(f,hd,bd) in enumerate([
     ('shot-account.png','Buat akun','Daftar dengan email aktif.'),
     ('shot-app.png','Pasang aplikasi','Unduh Reference Manager, lalu pasang add-in Mendeley Cite di Word.'),
     ('shot-extension.png','Pasang ekstensi','Tambahkan Web Importer ke peramban untuk menyimpan referensi dari web.')]):
     x=X0+k*(w3+0.8);box(s,x,4.2,w3,12.6,[CARD,SC,TC][k],1.4)
-    shot(s,f,x+0.5,4.7,w3-1.0,hd)
+    shot(s,f,x+0.9,4.7,w3-1.8,hd)
     num(s,x+0.7,9.4,1.2,str(k+1),P,'FFFFFF')
     tx(s,x+2.1,9.3,w3-2.8,1.6,hd,22,[TX,ON_SC,TX][k],True)
     tx(s,x+0.8,10.9,w3-1.6,5.0,bd,18,[MUT,ON_SC,MUT][k])
 notes(s,'Tiga persiapan: membuat akun dengan email aktif, memasang Reference Manager dan add-in Mendeley Cite di Word, lalu memasang Web Importer di peramban. Tangkapan layar akun: UCL Library (2019); tangkapan layar lain: Mendeley (n.d.).')
 # 9 langkah 1
-s=frame(2,'Langkah 1: kumpulkan referensi')
+s=frame('Langkah 1: kumpulkan referensi')
 for k,(f,hd,bd) in enumerate([
     ('shot-import.png','Impor PDF','Tambahkan PDF jurnal ke Library.'),
     ('shot-web-save.png','Simpan dari web','Gunakan Web Importer pada halaman artikel.'),
     ('shot-details.png','Periksa metadata','Periksa judul, penulis, tahun, dan DOI; koreksi yang salah.'),
     ('shot-organize.png','Rapikan','Kelompokkan dengan folder dan tag per bab atau topik.')]):
-    x=X0+(k%2)*14.4;y=4.0+(k//2)*7.4;box(s,x,y,13.6,6.6,[CARD,SC,TC,CARD][k],1.3)
-    shot(s,f,x+0.6,y+0.5,6.2,hd)
-    tx(s,x+7.2,y+0.5,5.8,1.6,hd,20,TX,True)
-    tx(s,x+7.2,y+2.2,5.8,3.8,bd,18,MUT)
+    w2=(W-0.8)/2
+    x=X0+(k%2)*(w2+0.8);y=4.0+(k//2)*7.4;box(s,x,y,w2,6.6,[CARD,SC,TC,CARD][k],1.3)
+    shot(s,f,x+0.6,y+0.5,6.6,hd)
+    tx(s,x+7.8,y+0.5,w2-8.4,1.6,hd,20,TX,True)
+    tx(s,x+7.8,y+2.2,w2-8.4,3.8,bd,18,MUT)
 notes(s,'Mulai dari mengumpulkan sumber. Metadata hasil impor sering keliru, jadi periksa judul, penulis, tahun, dan DOI satu per satu. Folder dan tag per bab memudahkan pencarian saat menulis. Tangkapan layar: Mendeley Support (2025).')
 # 10 langkah 2
-s=frame(2,'Langkah 2: baca dan catat')
-box(s,X0,4.0,17.6,14.0,CARD,1.4)
+s=frame('Langkah 2: baca dan catat')
+wL=20.8
+box(s,X0,4.0,wL,14.0,CARD,1.4)
 for k,(f,hd,bd) in enumerate([
     ('shot-highlight.png','Highlight dan anotasi','Kita bisa menandai bagian penting langsung di PDF.'),
     ('shot-notes.png','Catatan per referensi','Tulis ide utama dengan kalimat sendiri sebelum menulis naskah.')]):
     y=4.9+k*6.6;shot(s,f,X0+0.8,y+0.5,6.6,hd)
-    tx(s,X0+7.9,y+0.5,8.7,1.3,hd,22,TX,True)
-    tx(s,X0+7.9,y+1.9,8.7,4.0,bd,18,MUT)
-box(s,X0+18.4,4.0,9.6,14.0,TC,1.4)
-clipped(s,'mask-10-panah.png',X0+18.4,4.0,9.6,14.0,'Masking panah hasil')
-pic(s,icon('MdLightbulb',SUNNY,SC,ON_TC),X0+19.6,5.2,4.2,'Ikon ide')
-tx(s,X0+19.4,10.6,7.6,1.4,'Hasilnya',24,ON_TC,True);tx(s,X0+19.4,12.2,7.6,5,'Catatan ini menjadi bahan untuk menulis kutipan tidak langsung.',22,ON_TC)
+    tx(s,X0+7.9,y+0.5,wL-8.7,1.3,hd,22,TX,True)
+    tx(s,X0+7.9,y+1.9,wL-8.7,4.0,bd,18,MUT)
+xR=X0+wL+0.8
+box(s,xR,4.0,9.6,14.0,TC,1.4)
+clipped(s,'mask-10-panah.png',xR,4.0,9.6,14.0,'Masking panah hasil')
+pic(s,icon('MdLightbulb',SUNNY,SC,ON_TC),xR+1.2,5.2,4.2,'Ikon ide')
+tx(s,xR+1.0,10.6,7.6,1.4,'Hasilnya',24,ON_TC,True);tx(s,xR+1.0,12.2,7.6,5,'Catatan ini menjadi bahan untuk menulis kutipan tidak langsung.',22,ON_TC)
 notes(s,'Anotasi dan catatan membantu kita memahami sumber lebih dulu. Dari catatan itulah kutipan tidak langsung ditulis ulang dengan kalimat sendiri, lengkap dengan sitasinya. Tangkapan layar: Mendeley Support (2025).')
 # 11 langkah 3
-s=frame(2,'Langkah 3: sisipkan kutipan di Word')
+s=frame('Langkah 3: sisipkan kutipan di Word')
 w4=(W-3*1.6)/4
 for k,(f,hd,bd) in enumerate([
     ('shot-addin.png','Buka add-in','Buka Mendeley Cite di Microsoft Word.'),
@@ -217,7 +204,7 @@ for k,(f,hd,bd) in enumerate([
     ('shot-bibliography.png','Buat daftar pustaka','Daftar pustaka tersusun otomatis.')]):
     x=X0+k*(w4+1.6);box(s,x,4.4,w4,13.0,[CARD,SC,TC,PC][k],1.3)
     num(s,x+0.7,5.1,1.5,str(k+1),P,'FFFFFF')
-    shot(s,f,x+0.5,7.0,w4-1.0,hd)
+    shot(s,f,x+0.7,7.0,w4-1.4,hd)
     tcol=ON_PC if k==3 else TX
     bcol=ON_PC if k==3 else MUT
     tx(s,x+0.6,10.0,w4-1.2,2.2,hd,20,tcol,True)
@@ -225,68 +212,34 @@ for k,(f,hd,bd) in enumerate([
     if k<3:pic(s,icon('MdArrowForward','none','x',P),x+w4+0.3,10.2,1.0,'Panah')
 notes(s,'Alurnya empat langkah di Word: buka Mendeley Cite, sisipkan kutipan, pilih gaya sesuai pedoman kampus, lalu buat daftar pustaka. Daftar pustaka ikut berubah otomatis saat kutipan ditambah atau dihapus. Tangkapan layar: Mendeley Support (2025).')
 # 12 kelebihan keterbatasan
-s=frame(3,'Kelebihan dan keterbatasan')
+s=frame('Kelebihan dan keterbatasan')
 for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Gaya sitasi konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi lintas perangkat'],PC,ON_PC,P,'FFFFFF'),
  ('MdWarning','Keterbatasan',['Metadata hasil impor perlu diperiksa','Gaya sitasi khusus kampus perlu ditambahkan manual','Penyimpanan gratis hanya 2 GB','PDF hasil pindai biasanya masuk tanpa metadata'],EC,ON_EC,'F56965','FFFFFF')]):
-    x=X0+k*14.4;box(s,x,4.0,13.6,14.0,fill,1.4)
-    pic(s,icon(ic,[CLOVER,BURST][k],sh,fg),x+0.9,4.8,2.2,hd);tx(s,x+3.6,4.8,9.4,2.2,hd,24,col,True,valign='middle')
+    w2=(W-0.8)/2
+    x=X0+k*(w2+0.8);box(s,x,4.0,w2,14.0,fill,1.4)
+    pic(s,icon(ic,[CLOVER,BURST][k],sh,fg),x+0.9,4.8,2.2,hd);tx(s,x+3.6,4.8,w2-4.2,2.2,hd,24,col,True,valign='middle')
     pill=PILL_PC if k==0 else PILL_EC
     for j,t in enumerate(its):
         y=7.7+j*2.5
-        box(s,x+0.8,y,12.0,1.9,pill,0.95,name='kapsul')
-        tx(s,x+1.4,y,11.2,1.9,t,16,col,valign='middle')
+        box(s,x+0.8,y,w2-1.6,1.9,pill,0.95,name='kapsul')
+        tx(s,x+1.4,y,w2-2.4,1.9,t,16,col,valign='middle')
 notes(s,'Kelebihan: hemat waktu, gaya sitasi konsisten, dan sinkron. Keterbatasannya: metadata hasil impor perlu diperiksa, gaya sitasi khusus kampus perlu ditambahkan manual, penyimpanan gratis hanya 2 GB, dan PDF hasil pindai biasanya masuk tanpa metadata.')
 # 13 kesimpulan (terang)
-s=frame(4,'Kesimpulan')
-w3=13.6
+s=frame('Kesimpulan')
+w2=(W-0.8)/2
 for k,(ic,hd,bd,fill,col,ib,ifg) in enumerate([
  ('MdCheckCircle','Implementasinya','Impor referensi, sisipkan sitasi di Word, lalu buat daftar pustaka otomatis.',PC,ON_PC,P,ON_P),
  ('MdSchool','Manfaat dan batasannya','Gaya sitasi menjadi konsisten, tetapi metadata dan pedoman kampus tetap perlu diperiksa.',CARD,TX,SC,ON_SC)]):
-    x=X0+k*14.4;box(s,x,4.6,w3,12.6,fill,1.4)
+    x=X0+k*(w2+0.8);box(s,x,4.6,w2,12.6,fill,1.4)
     pic(s,icon(ic,[COOKIE,CLOVER][k],ib,ifg),x+0.9,5.6,3.8,hd)
-    tx(s,x+0.9,10.0,w3-1.8,2.6,hd,28,col,True)
-    tx(s,x+0.9,13.0,w3-1.8,3.6,bd,20,col)
+    tx(s,x+0.9,10.0,w2-1.8,2.6,hd,28,col,True)
+    tx(s,x+0.9,13.0,w2-1.8,3.6,bd,20,col)
 notes(s,'Jawab kedua rumusan: implementasinya lewat impor, sitasi, dan daftar pustaka otomatis; manfaatnya gaya sitasi konsisten, tetapi metadata dan pedoman kampus tetap perlu diperiksa.')
 # 14 penutup
-s=frame(4,'')
-tx(s,6.4,6.6,16.0,4.0,'Terima kasih',72,TX,True)
+s=frame('')
+tx(s,2.0,6.6,18.0,4.0,'Terima kasih',72,TX,True)
 pic(s,icon('MdWavingHand',FLOWER,PC,ON_PC),23.0,4.8,8.4,'Ikon penutup')
 notes(s,'Tutup dengan terima kasih.')
-# --- animasi per objek: group dianimasikan lewat proxy, lalu targetnya dipindah ke group ---
-HIN='M 1 0 L -0.015 0 L 0 0 E'
-VIN='M 0 1 L 0 -0.015 L 0 0 E'
-SIN='M -0.12 0 L 0.003 0 L 0 0 E'
-PDOWN='M 0 -0.1522 L 0 0.004 L 0 0 E'
-def anim(target,d,trigger,dur,easein=20,easeout=70):
-    emit(target,'animation',{'class':'motion','path':'custom','d':d,'trigger':trigger,'duration':dur,'easein':easein,'easeout':easeout})
-def proxy(i,tag):
-    emit(f'/slide[{i}]','shape',{'x':'0cm','y':'0cm','width':'0.01cm','height':'0.01cm','fill':'none','line':'none','name':f'#s{i}-proxy-{tag}'})
-# AddAnimation hanya menghitung shape top-level, bukan group atau picture.
-for i in range(1,TOTAL+1):
-    s=f'/slide[{i}]';total=counts[s];cs=content_start[s];se=sidebar_end.get(s,cs-1);pill=pill_idx.get(s)
-    emit(s,'group',{'shapes':','.join(map(str,range(cs,total+1))),'name':f'#s{i}-content'})
-    split=i in SPLIT
-    if split:
-        emit(s,'group',{'shapes':'1,2','name':f'#s{i}-sidebar-bg','zorder':'1'})
-        fg=[k for k in range(2,se) if k!=pill_top[s]-1]
-        emit(s,'group',{'shapes':','.join(map(str,fg)),'name':f'#s{i}-sidebar-fg','zorder':'3'})
-        ct,bt,ft=2,3,4
-    else:
-        ct=sidebar_shapes.get(s,0)+1;bt=ft=None
-    proxy(i,'content')
-    if split:
-        proxy(i,'sidebar-bg');proxy(i,'sidebar-fg')
-    c=f'/slide[{i}]/shape[{ct}]'
-    if i in (1,2):
-        anim(c,HIN,'afterPrevious',420)
-        continue
-    if i==3:
-        b,f,p=f'/slide[{i}]/shape[{bt}]',f'/slide[{i}]/shape[{ft}]',f'/slide[{i}]/shape[1]'
-        anim(b,SIN,'afterPrevious',400);anim(f,SIN,'withPrevious',400);anim(p,SIN,'withPrevious',400)
-        anim(c,VIN,'withPrevious',500)
-    else:
-        anim(c,VIN,'afterPrevious',500)
-    if i in (5,8,12):anim(f'/slide[{i}]/shape[{1 if i==12 else pill}]',PDOWN,'withPrevious',500,easein=30,easeout=50)
 # --- bangun ---
 if n!=TOTAL:raise ValueError(f'jumlah slide {n}, seharusnya {TOTAL}')
 json.dump(list(specs.values()),open('specs.json','w'))
@@ -301,4 +254,3 @@ else:
     print(r.stdout[-1500:],r.stderr[-800:])
 r.check_returncode()
 subprocess.run(['officecli','close',OUT],check=True)
-subprocess.run([sys.executable,'retarget_group_animations.py',OUT],check=True)

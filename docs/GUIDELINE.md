@@ -18,7 +18,7 @@ Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Jangan mengarang rujukan, angka, atau fitur. Klaim yang belum diverifikasi ditandai di catatan pembicara.
 
 ## Aturan desain
-- Referensi layout: pengaturan (settings) di https://github.com/satoxyan/expressive-pC, yaitu rail navigasi kiri, kartu tonal berradius besar, ikon dalam bentuk cookie, flower, clover, squircle, burst, atau sunny.
+- Referensi layout: kartu tonal berradius besar dan ikon dalam bentuk cookie, flower, clover, squircle, burst, atau sunny.
 - Bentuk ikon mengikuti peran: flower untuk hero, cookie/clover/squircle untuk kartu, burst untuk peringatan atau pemeriksaan, sunny untuk ide dan waktu.
 - Palet: biru, teal, dan hijau pastel dengan aksen navy. Merah hanya untuk risiko. Tanpa ungu.
 - Font: Calibri. Judul 36 pt tebal, isi 18 sampai 24 pt, keterangan minimal 10 pt, sitasi kaki minimal 8 pt.
@@ -27,12 +27,9 @@ Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Setiap slide membawa elemen visual berupa ikon, bentuk, atau screenshot. Sampul, kesimpulan, dan penutup terang.
 
 ## Aturan gerak
-- Satu slide satu klik. Tidak ada animasi keluar; slide berikutnya langsung masuk.
-- Sampul masuk horizontal 420 ms; slide dengan sidebar masuk vertikal 500 ms. Sidebar 400 ms. Konten memakai ease-in 20 dan ease-out 70; pil memakai 30 dan 50.
-- Path masuk melewati target sedikit lalu kembali: 1,5% lebar atau tinggi slide, sidebar 0,3% lebar.
-- Pil sidebar bergerak bersama konten memakai `withPrevious`, bukan `afterPrevious`.
-- Tanpa fade, opacity, atau perubahan warna. Animasi hanya tampil di PowerPoint 365/2021.
-- Referensi gerak: `MediaPager.qml` dan `SidebarPop.qml` di https://github.com/satoxyan/expressive-pC.
+- Deck statis. Tidak ada animasi, transisi, fade, atau perubahan warna.
+- Satu klik pindah ke slide berikutnya.
+- Tidak ada sidebar; konten memenuhi lebar slide.
 
 ## Token warna (ada di bagian atas build.py)
 | Peran | Hex |
@@ -50,7 +47,7 @@ Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Slide 7: contoh satu sumber menjadi sitasi dan daftar pustaka; jangan menambah teori jenis sitasi atau aturan APA/IEEE.
 - Slide 4, 5, 10: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks. Rasio PNG harus sama dengan kartu; `build.py` gagal jika berbeda, jadi jangan meregangkan mask.
 - Slide 5 sampai 11: screenshot Mendeley 16:9; tangkapan layar akun memakai UCL Library (2019); jangan regangkan; crop bilah hitam; kredit di speaker notes.
-- Slide 13: kesimpulan; slide 14: penutup. Keduanya memakai rail Penutup dan latar terang; jangan tambahkan gradasi latar.
+- Slide 13: kesimpulan; slide 14: penutup. Keduanya berlatar terang; jangan tambahkan gradasi latar.
 - Verifikasi ke situs resmi Mendeley: batas penyimpanan gratis dan ketersediaan fitur.
 
 ## Catatan teknis OfficeCLI

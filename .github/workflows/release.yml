@@ -65,11 +65,10 @@ jobs:
       - name: Bangun deck
         run: uv run build.py
 
-      - name: Periksa animasi
+      - name: Periksa tidak ada animasi
         run: |
-          uv run python test_retarget.py
-          uv run python test_check_anim.py
-          uv run python check_anim.py
+          uv run python test_check_no_anim.py
+          uv run python check_no_anim.py
 
       - name: Periksa tumpang tindih panah
         run: uv run python check_layout.py
