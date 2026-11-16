@@ -1,9 +1,10 @@
 const fs=require('fs'),React=require('react'),S=require('react-dom/server'),sharp=require('sharp'),m=require('react-icons/md');
 const specs=JSON.parse(fs.readFileSync(process.argv[2]));
-const SHAPES=['none','cookie','flower','clover','burst','sunny','squircle'];
+const SHAPES=['none','circle','cookie','flower','clover','burst','sunny','squircle'];
 fs.mkdirSync('assets',{recursive:true});
 function outline(shape,N=480){const p=[];for(let i=0;i<N;i++){const t=i/N*2*Math.PI;let r=1;
- if(shape==='cookie')r=(1+.055*Math.cos(9*t))/1.055;
+ if(shape==='circle')r=1;
+ else if(shape==='cookie')r=(1+.055*Math.cos(9*t))/1.055;
  else if(shape==='flower')r=(1+.12*Math.cos(8*t))/1.12;
  else if(shape==='clover')r=(1+.18*Math.cos(4*t))/1.18;
  else if(shape==='burst')r=(1+.18*Math.cos(12*t))/1.18;

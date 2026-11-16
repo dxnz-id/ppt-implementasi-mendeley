@@ -4,5 +4,6 @@ deck.pptx
 deck.pdf
 ops.json
 specs.json
+render/
 # ikon ber-hash dibuat ulang oleh icons.js saat build
 assets/[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].png

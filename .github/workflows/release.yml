@@ -36,11 +36,11 @@ jobs:
           node-version: "22"
           cache: "npm"
 
-      # Carlito metrik-compatible dengan Calibri agar layout PDF tidak bergeser.
+      # Liberation Sans metrik-compatible dengan Arial agar layout PDF tidak bergeser.
       - name: Pasang LibreOffice, font, dan alat pratinjau
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libreoffice-impress fonts-crosextra-carlito poppler-utils imagemagick
+          sudo apt-get install -y --no-install-recommends libreoffice-impress fonts-liberation poppler-utils imagemagick
 
       # Unduh rilis yang dipatok dan verifikasi checksum sebelum dipasang.
       - name: Pasang OfficeCLI
@@ -99,7 +99,7 @@ jobs:
           pdftoppm -png -r 120 deck.pdf preview/slide
           mapfile -t slides < <(find preview -maxdepth 1 -name 'slide-*.png' | sort -V)
           test "${#slides[@]}" -eq 16
-          montage "${slides[@]}" -tile 2x8 -geometry 800x450+8+8 -background '#F6F6F6' preview.png
+          montage "${slides[@]}" -tile 2x8 -geometry 800x450+8+8 -background '#F3F0EE' preview.png
           test -f preview.png
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

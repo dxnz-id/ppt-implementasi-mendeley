@@ -1,11 +1,11 @@
 # Implementasi Mendeley: generator slide
 
-Generator deck 16 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat dengan OfficeCLI dan bergaya Material 3.
+Generator deck 16 slide tentang Mendeley dalam penulisan karya ilmiah, dibuat dengan OfficeCLI dan bergaya editorial Mastercard: cream, ink, bentuk pill, potret lingkaran, satelit, dan orbit oranye.
 
 ## Struktur
 - `build.py`: isi slide, palet, dan layout
-- `icons.js`: pembuat ikon Material dengan bentuk cookie, flower, clover, squircle, burst, dan sunny
-- `assets/`: aset sumber (nomor, masking, ilustrasi, screenshot); ikon ber-hash dibuat saat build
+- `icons.js`: pembuat ikon Material dengan bentuk none, circle, cookie, flower, clover, burst, squircle, dan sunny
+- `assets/`: aset sumber (screenshot, orbit, bingkai screenshot); ikon ber-hash dibuat saat build
 - `docs/GUIDELINE.md`: panduan bahasa, desain, dan alur kerja
 - `skills/`: skill yang dipakai selama pembuatan (lihat `skills/README.md`)
 
@@ -31,3 +31,5 @@ Uji manual ini wajib dilakukan sebelum menerbitkan rilis dan tidak dicakup CI.
 
 ## Rilis otomatis
 Setiap push ke branch mana pun dan pull request menjalankan `.github/workflows/release.yml`: deck dibangun, divalidasi, diekspor ke `deck.pdf`, lalu artifact `deck.pptx`, `deck.pdf`, dan `preview.png` diunggah. Hanya push ke `main` yang menerbitkan release bertag `build-<sha>` dengan tiga aset tersebut. Rilis diserialkan agar build tidak saling menimpa. Tidak perlu mengisi rahasia; `GITHUB_TOKEN` sudah tersedia.
+
+Pratinjau desain dari branch dibuat sebagai pre-release manual dari artifact branch, bukan dari `main`. Setelah desain disetujui, baru merge ke `main` untuk rilis biasa.

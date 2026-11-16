@@ -4,7 +4,7 @@
 Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
 
 ## Alur kerja
-1. Baca skill yang dipakai (urutan: bahasa-skills, stop-slop, material-3, officecli). Sebagian ada di `skills/`, sisanya dipasang dari sumber di `skills/README.md`.
+1. Baca skill yang dipakai (urutan: bahasa-skills, stop-slop, officecli) dan `docs/superpowers/specs/2026-11-16-desain-mastercard.md`. Sebagian skill ada di `skills/`, sisanya dipasang dari sumber di `skills/README.md`.
 2. Tulis teks slide di `build.py` mengikuti aturan bahasa di bawah.
 3. Jalankan `uv run build.py`. Skrip membuat ikon (`icons.js`) lalu menyusun deck lewat batch OfficeCLI.
 4. Validasi: `officecli validate deck.pptx` dan `officecli view deck.pptx issues`.
@@ -18,13 +18,14 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Jangan mengarang rujukan, angka, atau fitur. Klaim yang belum diverifikasi ditandai di catatan pembicara.
 
 ## Aturan desain
-- Referensi layout: kartu tonal berradius besar dan ikon dalam bentuk cookie, flower, clover, squircle, burst, atau sunny.
-- Bentuk ikon mengikuti peran: flower untuk hero, cookie/clover/squircle untuk kartu, burst untuk peringatan atau pemeriksaan, sunny untuk ide dan waktu.
-- Palet: biru, teal, dan hijau pastel dengan aksen navy. Merah hanya untuk risiko. Tanpa ungu.
-- Font: Calibri. Judul 36 pt tebal, isi 18 sampai 24 pt, keterangan minimal 10 pt, sitasi kaki minimal 8 pt.
-- Margin tepi minimal 1 cm, jarak antarkartu 0,8 cm. Satu gagasan per slide.
-- Gradasi hanya untuk opacity gambar; permukaan, kartu, dan latar memakai warna tonal solid.
-- Setiap slide membawa elemen visual berupa ikon, bentuk, atau screenshot. Sampul, kesimpulan, dan penutup terang.
+- Referensi layout: editorial Mastercard dengan permukaan cream/ink, kartu beradius besar, pill, potret ikon lingkaran, satelit panah putih, dan orbit oranye tipis.
+- Screenshot tetap 16:9 di dalam bingkai stadium putih; jangan dipotong lingkaran atau diregangkan.
+- Palet: Canvas Cream `F3F0EE`, Lifted Cream `FCFBFA`, Soft Bone `F4F4F4`, Dust `D1CDC7`, Ink `141413`, Charcoal `262627`, Slate `696969`, Signal Orange `CF4500`, Light Signal Orange `F37338`, Clay `9A3A0A`, White `FFFFFF`.
+- Oranye hanya untuk aksen, nomor, tautan, dan penanda; jangan memakai oranye sebagai latar teks panjang.
+- Font: Arial. Judul slide 32 pt tebal, sampul 48 pt, isi 15 sampai 20 pt, keterangan minimal 10 pt.
+- Margin tepi 1,2 cm, jarak antarkartu 0,8 cm. Satu gagasan per slide.
+- Tanpa gradasi, bayangan keras, atau logo Mastercard. Permukaan memakai warna solid.
+- Setiap slide membawa elemen visual berupa ikon, bentuk, atau screenshot. Sampul dan kesimpulan terang; penutup memakai latar ink.
 
 ## Aturan gerak
 - Deck statis. Tidak ada animasi, transisi, fade, atau perubahan warna.
@@ -34,16 +35,21 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 ## Token warna (ada di bagian atas build.py)
 | Peran | Hex |
 |---|---|
-| Latar | F6F6F6 |
-| Primary / container | 46627A / B0C8E0 |
-| Secondary container | C1E0E0 |
-| Tertiary container | DCE7D6 |
-| Error | FFDAD6 / 65000B |
-| Teks | 2F3334 |
+| Canvas Cream | F3F0EE |
+| Lifted Cream | FCFBFA |
+| Soft Bone | F4F4F4 |
+| Dust | D1CDC7 |
+| Ink | 141413 |
+| Charcoal | 262627 |
+| Slate | 696969 |
+| Signal Orange | CF4500 |
+| Light Signal Orange | F37338 |
+| Clay | 9A3A0A |
+| White | FFFFFF |
 
 ## Yang harus diisi manual
-- Slide 2: nama dan NIM anggota, urut NIM; nomor besar memakai aset `num-01.png` sampai `num-07.png` yang dipotong mask kartu. Ikon ber-hash tidak disimpan di Git; `icons.js` membuatnya saat build.
-- Slide 4: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks. Rasio PNG harus sama dengan kartu; `build.py` gagal jika berbeda, jadi jangan meregangkan mask.
+- Slide 2: nama dan NIM anggota, urut NIM; nomor besar digambar sebagai teks oranye, bukan aset `num-*.png`. Ikon ber-hash tidak disimpan di Git; `icons.js` membuatnya saat build.
+- Slide 4: tanpa mask pastel; kartu kiri lifted cream, kartu kanan ink. Jangan mengembalikan `mask-04-*.png`.
 - Slide 5: enam fitur utama; jangan menambah fitur yang tidak ada di sumber.
 - Slide 6-7: instalasi akun, aplikasi, Web Importer, dan Cite; pertahankan screenshot besar.
 - Slide 8-9: antarmuka library dan PDF Reader; jangan mengecilkan screenshot demi memadatkan.
@@ -51,8 +57,8 @@ Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 - Slide 11: enam langkah Mendeley Cite; teori gaya sitasi tetap di Kelompok 4.
 - Slide 12: tabel lima gaya sitasi; jangan menambah aturan format rinci.
 - Slide 13: contoh satu sumber menjadi sitasi dan daftar pustaka.
-- Slide 6-11: screenshot Mendeley 16:9; tangkapan layar akun memakai Mendeley (n.d.); jangan regangkan; crop bilah hitam; kredit di speaker notes.
-- Slide 15: kesimpulan; slide 16: penutup. Keduanya berlatar terang; jangan tambahkan gradasi latar.
+- Slide 6-11: screenshot Mendeley 16:9 di dalam `shot-mask.png`; tangkapan layar akun memakai Mendeley (n.d.); jangan regangkan; crop bilah hitam; kredit di speaker notes.
+- Slide 15: kesimpulan terang; slide 16: penutup berlatar ink. Jangan menambahkan gradasi latar.
 - Verifikasi ke situs resmi Mendeley: batas penyimpanan gratis dan ketersediaan fitur.
 
 ## Catatan teknis OfficeCLI
