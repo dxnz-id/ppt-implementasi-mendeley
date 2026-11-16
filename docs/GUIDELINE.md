@@ -1,7 +1,7 @@
 # Panduan deck Implementasi Mendeley
 
 ## Tujuan
-Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
+Deck 16 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu kutipan, daftar pustaka, dan pencegahan plagiarisme.
 
 ## Alur kerja
 1. Baca skill yang dipakai (urutan: bahasa-skills, stop-slop, material-3, officecli). Sebagian ada di `skills/`, sisanya dipasang dari sumber di `skills/README.md`.
@@ -43,11 +43,16 @@ Deck 14 slide untuk mata kuliah Bahasa Indonesia: Mendeley sebagai alat bantu ku
 
 ## Yang harus diisi manual
 - Slide 2: nama dan NIM anggota, urut NIM; nomor besar memakai aset `num-01.png` sampai `num-07.png` yang dipotong mask kartu. Ikon ber-hash tidak disimpan di Git; `icons.js` membuatnya saat build.
-- Slide 6: batas Mendeley, bukan teori sitasi; teori jenis sitasi ada di Kelompok 4.
-- Slide 7: contoh satu sumber menjadi sitasi dan daftar pustaka; jangan menambah teori jenis sitasi atau aturan APA/IEEE.
-- Slide 4, 5, 10: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks. Rasio PNG harus sama dengan kartu; `build.py` gagal jika berbeda, jadi jangan meregangkan mask.
-- Slide 5 sampai 11: screenshot Mendeley 16:9; tangkapan layar akun memakai UCL Library (2019); jangan regangkan; crop bilah hitam; kredit di speaker notes.
-- Slide 13: kesimpulan; slide 14: penutup. Keduanya berlatar terang; jangan tambahkan gradasi latar.
+- Slide 4: masking memakai `assets/mask-*.png`; letakkan setelah kartu dan sebelum ikon atau teks. Rasio PNG harus sama dengan kartu; `build.py` gagal jika berbeda, jadi jangan meregangkan mask.
+- Slide 5: enam fitur utama; jangan menambah fitur yang tidak ada di sumber.
+- Slide 6-7: instalasi akun, aplikasi, Web Importer, dan Cite; pertahankan screenshot besar.
+- Slide 8-9: antarmuka library dan PDF Reader; jangan mengecilkan screenshot demi memadatkan.
+- Slide 10: empat cara menambahkan referensi dan menu Add reference.
+- Slide 11: enam langkah Mendeley Cite; teori gaya sitasi tetap di Kelompok 4.
+- Slide 12: tabel lima gaya sitasi; jangan menambah aturan format rinci.
+- Slide 13: contoh satu sumber menjadi sitasi dan daftar pustaka.
+- Slide 6-11: screenshot Mendeley 16:9; tangkapan layar akun memakai Mendeley (n.d.); jangan regangkan; crop bilah hitam; kredit di speaker notes.
+- Slide 15: kesimpulan; slide 16: penutup. Keduanya berlatar terang; jangan tambahkan gradasi latar.
 - Verifikasi ke situs resmi Mendeley: batas penyimpanan gratis dan ketersediaan fitur.
 
 ## Catatan teknis OfficeCLI

@@ -30,8 +30,8 @@ def check_slide(index, root):
 def main(path="deck.pptx"):
     roots = parse(path)
     bad = []
-    if len(roots) != 14:
-        bad.append(f"jumlah slide {len(roots)}, seharusnya 14")
+    if len(roots) != 16:
+        bad.append(f"jumlah slide {len(roots)}, seharusnya 16")
     for i, root in enumerate(roots, 1):
         bad.extend(check_slide(i, root))
     if bad:

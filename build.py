@@ -1,6 +1,6 @@
 import json,subprocess,os,hashlib,struct
 OUT='deck.pptx'
-TOTAL=14
+TOTAL=16
 # --- palet M3 Expressive dari #B0C8E0 #C1E0E0 #DCE7D6 #F6F6F6 ---
 BG,CARD='F6F6F6','E6E9E9'
 TX,MUT='2F3334','5B6061'
@@ -106,35 +106,94 @@ for k,(ic,hd,its,pitch,fill,col,nb,nc) in enumerate([('MdQuestionAnswer','Rumusa
     for j,t in enumerate(its):
         y=8.2+j*pitch;num(s,x+0.9,y,1.5,str(j+1),nb,nc);tx(s,x+3.0,y-0.2,10,pitch-0.4,t,20,col,valign='top')
 notes(s,'Dua rumusan masalah menuntun presentasi ini: cara implementasi dan manfaat serta keterbatasan. Tiga tujuan mengikuti urutan tersebut: fungsi, langkah, lalu evaluasi.')
-# 5 mengenal
-s=frame('')
-Y=2.4
-box(s,X0,Y,10.0,14.0,PC,1.4)
-clipped(s,'mask-05-tiga.png',X0,Y,10.0,14.0,'Masking angka tiga')
-pic(s,icon('MdLibraryBooks',FLOWER,P,'FFFFFF'),X0+1.2,Y+0.9,3.6,'Ikon Mendeley')
-tx(s,X0+1.0,Y+5.4,8,5.8,'Mendeley adalah aplikasi pengelola referensi dan jejaring akademik.',20,ON_PC,True)
-tx(s,X0+1.0,Y+11.2,8,2.4,'Kita akan fokus pada Reference Manager.',16,ON_PC)
-for k,(f,hd,bd) in enumerate([('shot-rm-add.png','Mendeley Reference Manager','Pustaka pribadi untuk menyimpan, mengelompokkan, dan menganotasi PDF jurnal.'),
- ('shot-cite-panel.png','Mendeley Cite','Add-in Microsoft Word untuk menyisipkan kutipan dan membuat daftar pustaka.'),
- ('shot-web-importer.png','Web Importer','Ekstensi peramban untuk menyimpan referensi dari halaman web.')]):
-    y=Y+k*4.9;box(s,X0+10.8,y,W-10.8,4.2,CARD,1.2)
-    shot(s,f,X0+11.5,y+0.5,6.2,hd)
-    tx(s,X0+18.2,y+0.4,W-19.2,1.9,hd,20,TX,True);tx(s,X0+18.2,y+2.1,W-19.2,2.0,bd,16,MUT)
-notes(s,'Mendeley dikembangkan Elsevier. Ada tiga komponen: Reference Manager untuk pustaka, Mendeley Cite untuk Word, dan Web Importer untuk peramban. Tangkapan layar: Mendeley (n.d.); Mendeley Support (2025).')
-# 6 apa yang diolah
-s=frame('Data yang diolah Mendeley')
-box(s,X0,4.0,W,4.6,P,1.4)
-pic(s,icon('MdDescription',SQUIRCLE,PC,ON_PC),X0+1.0,5.0,2.6,'Ikon metadata')
-tx(s,X0+4.4,4.0,W-5.4,4.6,'Mendeley memakai metadata referensi untuk menyusun sitasi dan daftar pustaka. Penulis tetap harus memeriksa isi dan ketepatan datanya.',24,'FFFFFF',True,valign='middle')
-w3=(W-1.6)/3
-for k,(f,hd,bd) in enumerate([('shot-metadata.png','Metadata','Judul, penulis, tahun, DOI, dan nama jurnal menjadi bahan sitasi.'),
- ('shot-style.png','Gaya sitasi','Mendeley menerapkan gaya yang dipilih, misalnya APA atau IEEE.'),
- ('shot-bibliography.png','Daftar pustaka','Mendeley menyusun entri dari metadata dan gaya yang sama.')]):
-    x=X0+k*(w3+0.8);box(s,x,9.4,w3,8.6,CARD,1.2)
-    shot(s,f,x+0.9,9.9,w3-1.8,hd)
-    tx(s,x+0.8,14.7,w3-1.6,1.2,hd,24,TX,True);tx(s,x+0.8,15.9,w3-1.6,2.0,bd,16,MUT)
-notes(s,'Mendeley mengolah metadata menjadi sitasi dan daftar pustaka. Jenis kutipan dan aturan tiap gaya dibahas Kelompok 4; fokus kita pada data yang diolah dan hasil yang dibuat Mendeley. Tangkapan layar: Mendeley Support (2025).')
-# 7 satu sumber dua keluaran
+# 5 fitur utama
+s=frame('Fitur utama')
+feats=[
+ ('MdLibraryBooks','Reference Library','Simpan dan kelola referensi.',COOKIE,PC,ON_PC),
+ ('MdPictureAsPdf','PDF Reader','Baca, highlight, dan beri catatan.',CLOVER,SC,ON_SC),
+ ('MdFormatQuote','Mendeley Cite','Sitasi langsung di Microsoft Word.',SQUIRCLE,TC,ON_TC),
+ ('MdCloudSync','Sinkronisasi cloud','Akses dari berbagai perangkat.',BURST,PC,ON_PC),
+ ('MdGroup','Groups','Bagikan referensi dengan kolaborator.',SUNNY,SC,ON_SC),
+ ('MdExtension','Web Importer','Simpan referensi dari browser.',FLOWER,TC,ON_TC),
+]
+w3=(W-1.6)/3;h=6.6
+for k,(ic,hd,bd,shape,bg,fg) in enumerate(feats):
+    x=X0+(k%3)*(w3+0.8);y=4.0+(k//3)*(h+0.8)
+    box(s,x,y,w3,h,CARD,1.4)
+    pic(s,icon(ic,shape,bg,fg),x+0.8,y+0.8,2.0,hd)
+    tx(s,x+0.8,y+3.1,w3-1.6,1.0,hd,20,TX,True)
+    tx(s,x+0.8,y+4.2,w3-1.6,2.0,bd,16,MUT)
+notes(s,'Enam fitur utama Mendeley: Reference Library untuk menyimpan referensi, PDF Reader untuk membaca dan menandai, Mendeley Cite untuk sitasi di Word, sinkronisasi cloud, Groups untuk berbagi, dan Web Importer untuk menyimpan referensi dari browser.')
+# 6 instalasi akun dan aplikasi
+s=frame('Instalasi: akun dan aplikasi')
+shot(s,'shot-account.png',X0,4.0,18.0,'Situs resmi Mendeley')
+tx(s,X0,14.4,18.0,0.7,'Situs resmi Mendeley',12,MUT,align='center')
+for k,t in enumerate(['Buka situs resmi Mendeley.','Buat akun dengan email atau akun Elsevier.','Unduh Mendeley Reference Manager.','Instal aplikasi, lalu login.']):
+    y=4.0+k*3.3
+    num(s,20.0,y,1.3,str(k+1),P,'FFFFFF')
+    tx(s,21.7,y-0.1,10.7,3.0,t,18,TX,valign='top')
+notes(s,'Instalasi dimulai dari situs resmi Mendeley. Buat akun dengan email atau akun Elsevier, unduh Reference Manager, lalu instal dan login. Tangkapan layar: Mendeley (n.d.).')
+# 7 instalasi web importer dan cite
+s=frame('Instalasi: Web Importer dan Cite')
+for k,(f,hd,bd) in enumerate([('shot-extension.png','Web Importer','Pasang ekstensi di browser, lalu simpan referensi dari halaman artikel.'),('shot-addin.png','Mendeley Cite','Pasang add-in di Microsoft Word, lalu buka tab References.')]):
+    x=X0+k*16.0;box(s,x,4.0,15.2,14.0,CARD,1.4)
+    shot(s,f,x+0.8,4.8,13.6,hd)
+    num(s,x+0.8,12.8,1.2,str(k+5),P,'FFFFFF')
+    tx(s,x+2.2,12.7,12.2,1.2,hd,22,TX,True)
+    tx(s,x+0.8,14.2,13.6,2.8,bd,17,MUT)
+notes(s,'Langkah kelima memasang Web Importer di browser. Langkah keenam memasang Mendeley Cite di Microsoft Word. Tangkapan layar: Mendeley (n.d.).')
+# 8 antarmuka
+s=frame('Tampilan antarmuka')
+shot(s,'shot-details.png',X0,4.0,19.2,'Antarmuka Mendeley Reference Manager')
+tx(s,X0,14.9,19.2,0.7,'Antarmuka Mendeley Reference Manager',12,MUT,align='center')
+for k,(hd,bd,col) in enumerate([('Panel kiri','Koleksi, folder, dan grup.',PC),('Panel tengah','Daftar referensi.',SC),('Panel kanan','Detail metadata.',TC)]):
+    y=4.2+k*4.2
+    box(s,21.2,y+0.1,0.3,2.8,col,0.15)
+    tx(s,21.8,y,9.8,1.0,hd,20,TX,True)
+    tx(s,21.8,y+1.0,9.8,2.2,bd,17,MUT)
+notes(s,'Tampilan Reference Manager dibagi tiga panel: koleksi, folder, dan grup di kiri; daftar referensi di tengah; detail metadata di kanan. Tangkapan layar: Mendeley (n.d.).')
+# 9 pdf reader
+s=frame('PDF Reader: baca dan tandai')
+for k,(f,hd,bd) in enumerate([('shot-highlight.png','Highlight dan anotasi','Tandai bagian penting langsung di PDF.'),('shot-notes.png','Catatan','Tulis ringkasan atau komentar per referensi.')]):
+    x=X0+k*16.0;box(s,x,4.0,15.2,14.0,CARD,1.4)
+    shot(s,f,x+0.8,4.8,13.6,hd)
+    tx(s,x+0.8,12.8,13.6,1.2,hd,22,TX,True)
+    tx(s,x+0.8,14.2,13.6,2.8,bd,17,MUT)
+notes(s,'PDF Reader terintegrasi dengan Reference Manager. Bagian penting bisa di-highlight, diberi anotasi, atau dicatat di Notebook. Tangkapan layar: Mendeley (n.d.).')
+# 10 menambahkan referensi
+s=frame('Menambahkan referensi')
+shot(s,'shot-rm-add.png',X0,4.0,18.0,'Menu Add reference')
+tx(s,X0,14.4,18.0,0.7,'Menu Add reference',12,MUT,align='center')
+for k,(ic,hd,bd,shape,bg,fg) in enumerate([('MdUploadFile','Unggah PDF','Tarik file ke Library.',COOKIE,PC,ON_PC),('MdExtension','Web Importer','Simpan dari halaman artikel.',CLOVER,SC,ON_SC),('MdEdit','Input manual','Isi DOI, ISBN, atau PMID.',SQUIRCLE,TC,ON_TC),('MdFileUpload','Impor file','RIS, BibTeX, EndNote XML.',BURST,PC,ON_PC)]):
+    y=4.0+k*3.3
+    pic(s,icon(ic,shape,bg,fg),20.0,y,1.6,hd)
+    tx(s,22.0,y-0.1,10.4,1.0,hd,20,TX,True)
+    tx(s,22.0,y+1.0,10.4,2.2,bd,16,MUT)
+notes(s,'Referensi bisa masuk lewat unggahan PDF, Web Importer, input manual DOI/ISBN/PMID, atau impor RIS, BibTeX, dan EndNote XML. Tangkapan layar menu Add reference: Mendeley (n.d.).')
+# 11 mendeley cite
+s=frame('Mendeley Cite di Word')
+shot(s,'shot-addin.png',X0,4.0,14.0,'Mendeley Cite di Microsoft Word')
+tx(s,X0,12.2,14.0,0.7,'Mendeley Cite di Microsoft Word',12,MUT,align='center')
+box(s,X0,13.2,14.0,4.2,CARD,1.2)
+tx(s,X0+0.9,13.2,12.2,4.2,'Gaya sitasi bisa diganti tanpa menulis ulang.',18,MUT,valign='middle')
+for k,t in enumerate(['Buka Microsoft Word, lalu tab References.','Klik Mendeley Cite.','Pilih referensi dari pustaka.','Klik Insert Citation.','Pilih gaya sitasi.','Klik Insert Bibliography.']):
+    y=4.0+k*2.3
+    num(s,16.0,y,1.3,str(k+1),P,'FFFFFF')
+    tx(s,17.4,y-0.1,14.6,2.1,t,17,TX,valign='top')
+notes(s,'Di Word, buka tab References lalu Mendeley Cite. Pilih referensi, klik Insert Citation, tentukan gaya, lalu Insert Bibliography. Gaya bisa diganti kapan saja. Tangkapan layar: Mendeley Support (2025).')
+# 12 gaya sitasi
+s=frame('Gaya sitasi')
+box(s,X0,4.0,W,1.2,P,0.6)
+tx(s,X0+1.0,4.0,6.0,1.2,'Gaya',16,'FFFFFF',True,valign='middle')
+tx(s,X0+8.0,4.0,22.0,1.2,'Contoh bidang',16,'FFFFFF',True,valign='middle')
+for k,(style,field) in enumerate([('APA','Psikologi, pendidikan, sosial'),('IEEE','Teknik, informatika'),('Harvard','Bisnis, manajemen'),('Chicago','Humaniora, sejarah'),('Vancouver','Kedokteran, kesehatan')]):
+    y=5.5+k*2.3
+    box(s,X0,y,W,2.1,[CARD,SC,TC,CARD,SC][k],0.9)
+    tx(s,X0+1.0,y,6.0,2.1,style,18,TX,True,valign='middle')
+    tx(s,X0+8.0,y,22.0,2.1,field,18,MUT,valign='middle')
+tx(s,X0,17.0,W,0.8,'Gaya dapat diganti kapan saja tanpa menulis ulang.',14,MUT)
+notes(s,'Lima gaya yang umum: APA untuk psikologi, pendidikan, dan sosial; IEEE untuk teknik dan informatika; Harvard untuk bisnis dan manajemen; Chicago untuk humaniora dan sejarah; Vancouver untuk kedokteran dan kesehatan. Gaya bisa diganti kapan saja.')
+# 13 satu sumber dua keluaran
 s=frame('Satu sumber untuk dua rujukan')
 tx(s,X0,3.3,W,0.9,'Metadata yang sama menjadi bahan sitasi dan daftar pustaka.',18,MUT)
 wL,wR=12.0,18.4
@@ -144,8 +203,7 @@ shot(s,'shot-source.png',X0+1.2,5.7,9.6,'PDF jurnal dan metadata')
 tx(s,X0+0.8,11.3,wL-1.6,0.8,'PDF jurnal dan metadata',16,ON_PC,True)
 tx(s,X0+0.8,12.1,wL-1.6,3.2,'Penulis, tahun, judul, dan DOI dipakai untuk keduanya.',16,ON_PC)
 xR=X0+wL+0.8
-for k,(f,hd,bd,fill,col) in enumerate([('shot-citation.png','Sitasi dalam teks','Mendeley Cite menyisipkan sitasi ke dalam kalimat.',SC,ON_SC),
- ('shot-bib-menu.png','Daftar pustaka','Mendeley menyusun entri lengkap dari metadata yang sama.',TC,ON_TC)]):
+for k,(f,hd,bd,fill,col) in enumerate([('shot-citation.png','Sitasi dalam teks','Mendeley Cite menyisipkan sitasi ke dalam kalimat.',SC,ON_SC),('shot-bib-menu.png','Daftar pustaka','Mendeley menyusun entri lengkap dari metadata yang sama.',TC,ON_TC)]):
     y=4.2+k*6.9;box(s,xR,y,wR,6.3,fill,1.4)
     tx(s,xR+0.8,y+0.5,wR-1.6,0.7,hd,14,col,True)
     shot(s,f,xR+0.8,y+1.4,7.2,hd)
@@ -153,69 +211,9 @@ for k,(f,hd,bd,fill,col) in enumerate([('shot-citation.png','Sitasi dalam teks',
     if k==0:pic(s,icon('MdArrowForward','none','x',P),X0+wL+0.05,7.1,0.7,'Panah')
     else:pic(s,icon('MdArrowForward','none','x',P),X0+wL+0.05,14.0,0.7,'Panah')
 notes(s,'Satu referensi di Library menjadi sumber untuk sitasi di Word dan entri daftar pustaka. Tangkapan layar menunjukkan panel Cite dan menu Insert Bibliography; teori gaya sitasi tetap di Kelompok 4. Tangkapan layar: Mendeley Support (2025).')
-# 8 persiapan
-s=frame('Persiapan: akun, aplikasi, dan add-in')
-w3=(W-1.6)/3
-for k,(f,hd,bd) in enumerate([
-    ('shot-account.png','Buat akun','Daftar dengan email aktif.'),
-    ('shot-app.png','Pasang aplikasi','Unduh Reference Manager, lalu pasang add-in Mendeley Cite di Word.'),
-    ('shot-extension.png','Pasang ekstensi','Tambahkan Web Importer ke peramban untuk menyimpan referensi dari web.')]):
-    x=X0+k*(w3+0.8);box(s,x,4.2,w3,12.6,[CARD,SC,TC][k],1.4)
-    shot(s,f,x+0.9,4.7,w3-1.8,hd)
-    num(s,x+0.7,9.4,1.2,str(k+1),P,'FFFFFF')
-    tx(s,x+2.1,9.3,w3-2.8,1.6,hd,22,[TX,ON_SC,TX][k],True)
-    tx(s,x+0.8,10.9,w3-1.6,5.0,bd,18,[MUT,ON_SC,MUT][k])
-notes(s,'Tiga persiapan: membuat akun dengan email aktif, memasang Reference Manager dan add-in Mendeley Cite di Word, lalu memasang Web Importer di peramban. Tangkapan layar akun: UCL Library (2019); tangkapan layar lain: Mendeley (n.d.).')
-# 9 langkah 1
-s=frame('Langkah 1: kumpulkan referensi')
-for k,(f,hd,bd) in enumerate([
-    ('shot-import.png','Impor PDF','Tambahkan PDF jurnal ke Library.'),
-    ('shot-web-save.png','Simpan dari web','Gunakan Web Importer pada halaman artikel.'),
-    ('shot-details.png','Periksa metadata','Periksa judul, penulis, tahun, dan DOI; koreksi yang salah.'),
-    ('shot-organize.png','Rapikan','Kelompokkan dengan folder dan tag per bab atau topik.')]):
-    w2=(W-0.8)/2
-    x=X0+(k%2)*(w2+0.8);y=4.0+(k//2)*7.4;box(s,x,y,w2,6.6,[CARD,SC,TC,CARD][k],1.3)
-    shot(s,f,x+0.6,y+0.5,6.6,hd)
-    tx(s,x+7.8,y+0.5,w2-8.4,1.6,hd,20,TX,True)
-    tx(s,x+7.8,y+2.2,w2-8.4,3.8,bd,18,MUT)
-notes(s,'Mulai dari mengumpulkan sumber. Metadata hasil impor sering keliru, jadi periksa judul, penulis, tahun, dan DOI satu per satu. Folder dan tag per bab memudahkan pencarian saat menulis. Tangkapan layar: Mendeley Support (2025).')
-# 10 langkah 2
-s=frame('Langkah 2: baca dan catat')
-wL=20.8
-box(s,X0,4.0,wL,14.0,CARD,1.4)
-for k,(f,hd,bd) in enumerate([
-    ('shot-highlight.png','Highlight dan anotasi','Kita bisa menandai bagian penting langsung di PDF.'),
-    ('shot-notes.png','Catatan per referensi','Tulis ide utama dengan kalimat sendiri sebelum menulis naskah.')]):
-    y=4.9+k*6.6;shot(s,f,X0+0.8,y+0.5,6.6,hd)
-    tx(s,X0+7.9,y+0.5,wL-8.7,1.3,hd,22,TX,True)
-    tx(s,X0+7.9,y+1.9,wL-8.7,4.0,bd,18,MUT)
-xR=X0+wL+0.8
-box(s,xR,4.0,9.6,14.0,TC,1.4)
-clipped(s,'mask-10-panah.png',xR,4.0,9.6,14.0,'Masking panah hasil')
-pic(s,icon('MdLightbulb',SUNNY,SC,ON_TC),xR+1.2,5.2,4.2,'Ikon ide')
-tx(s,xR+1.0,10.6,7.6,1.4,'Hasilnya',24,ON_TC,True);tx(s,xR+1.0,12.2,7.6,5,'Catatan ini menjadi bahan untuk menulis kutipan tidak langsung.',22,ON_TC)
-notes(s,'Anotasi dan catatan membantu kita memahami sumber lebih dulu. Dari catatan itulah kutipan tidak langsung ditulis ulang dengan kalimat sendiri, lengkap dengan sitasinya. Tangkapan layar: Mendeley Support (2025).')
-# 11 langkah 3
-s=frame('Langkah 3: sisipkan kutipan di Word')
-w4=(W-3*1.6)/4
-for k,(f,hd,bd) in enumerate([
-    ('shot-addin.png','Buka add-in','Buka Mendeley Cite di Microsoft Word.'),
-    ('shot-cite.png','Sisipkan kutipan','Pilih referensi, lalu sisipkan ke dalam kalimat.'),
-    ('shot-style.png','Pilih gaya','Sesuaikan dengan pedoman kampus.'),
-    ('shot-bibliography.png','Buat daftar pustaka','Daftar pustaka tersusun otomatis.')]):
-    x=X0+k*(w4+1.6);box(s,x,4.4,w4,13.0,[CARD,SC,TC,PC][k],1.3)
-    num(s,x+0.7,5.1,1.5,str(k+1),P,'FFFFFF')
-    shot(s,f,x+0.7,7.0,w4-1.4,hd)
-    tcol=ON_PC if k==3 else TX
-    bcol=ON_PC if k==3 else MUT
-    tx(s,x+0.6,10.0,w4-1.2,2.2,hd,20,tcol,True)
-    tx(s,x+0.6,12.2,w4-1.2,4.2,bd,18,bcol)
-    if k<3:pic(s,icon('MdArrowForward','none','x',P),x+w4+0.3,10.2,1.0,'Panah')
-notes(s,'Alurnya empat langkah di Word: buka Mendeley Cite, sisipkan kutipan, pilih gaya sesuai pedoman kampus, lalu buat daftar pustaka. Daftar pustaka ikut berubah otomatis saat kutipan ditambah atau dihapus. Tangkapan layar: Mendeley Support (2025).')
-# 12 kelebihan keterbatasan
+# 14 kelebihan keterbatasan
 s=frame('Kelebihan dan keterbatasan')
-for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Gaya sitasi konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi lintas perangkat'],PC,ON_PC,P,'FFFFFF'),
- ('MdWarning','Keterbatasan',['Metadata hasil impor perlu diperiksa','Gaya sitasi khusus kampus perlu ditambahkan manual','Penyimpanan gratis hanya 2 GB','PDF hasil pindai biasanya masuk tanpa metadata'],EC,ON_EC,'F56965','FFFFFF')]):
+for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['Hemat waktu','Gaya sitasi konsisten','Kutipan dan daftar pustaka sinkron','Penyimpanan dan sinkronisasi lintas perangkat'],PC,ON_PC,P,'FFFFFF'),('MdWarning','Keterbatasan',['Metadata hasil impor perlu diperiksa','Gaya sitasi khusus kampus perlu ditambahkan manual','Penyimpanan gratis hanya 2 GB','PDF hasil pindai biasanya masuk tanpa metadata'],EC,ON_EC,'F56965','FFFFFF')]):
     w2=(W-0.8)/2
     x=X0+k*(w2+0.8);box(s,x,4.0,w2,14.0,fill,1.4)
     pic(s,icon(ic,[CLOVER,BURST][k],sh,fg),x+0.9,4.8,2.2,hd);tx(s,x+3.6,4.8,w2-4.2,2.2,hd,24,col,True,valign='middle')
@@ -225,7 +223,7 @@ for k,(ic,hd,its,fill,col,sh,fg) in enumerate([('MdCheckCircle','Kelebihan',['He
         box(s,x+0.8,y,w2-1.6,1.9,pill,0.95,name='kapsul')
         tx(s,x+1.4,y,w2-2.4,1.9,t,16,col,valign='middle')
 notes(s,'Kelebihan: hemat waktu, gaya sitasi konsisten, dan sinkron. Keterbatasannya: metadata hasil impor perlu diperiksa, gaya sitasi khusus kampus perlu ditambahkan manual, penyimpanan gratis hanya 2 GB, dan PDF hasil pindai biasanya masuk tanpa metadata.')
-# 13 kesimpulan (terang)
+# 15 kesimpulan (terang)
 s=frame('Kesimpulan')
 w2=(W-0.8)/2
 for k,(ic,hd,bd,fill,col,ib,ifg) in enumerate([
@@ -236,7 +234,7 @@ for k,(ic,hd,bd,fill,col,ib,ifg) in enumerate([
     tx(s,x+0.9,10.0,w2-1.8,2.6,hd,28,col,True)
     tx(s,x+0.9,13.0,w2-1.8,3.6,bd,20,col)
 notes(s,'Jawab kedua rumusan: implementasinya lewat impor, sitasi, dan daftar pustaka otomatis; manfaatnya gaya sitasi konsisten, tetapi metadata dan pedoman kampus tetap perlu diperiksa.')
-# 14 penutup
+# 16 penutup
 s=frame('')
 tx(s,2.0,6.6,18.0,4.0,'Terima kasih',72,TX,True)
 pic(s,icon('MdWavingHand',FLOWER,PC,ON_PC),23.0,4.8,8.4,'Ikon penutup')
